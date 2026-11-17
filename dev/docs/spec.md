@@ -1,6 +1,6 @@
 # Game chợ nổi miền Tây — đề bài và các quyết định đã duyệt
 
-Cập nhật: 2026-11-17 (B5). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
+Cập nhật: 2026-11-18 (B4b). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
 Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/lethienkhoi/cho-noi-mien-tay
 
 ## 1. Ý tưởng
@@ -40,11 +40,16 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 
 ## 6. Kỹ thuật
 - Web tĩnh, JS thuần, không build; hình SVG xuất sẵn, vẽ bằng Canvas 2D; chữ và giao diện bằng HTML.
-- Giọng nói: nhận giọng có sẵn của trình duyệt (Web Speech API, vi-VN) — Chrome Android, Safari iPhone (iOS 14.5+). Cần mạng.
+- Giọng nói (B4b, Khôi chọn 2026-11-17 vì bộ nghe của Apple nghe tiếng Việt sai nhiều): MẶC ĐỊNH là bộ nghe tiếng Việt chạy ngay trong trình duyệt — sherpa-onnx WebAssembly + mô hình Zipformer tiếng Việt INT8 (Apache-2.0), không gửi âm thanh đi đâu, không cần mạng sau lần tải đầu. Dự phòng: nhận giọng có sẵn của trình duyệt (Web Speech API, vi-VN, cần mạng).
+  - Tải lần đầu ~87 MB (wasm 13,7 MB + mô hình 77 MB, gồm encoder 71 MB), có thanh tiến độ "Đang tải bộ nghe tiếng Việt… X% (a/b MB)" ở màn bắt đầu, tải song song lúc đọc hướng dẫn; lưu Cache Storage, lần sau không tải lại. Lỗi mạng: nút Thử lại. Nút Bắt đầu chỉ bật khi bộ nghe sẵn sàng (hoặc đã chuyển sang Web Speech).
+  - Chạy trong Web Worker (`src/speech/asr-worker.js`); micro: getUserMedia (echoCancellation, noiseSuppression, autoGainControl) + AudioWorklet (`mic-worklet.js`) hạ mẫu 16 kHz mono; AudioContext tạo/resume ngay trong cú bấm (iOS).
+  - Mô hình offline nên giải mã lặp lại đoạn âm thanh từ tiếng đầu tiên của câu hiện tại (lùi 0,3s; tối đa thời gian câu + ân hạn + chờ + 1s), mỗi ≥350 ms khi có tiếng (VAD năng lượng, hết tiếng sau 600 ms im), giãn nhịp bằng thời gian giải mã nếu máy chậm (không xếp hàng). Mỗi câu là một kết quả riêng; câu cũ chốt khi câu mới tới; nhảy/đụng thì ngừng giải mã.
+  - Gợi ý câu (hotwords, modified_beam_search, điểm thưởng 2.0): mỗi câu đưa cả câu chính tả và câu phiên âm (chữ HOA, bỏ dấu câu) qua stream mới, không nạp lại mô hình.
+  - Tự chuyển về Web Speech kèm dòng thông báo nhỏ khi: trình duyệt thiếu WebAssembly SIMD/Worker/AudioWorklet (Safari cần iOS 16.4+), tải mô hình lỗi, hoặc đo lúc khởi động hệ số thời gian thực > 1,5. Tham số URL: `?asr=webspeech` ép Web Speech (qa_b4/qa_b5 dùng), `?asr=local` ép cục bộ.
+  - Dựng lại wasm: `dev/asr-build/build.sh` (emsdk 4.0.23, sherpa-onnx 2.0.1); sau khi đổi tệp trong `assets/asr/` chạy `python3 dev/tools/asr_manifest.py`. Nguồn + giấy phép: `dev/docs/licenses.md`.
 - BỎ HẲN điều khiển chạm và chế độ dự phòng bằng chạm (Khôi 2026-11-17: "chưa nhận mic đọc không được, bỏ cái bấm tay vô nhảy"). Chạm chỉ dùng cho nút.
 - Trình duyệt không nghe được (Firefox, trình duyệt trong app Zalo/Facebook/Messenger…): báo sớm, hướng dẫn mở bằng Chrome/Safari, nút Sao chép link. Từ chối micro / mất mạng: màn hướng dẫn + nút Thử lại.
-- Model tiếng Việt chạy trên máy (không cần mạng): chưa làm, để sau nếu cần.
-- Code: `src/speech/` (matcher.js chấm, recognizer.js nhận giọng, voice.js nối với game). Test: `node --test dev/tests/matcher.test.mjs`, `python3 dev/tools/qa_b4.py`, `python3 dev/tools/qa_b5.py`.
+- Code: `src/speech/` (matcher.js chấm, local-asr.js + asr-worker.js + asr-core.js + mic-worklet.js bộ nghe cục bộ, recognizer.js Web Speech, voice.js nối với game). Test: `node --test dev/tests/matcher.test.mjs`, `python3 dev/tools/qa_b4.py`, `python3 dev/tools/qa_b5.py`, `python3 dev/tools/qa_hold.py`, `python3 dev/tools/qa_b4b.py` (micro giả đọc wav), `node dev/tools/asr_node_test.cjs` (WER, hotwords, tốc độ).
 - Tiếng chửi: file âm thanh thu sẵn (giọng AI hoặc Khôi thu).
 - Đưa lên GitHub Pages (https) để micro chạy được trên điện thoại.
 
@@ -59,6 +64,9 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
    - Cảnh đụng: rung màn 0,35s, sao vàng "RẦM!", bọt nước tròn trắng viền đậm, nhân vật (hero_scream) văng xoay vòng, nón lá bay riêng, tô bún/cá/sầu riêng bay, người bán yell + bong bóng; bảng kết quả sau 1,6s. Thua mà không phá kỷ lục: bảng kết quả có thêm mặt mếu (hero_sad).
    - Thời gian mỗi câu (config.js): T = max(1,6s + 0,22s/chữ ; (1,8s + 0,28s/chữ) × (1 − 0,015 × số ghe qua, thấp nhất 0,8)). Thanh thời gian hết đúng lúc ghe hàng tới sát mũi; thêm 0,25s ân hạn rồi mới đụng (đọc khớp trong ân hạn vẫn nhảy). Câu 2 chữ: 2,36s → 2,04s; câu 15 chữ: 6,0s → 4,9s. "Một nửa thời gian cũ" (0,8s + 0,28s/chữ) thấp hơn sàn nhận giọng nên sàn thắng.
    - Mức câu theo số ghe đã qua: 0–2 mức 1, 3–6 mức 2, 7–12 mức 3, 13–19 mức 4, 20+ mức 5 (chưa có câu mức 5 → lấy mức cao nhất có sẵn). 20% lấy câu mức thấp hơn cho đỡ ngộp. (Tính theo số ghe qua, không theo điểm, vì điểm có thưởng +2 làm mức nhảy quá nhanh — CHỜ KHÔI CHỐT.)
+5b. B4b: bộ nghe tiếng Việt chạy trong trình duyệt (sherpa-onnx WebAssembly, Zipformer vi INT8, hotwords) thay Web Speech làm mặc định — XONG, chờ thử trên iPhone thật.
+   - Đo trên máy thử (Chromium headless, CPU máy chủ x86, 1 luồng): hệ số thời gian thực 0,07–0,12; giải mã đoạn 1,5–2s mất ~120–220 ms; từ lúc nói xong tới lúc nhảy ~0,7s; tải lần đầu ~4s mạng nội bộ, lần sau ~2,5–3s (khởi tạo); bộ nhớ: heap wasm 133 MB, tiến trình trang ~400 MB khi chơi (game không bộ nghe ~190 MB), đỉnh lúc tải ~570 MB.
+   - Thử bằng giọng TTS tiếng Việt (Piper, đọc 27 câu × 2 dạng): không hotwords qua ghe 2/54, có hotwords 10/54, không nhận nhầm câu khác (0/54). Giọng TTS máy khác xa người thật nên chỉ để so sánh tương đối.
 6. B6: độ khó theo level, điểm, kỷ lục, hiệu ứng lên đời 6 cấp.
 7. B7: thử trên iPhone và Android thật, tối ưu.
 

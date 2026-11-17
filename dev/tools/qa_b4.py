@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 QA = os.path.join(ROOT, 'dev', 'qa')
 PORT = 8766
-URL = f'http://127.0.0.1:{PORT}/index.html'
+URL = f'http://127.0.0.1:{PORT}/index.html?asr=webspeech'  # B4b: ép Web Speech để dùng micro giả
 W, H = 390, 844
 problems = []
 

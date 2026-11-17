@@ -44,10 +44,29 @@
       <p class="lead">Ghe hàng chạy tới. Đọc to câu trên ghe cho kịp để nhảy qua, chậm là đụng ghe.</p>
       <p class="mic-note" id="start-note"><span class="mic-ico" aria-hidden="true"></span><span>Game cần <b>micro</b>. Bấm Bắt đầu, cho phép micro, rồi <b>đọc to câu trên khung chữ</b>.</span></p>
       <div class="start-best">Kỷ lục: <b id="start-best">0</b> điểm</div>
+      <div class="asr-box" id="asr-box" hidden aria-live="polite">
+        <div class="asr-text" id="asr-text">Đang tải bộ nghe tiếng Việt…</div>
+        <div class="bar asr-bar" id="asr-bar"><div class="bar-fill" id="asr-fill" style="transform:scaleX(0)"></div></div>
+        <button class="btn btn-ghost btn-sm" id="btn-asr-retry" type="button" hidden>Thử lại</button>
+      </div>
       <button class="btn btn-primary" id="btn-start" type="button">Bắt đầu</button>
+      <button class="link-btn" id="btn-licenses" type="button">Nguồn và giấy phép</button>
     </div>
     <div class="signature">made by Khoi M1nhon</div>
   </section>
+
+  <div id="overlay-licenses" class="overlay" hidden>
+    <div class="card small-card lic-card">
+      <div class="title-sm">Nguồn và giấy phép</div>
+      <ul class="lic-list">
+        <li><b>Bộ nghe tiếng Việt</b>: mô hình Zipformer tiếng Việt INT8 (zzasdf/viet_iter3_pseudo_label, gói sherpa-onnx-zipformer-vi-int8-2025-04-20), giấy phép Apache-2.0.</li>
+        <li><b>sherpa-onnx</b> (k2-fsa, Apache-2.0) dựng sang WebAssembly, kèm <b>onnxruntime</b> (Microsoft, MIT) và các thư viện kaldi-native-fbank, kaldifst, kaldi-decoder, simple-sentencepiece (Apache-2.0), OpenFst (Apache-2.0), utf8proc (MIT), nlohmann/json (MIT), kissfft (BSD-3), Eigen (MPL-2.0).</li>
+        <li>Âm thanh chỉ xử lý ngay trên máy, không gửi đi đâu. Khi máy không chạy được bộ nghe này, game dùng bộ nghe của trình duyệt (cần mạng).</li>
+        <li>Phông chữ: Baloo 2, Be Vietnam Pro (Google Fonts, SIL OFL 1.1). Hình vẽ bằng code.</li>
+      </ul>
+      <button class="btn btn-primary" id="btn-licenses-close" type="button">Đóng</button>
+    </div>
+  </div>
 
   <section id="screen-result" class="screen" hidden>
     <div class="card result-card">

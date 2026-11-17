@@ -8,6 +8,7 @@ import { Hud } from './ui/hud.js';
 import { Panel } from './ui/panel.js';
 import { Screens } from './ui/screens.js';
 import { SpeechInput, speechSupport } from './speech/recognizer.js';
+import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js';
 import { VoiceControl } from './speech/voice.js';
 import { playTaunt } from './game/sfx.js';
 
@@ -41,6 +42,18 @@ function spriteList(man, phrases) {
   for (const p of phrases.phrases) { const st = man.stallMap[p.stall]; add(st); if (S[st]) add(S[st].back); }
   return [...out];
 }
+
+// ---------------------------------------------------------------- bộ nghe (B4b)
+// Mặc định: bộ nghe tiếng Việt chạy ngay trong trình duyệt (sherpa-onnx WebAssembly). Tham số URL:
+//   ?asr=webspeech  ép dùng Web Speech của trình duyệt (bản B4, cần mạng) — qa_b4/qa_b5 dùng chế độ này
+//   ?asr=local      ép dùng bộ nghe cục bộ (không tự chuyển về Web Speech khi máy chậm)
+const ASR_PARAM = new URLSearchParams(location.search).get('asr') || '';
+// đo lúc khởi động: chậm hơn mức này thì chuyển về Web Speech (nếu có). ?asrmaxrtf=… chỉ để kiểm thử.
+const ASR_MAX_RTF = parseFloat(new URLSearchParams(location.search).get('asrmaxrtf')) || 1.5;
+const localSup = localAsrSupport();
+const localAsr = ASR_PARAM !== 'webspeech' && (localSup.ok || ASR_PARAM === 'local')
+  ? new LocalSpeechInput({ opts: { method: 'modified_beam_search', hotwordsScore: 2.0 } }) : null;
+if (localAsr && localSup.ok) localAsr.load();       // tải ngay, song song với hình và lúc người chơi đọc hướng dẫn
 
 async function boot() {
   screens.setLoading(0.02);
@@ -98,9 +111,14 @@ async function boot() {
   const running = () => game.state === 'playing' || game.state === 'jumping' || game.state === 'crash';
 
   // ---- nối sự kiện game -> UI
-  game.addEventListener('round', (e) => { panel.play(e.detail.phrase); measureUI(); });
-  game.addEventListener('matched', (e) => { panel.passed(e.detail.phrase, e.detail); measureUI(); });
-  game.addEventListener('crash', (e) => { panel.crash(e.detail.phrase); measureUI(); });
+  // bộ nghe cục bộ: mỗi câu mới đặt hotwords + mốc cắt âm thanh; nhảy/đụng thì ngừng giải mã cho nhẹ máy
+  game.addEventListener('round', (e) => {
+    const T = e.detail.T || (game.round && game.round.T) || 8;
+    speech.setContext(e.detail.phrase, { maxSec: T + CONFIG.TIME_GRACE + CONFIG.HOLD_MAX + 1 });
+    panel.play(e.detail.phrase); measureUI();
+  });
+  game.addEventListener('matched', (e) => { speech.setContext(null); panel.passed(e.detail.phrase, e.detail); measureUI(); });
+  game.addEventListener('crash', (e) => { speech.setContext(null); panel.crash(e.detail.phrase); measureUI(); });
   game.addEventListener('taunt', (e) => playTaunt(e.detail.kind, e.detail.text));
   game.addEventListener('over', (e) => {
     panel.show(false);
@@ -113,13 +131,91 @@ async function boot() {
     if (paused) { speech && speech.stop(); panel.setMic('off'); }
   });
 
-  // ---- giọng nói (B4). Không có điều khiển chạm: chạm chỉ dùng cho nút.
-  const support = speechSupport();
+  // ---- giọng nói (B4, B4b). Không có điều khiển chạm: chạm chỉ dùng cho nút.
+  const support0 = speechSupport();
+  // màn "không nghe được" coi như có API khi chạy được bộ nghe cục bộ
+  const support = { ...support0, api: support0.api || !!(localAsr && localSup.ok) };
   const pageUrl = location.href.split('#')[0];
-  const speech = support.api && support.secure ? new SpeechInput({ Ctor: support.Ctor, lang: 'vi-VN' }) : null;
+  const webSpeech = support0.api && support0.secure ? new SpeechInput({ Ctor: support0.Ctor, lang: 'vi-VN' }) : null;
+  const speech = (localAsr || webSpeech) ? new SpeechSwitch() : null;
   let waitFor = null;           // 'start' | 'resume': đang chờ micro mở để bắt đầu / chơi tiếp
   let forceTry = false;         // bấm "Vẫn thử ở đây" trong trình duyệt của app
   const canListen = () => speech && (!support.inApp || forceTry);
+
+  // ---- chọn bộ nghe + màn tải
+  const asrBox = document.getElementById('asr-box'), asrText = document.getElementById('asr-text');
+  const asrFill = document.getElementById('asr-fill'), asrBar = document.getElementById('asr-bar');
+  const btnAsrRetry = document.getElementById('btn-asr-retry'), btnStart = document.getElementById('btn-start');
+  let pendingUse = null;        // đổi bộ nghe khi đang chơi: để dành tới lúc về bến
+  function useSpeech(inner, kind) {
+    if (!speech) return;
+    if (running() || waitFor) { pendingUse = [inner, kind]; return; }
+    speech.use(inner, kind); app.dataset.asr = kind;
+  }
+  function asrUI(text, { frac = null, cls = '', retry = false } = {}) {
+    asrBox.hidden = false;
+    asrText.textContent = text;
+    asrBox.classList.toggle('is-ready', cls === 'ready'); asrBox.classList.toggle('is-error', cls === 'error');
+    asrBar.hidden = frac === null;
+    if (frac !== null) asrFill.style.transform = `scaleX(${Math.max(0, Math.min(1, frac))})`;
+    btnAsrRetry.hidden = !retry;
+    updateStartBtn();
+  }
+  function updateStartBtn() {
+    const ok = !!(speech && speech.inner && (speech.kind === 'webspeech' || (localAsr && localAsr.ready)));
+    btnStart.disabled = !ok;
+    btnStart.textContent = ok ? 'Bắt đầu' : 'Đang tải bộ nghe…';
+  }
+  const MB = (b) => (b / 1048576).toFixed(b < 10485760 ? 1 : 0);
+  const fallbackWeb = (why) => {
+    useSpeech(webSpeech, 'webspeech');
+    console.info('[cho-noi] dùng Web Speech:', why);
+  };
+  if (localAsr && !localSup.ok) {
+    // ép ?asr=local nhưng trình duyệt thiếu tính năng
+    useSpeech(localAsr, 'local');
+    asrUI(`Trình duyệt này chưa chạy được bộ nghe trên máy (thiếu ${localSup.why.join(', ')}).`, { cls: 'error' });
+  } else if (localAsr) {
+    useSpeech(localAsr, 'local');
+    asrUI('Đang tải bộ nghe tiếng Việt…', { frac: 0 });
+    localAsr.addEventListener('load-progress', (e) => {
+      const { loaded, total } = e.detail;
+      if (speech.kind !== 'local') return;
+      if (loaded >= total) asrUI('Đang khởi động bộ nghe tiếng Việt…', { frac: 1 });
+      else asrUI(`Đang tải bộ nghe tiếng Việt… ${Math.floor(100 * loaded / Math.max(1, total))}% (${MB(loaded)}/${MB(total)} MB)`, { frac: loaded / Math.max(1, total) });
+    });
+    localAsr.addEventListener('load-ready', (e) => {
+      const { rtf, cached, heapMB, loadMs } = e.detail;
+      console.info(`[cho-noi] bộ nghe cục bộ sẵn sàng: RTF ${rtf}, ${loadMs} ms${cached ? ' (từ bộ nhớ đệm)' : ''}, heap ${heapMB} MB`);
+      if (rtf > ASR_MAX_RTF && ASR_PARAM !== 'local' && webSpeech) {
+        fallbackWeb('máy chậm, RTF ' + rtf);
+        asrUI('Máy hơi chậm cho bộ nghe trên máy, tạm dùng bộ nghe của trình duyệt (cần mạng).', { cls: 'error' });
+        return;
+      }
+      useSpeech(localAsr, 'local');
+      asrUI('Bộ nghe tiếng Việt sẵn sàng, chạy ngay trên máy.', { cls: 'ready' });
+    });
+    localAsr.addEventListener('load-error', (e) => {
+      console.warn('[cho-noi] tải bộ nghe lỗi:', e.detail.code, e.detail.message);
+      const net = e.detail.code === 'network';
+      if (webSpeech && ASR_PARAM !== 'local') {
+        fallbackWeb('tải lỗi');
+        asrUI(net ? 'Tải bộ nghe bị lỗi mạng. Tạm dùng bộ nghe của trình duyệt (cần mạng).' : 'Máy chưa chạy được bộ nghe trên máy. Tạm dùng bộ nghe của trình duyệt (cần mạng).',
+          { cls: 'error', retry: net });
+      } else {
+        asrUI(net ? 'Tải bộ nghe bị lỗi mạng. Kiểm tra mạng rồi bấm Thử lại.' : 'Máy chưa chạy được bộ nghe tiếng Việt. Bấm Thử lại hoặc mở bằng trình duyệt khác.', { cls: 'error', retry: true });
+      }
+    });
+    btnAsrRetry.addEventListener('click', () => {
+      if (speech.kind !== 'local') asrUI('Đang tải lại bộ nghe tiếng Việt… (vẫn chơi được bằng bộ nghe của trình duyệt)', { frac: 0 });
+      else asrUI('Đang tải lại bộ nghe tiếng Việt…', { frac: 0 });
+      localAsr.load();
+    });
+  } else if (webSpeech) {
+    useSpeech(webSpeech, 'webspeech');
+    if (ASR_PARAM !== 'webspeech') asrUI('Trình duyệt này chưa chạy được bộ nghe trên máy, dùng bộ nghe của trình duyệt (cần mạng).', { cls: 'error' });
+  }
+  if (speech) updateStartBtn();
 
   if (speech) {
     new VoiceControl({ game, speech, panel });
@@ -152,6 +248,8 @@ async function boot() {
   }
 
   function startRun() {
+    if (btnStart.disabled && !screens.start.hidden) return;
+    if (pendingUse && speech && !running()) { speech.use(...pendingUse); app.dataset.asr = pendingUse[1]; pendingUse = null; }
     screens.hideStart(); screens.hideResult(); screens.hideSpeechError();
     if (!canListen()) { showNoSpeech(); return; }
     game.toTitle();
@@ -162,7 +260,8 @@ async function boot() {
     game.start();
   }
   function toTitle() {
-    waitFor = null; speech && speech.stop();
+    waitFor = null; speech && speech.release();
+    if (pendingUse && speech) { speech.use(...pendingUse); app.dataset.asr = pendingUse[1]; pendingUse = null; updateStartBtn(); }
     screens.hideResult(); screens.hideSpeechError(); screens.showMicWait(false); screens.setPaused(false);
     panel.show(false); hud.show(false);
     if (game.paused) game.resume();
@@ -195,10 +294,18 @@ async function boot() {
   document.getElementById('btn-try-here').addEventListener('click', () => { forceTry = true; screens.hideNoSpeech(); startRun(); });
   document.getElementById('btn-reload').addEventListener('click', () => location.reload());
   document.getElementById('btn-continue').addEventListener('click', () => screens.hideError());
+  const licEl = document.getElementById('overlay-licenses');
+  document.getElementById('btn-licenses').addEventListener('click', () => { licEl.hidden = false; });
+  document.getElementById('btn-licenses-close').addEventListener('click', () => { licEl.hidden = true; });
 
   // ---- tab ẩn: tạm dừng
-  document.addEventListener('visibilitychange', () => { if (document.hidden && running()) game.pause('hidden'); });
-  window.addEventListener('pagehide', () => { if (running()) game.pause('hidden'); });
+  // bộ nghe cục bộ: trang ẩn thì trả micro hẳn (tắt đèn micro), bấm Chơi tiếp sẽ xin lại
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) return;
+    if (running()) game.pause('hidden');
+    if (speech && speech.kind === 'local') speech.release();
+  });
+  window.addEventListener('pagehide', () => { if (running()) game.pause('hidden'); if (speech) speech.release(); });
 
   window.addEventListener('resize', layout);
   window.addEventListener('orientationchange', () => setTimeout(layout, 120));
@@ -231,7 +338,7 @@ async function boot() {
 
   // cho B4 và kiểm thử
   window.game = game;
-  window.__choNoi = { game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support };
+  window.__choNoi = { game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support, localAsr, webSpeech, localSup };
 }
 
 boot().catch((e) => {

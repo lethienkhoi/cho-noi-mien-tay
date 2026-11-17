@@ -1,0 +1,41 @@
+{
+ "version": "6978ffd5e7be",
+ "files": [
+  {
+   "name": "chonoi-asr.js",
+   "size": 73966,
+   "sha256": "ea57acd80645656294f95a60c4ce15f331bd621174103f599cec931f0cd5dfd8"
+  },
+  {
+   "name": "chonoi-asr.wasm",
+   "size": 13739865,
+   "sha256": "391b1c432bc052814cd07449ec172749f1fa8dbfc5c2bf5b0474747d1ecafbb7"
+  },
+  {
+   "name": "encoder.int8.onnx",
+   "size": 70876129,
+   "sha256": "b3abdef7a660fea7faf5e076b3c7613b0fc98406707103784d018189bb522124"
+  },
+  {
+   "name": "decoder.onnx",
+   "size": 5165084,
+   "sha256": "d1d27cca84c824a8acf5ce6edf0f2c0880cfe295d2e69b95134de1707e1d9998"
+  },
+  {
+   "name": "joiner.int8.onnx",
+   "size": 1033417,
+   "sha256": "38ec49e1c18e4feb0cad4de13e25c83a866cf56f4a66f22e8ff579d591a69a46"
+  },
+  {
+   "name": "tokens.txt",
+   "size": 25847,
+   "sha256": "f536d03c2e95ebd2930cf0abec88e823bd17d3c1933da7ae6a82db3b80605e15"
+  },
+  {
+   "name": "bpe.vocab",
+   "size": 55006,
+   "sha256": "a0b4ecc182330110ab840bb9075fcc88d9a90493d889d418b158ea35b28c1c8c"
+  }
+ ],
+ "total": 90969314
+}
