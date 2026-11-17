@@ -72,7 +72,7 @@ export class Panel {
     this.el.classList.remove('is-passed'); this.el.classList.add('is-crash');
     this.bar.hidden = true; this.chips.hidden = true; this.title.hidden = false;
     this.setPhrase(p, Math.min(34, fontSizeFor(p.phienAm)));
-    this.heard.hidden = true;
+    this.heard.hidden = false; // giữ dòng máy nghe được để người chơi biết sai chỗ nào
   }
 
   // số chữ đầu câu đã đọc đúng

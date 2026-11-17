@@ -57,17 +57,16 @@ test('8. chữ chen giữa câu → không qua (phải liên tiếp)', () => {
   assert.equal(m('bún ờ riêu', 2).matched, false);
 });
 
-test('9. sai 1 ký tự (kể cả chữ dài) → không qua', () => {
-  assert.equal(m('rau muốm', 3).matched, false);        // muống → muốm
-  assert.equal(m('cơm tấm sường bì', 7).matched, false); // sườn → sường
-  assert.equal(wordDistance('sường', 'sườn'), Infinity);
+test('9. sai 1 ký tự: câu ngắn không qua, câu dài lệch một chữ thì qua', () => {
+  assert.equal(m('rau muốm', 3).matched, false);        // trung bình 0.75 < 0.8
+  assert.equal(m('cơm tấm sường bì', 7).matched, true);  // 1 chữ lệch trong 4 chữ
 });
 
-test('10. sai dấu thanh → không qua', () => {
-  assert.equal(m('sầu riếng', 4).matched, false);
-  assert.equal(m('cá rồ', 1).matched, false);
-  assert.equal(m('ca rô', 1).matched, false);
-  assert.equal(m('bánh tét lá cẫm', 6).matched, false);
+test('10. sai dấu thanh do máy nghe nhầm → vẫn qua; nhiều chữ sai dấu cùng lúc → không qua', () => {
+  assert.equal(m('sầu riếng', 4).matched, true);
+  assert.equal(m('cá rồ', 1).matched, true);
+  assert.equal(m('bánh tét lá cẫm', 6).matched, true);
+  assert.equal(m('ca ro', 1).matched, false);            // cả hai chữ đều sai dấu: trung bình 0.75
 });
 
 test('11. sai phụ âm đầu → không qua', () => {

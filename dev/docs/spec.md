@@ -63,3 +63,4 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 7. B7: thử trên iPhone và Android thật, tối ưu.
 
 - 2026-11-17 (Khôi thử iPhone, nhận giọng chậm): trả thời gian về 1,6s + 0,55s/chữ, giảm tới 60%; ân hạn 0,4s; thêm "chờ người đang đọc": đã đọc đúng ≥ nửa câu và vừa có chữ đúng mới trong 1s thì ghe hàng dừng sát mũi chờ thêm tối đa 1,2s.
+- 2026-11-17 (Khôi: máy nghe sai nhiều, thua liên tục): chấm theo điểm từng chữ — trùng 1; chỉ sai dấu thanh 0,75; sai 1 ký tự cùng phụ âm đầu 0,5; sai chữ 0. Qua khi không chữ nào 0 và trung bình ≥ 0,8. Lộn thứ tự, thiếu chữ, sai chữ vẫn không qua. Thưởng "Chuẩn miền Tây" chỉ khi trùng chính xác chữ phiên âm. Thêm khớp dự phòng trên cả phiên nhận giọng (iPhone viết lại kết quả tạm thời). Khi đụng, giữ dòng "Đang nghe" để thấy máy nghe được gì.
