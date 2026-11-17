@@ -1,6 +1,6 @@
 # Game chợ nổi miền Tây — đề bài và các quyết định đã duyệt
 
-Cập nhật: 2026-11-17. Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
+Cập nhật: 2026-11-17 (B4). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
 Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/lethienkhoi/cho-noi-mien-tay
 
 ## 1. Ý tưởng
@@ -18,8 +18,10 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 - Khung chữ: phiên âm to (âm bị đổi tô đỏ) + chính tả nhỏ trong ngoặc, ví dụ "Búng giêu (Bún riêu)". Không hiện câu kế tiếp.
 
 ## 3. Cách chấm
-- Qua ghe = đọc kịp và đủ câu; khớp dạng chính tả HOẶC dạng phiên âm đều tính (máy nhận giọng hay tự sửa về chính tả).
-- Thưởng "Chuẩn miền Tây" khi máy nghe ra đúng dạng phiên âm.
+- Qua ghe = đọc kịp và đủ câu, đúng thứ tự; khớp dạng chính tả HOẶC dạng phiên âm đều tính (máy nhận giọng hay tự sửa về chính tả). Ở mỗi vị trí, chữ nghe được khớp chữ chính tả hoặc chữ phiên âm cùng vị trí đều được (đọc trộn vẫn qua).
+- Khớp CHÍNH XÁC từng chữ (sau chuẩn hoá NFC, chữ thường, bỏ dấu câu), không dung sai: đọc lộn thứ tự, thiếu chữ, sai dấu thanh, sai chữ → không qua, hết giờ là đụng (Khôi chốt 2026-11-17). Chữ thừa trước/sau câu thì vẫn được.
+- Chỉ tính chữ nghe được sau khi ghe hiện tại bắt đầu; chấm trên kết quả tạm thời để nhảy ngay khi đọc xong.
+- Thưởng "Chuẩn miền Tây" khi máy nghe ra dạng phiên âm ở ít nhất một chữ có đổi âm.
 - Điểm: hiện tạm qua ghe +1, chuẩn miền Tây +2. (CHỜ KHÔI CHỐT)
 
 ## 4. Kỷ lục và lên đời
@@ -38,7 +40,11 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 
 ## 6. Kỹ thuật
 - Web tĩnh, JS thuần, không build; hình SVG xuất sẵn, vẽ bằng Canvas 2D; chữ và giao diện bằng HTML.
-- Giọng nói 3 tầng: (1) nhận giọng có sẵn của trình duyệt → (2) model tiếng Việt chạy trên máy khi trình duyệt không hỗ trợ → (3) chế độ chạm khi người chơi từ chối micro.
+- Giọng nói: nhận giọng có sẵn của trình duyệt (Web Speech API, vi-VN) — Chrome Android, Safari iPhone (iOS 14.5+). Cần mạng.
+- BỎ HẲN điều khiển chạm và chế độ dự phòng bằng chạm (Khôi 2026-11-17: "chưa nhận mic đọc không được, bỏ cái bấm tay vô nhảy"). Chạm chỉ dùng cho nút.
+- Trình duyệt không nghe được (Firefox, trình duyệt trong app Zalo/Facebook/Messenger…): báo sớm, hướng dẫn mở bằng Chrome/Safari, nút Sao chép link. Từ chối micro / mất mạng: màn hướng dẫn + nút Thử lại.
+- Model tiếng Việt chạy trên máy (không cần mạng): chưa làm, để sau nếu cần.
+- Code: `src/speech/` (matcher.js chấm, recognizer.js nhận giọng, voice.js nối với game). Test: `node --test dev/tests/`, `python3 dev/tools/qa_b4.py`.
 - Tiếng chửi: file âm thanh thu sẵn (giọng AI hoặc Khôi thu).
 - Đưa lên GitHub Pages (https) để micro chạy được trên điện thoại.
 
@@ -46,7 +52,7 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 1. Duyệt chữ — XONG.
 2. Duyệt keyframe — XONG.
 3. B3: khung game + vòng chơi lõi, điều khiển tạm bằng chạm — XONG, đã lên link chơi.
-4. B4: giọng nói 3 tầng + bộ chấm.
+4. B4: nhận giọng nói + bộ chấm, bỏ điều khiển chạm — XONG (chờ thử trên điện thoại thật).
 5. B5: hiệu ứng nhảy, cảnh đụng, bong bóng chửi, âm thanh.
 6. B6: độ khó theo level, điểm, kỷ lục, hiệu ứng lên đời 6 cấp.
 7. B7: thử trên iPhone và Android thật, tối ưu.

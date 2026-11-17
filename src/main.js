@@ -7,6 +7,8 @@ import { Renderer } from './game/renderer.js';
 import { Hud } from './ui/hud.js';
 import { Panel } from './ui/panel.js';
 import { Screens } from './ui/screens.js';
+import { SpeechInput, speechSupport } from './speech/recognizer.js';
+import { VoiceControl } from './speech/voice.js';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
@@ -92,31 +94,92 @@ async function boot() {
     screens.showResult(e.detail, man.vehicles, (n) => assets.url(n));
   });
   game.addEventListener('state', (e) => { app.dataset.state = e.detail.state; });
-  game.addEventListener('pause', (e) => screens.setPaused(e.detail.paused && e.detail.reason !== 'qa'));
+  game.addEventListener('pause', (e) => {
+    const { paused, reason } = e.detail;
+    screens.setPaused(paused && reason !== 'qa' && reason !== 'speech');
+    if (paused) { speech && speech.stop(); panel.setMic('off'); }
+  });
+
+  // ---- giọng nói (B4). Không có điều khiển chạm: chạm chỉ dùng cho nút.
+  const support = speechSupport();
+  const pageUrl = location.href.split('#')[0];
+  const speech = support.api && support.secure ? new SpeechInput({ Ctor: support.Ctor, lang: 'vi-VN' }) : null;
+  let waitFor = null;           // 'start' | 'resume': đang chờ micro mở để bắt đầu / chơi tiếp
+  let forceTry = false;         // bấm "Vẫn thử ở đây" trong trình duyệt của app
+  const canListen = () => speech && (!support.inApp || forceTry);
+
+  if (speech) {
+    new VoiceControl({ game, speech, panel });
+    speech.addEventListener('listening', () => {
+      panel.setMic('on');
+      const w = waitFor; waitFor = null;
+      screens.showMicWait(false);
+      if (w === 'start') beginRun();
+      else if (w === 'resume') game.resume();
+    });
+    speech.addEventListener('activity', (e) => panel.setActivity(e.detail.on));
+    speech.addEventListener('error', (e) => onSpeechError(e.detail.code));
+  }
+
+  function onSpeechError(code) {
+    console.info('[cho-noi] speech:', code);
+    panel.setMic('off');
+    screens.showMicWait(false);
+    if (running()) { game.pause('speech'); waitFor = 'resume'; }
+    else if (waitFor !== 'start') { if (game.state !== 'title') return; waitFor = 'start'; } // lỗi lúc không chơi: bỏ qua
+    screens.showSpeechError(code, support);
+  }
+
+  // mở micro (trong click) rồi chờ 'listening'
+  function listen(kind) {
+    waitFor = kind;
+    panel.setMic('wait');
+    screens.showMicWait(kind === 'start');
+    speech.start({ gesture: true });
+  }
 
   function startRun() {
-    screens.hideStart(); screens.hideResult();
+    screens.hideStart(); screens.hideResult(); screens.hideSpeechError();
+    if (!canListen()) { showNoSpeech(); return; }
+    game.toTitle();
+    listen('start');
+  }
+  function beginRun() {
     hud.show(true); panel.show(true);
     game.start();
   }
   function toTitle() {
-    screens.hideResult(); panel.show(false); hud.show(false);
+    waitFor = null; speech && speech.stop();
+    screens.hideResult(); screens.hideSpeechError(); screens.showMicWait(false); screens.setPaused(false);
+    panel.show(false); hud.show(false);
+    if (game.paused) game.resume();
     game.toTitle();
-    screens.showStart(game.best);
+    if (canListen()) screens.showStart(game.best); else showNoSpeech();
+  }
+  function showNoSpeech() { hud.show(false); panel.show(false); screens.showNoSpeech(support, pageUrl); }
+  function resumeRun() {
+    if (!screens.rotateEl.hidden) return;
+    screens.setPaused(false);
+    listen('resume');
   }
 
-  // ---- điều khiển tạm (B3): chạm = đọc đúng. B4 thay bằng game.onPhraseMatched(roundId, {dialect}).
-  app.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('button') || game.paused) return;
-    if (game.state === 'playing') { e.preventDefault(); game.tap(); }
-  });
-  window.addEventListener('keydown', (e) => {
-    if ((e.code === 'Space' || e.code === 'Enter') && game.state === 'playing' && !game.paused) { e.preventDefault(); game.tap(); }
-  });
+  game.addEventListener('crash', () => { speech && speech.stop(); panel.setMic('off'); });
+  game.addEventListener('over', () => { speech && speech.stop(); });
+
   document.getElementById('btn-start').addEventListener('click', startRun);
   document.getElementById('btn-again').addEventListener('click', startRun);
   document.getElementById('btn-home').addEventListener('click', toTitle);
-  document.getElementById('btn-resume').addEventListener('click', () => { if (!screens.rotateEl.hidden) return; game.resume(); });
+  document.getElementById('btn-resume').addEventListener('click', resumeRun);
+  document.getElementById('btn-mic-cancel').addEventListener('click', toTitle);
+  document.getElementById('btn-speech-home').addEventListener('click', toTitle);
+  document.getElementById('btn-speech-retry').addEventListener('click', () => {
+    screens.hideSpeechError();
+    if (waitFor === 'resume' && game.paused) listen('resume');
+    else startRun();
+  });
+  const btnCopy = document.getElementById('btn-copy-link');
+  btnCopy.addEventListener('click', () => screens.copyLink(pageUrl, btnCopy));
+  document.getElementById('btn-try-here').addEventListener('click', () => { forceTry = true; screens.hideNoSpeech(); startRun(); });
   document.getElementById('btn-reload').addEventListener('click', () => location.reload());
   document.getElementById('btn-continue').addEventListener('click', () => screens.hideError());
 
@@ -145,7 +208,7 @@ async function boot() {
 
   screens.setLoading(null);
   app.classList.remove('is-loading');
-  screens.showStart(game.best);
+  if (canListen()) screens.showStart(game.best); else showNoSpeech();
   app.dataset.state = 'title';
 
   if (failed.length) {
@@ -155,7 +218,7 @@ async function boot() {
 
   // cho B4 và kiểm thử
   window.game = game;
-  window.__choNoi = { game, renderer, assets, panel, hud, screens, startRun, toTitle };
+  window.__choNoi = { game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support };
 }
 
 boot().catch((e) => {

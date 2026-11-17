@@ -1,4 +1,4 @@
-// Màn bắt đầu, bảng kết quả, lớp phủ (tạm dừng, xoay màn, đang tải, lỗi).
+// Màn bắt đầu, bảng kết quả, lớp phủ (tạm dừng, xoay màn, đang tải, lỗi, micro/giọng nói).
 const STEP_NAMES = ['Ghe chèo', 'Cano máy', 'Vê Ép 5', 'Du thuyền', 'Máy bay', 'Tàu vũ trụ'];
 
 export class Screens {
@@ -15,6 +15,77 @@ export class Screens {
       tier: q('#res-tier'), steps: q('#res-steps'),
     };
     this.errorMsg = q('#error-msg');
+    this.micEl = q('#overlay-mic'); this.speechEl = q('#overlay-speech'); this.noSpeechEl = q('#screen-nospeech');
+  }
+
+  // ---------------------------------------------------------------- micro / giọng nói (B4)
+  showMicWait(on) { this.micEl.hidden = !on; }
+
+  // code: denied | need-tap | network | audio-capture | unsupported-lang | stuck | start-failed
+  showSpeechError(code, sup = {}) {
+    const q = (s) => this.speechEl.querySelector(s);
+    const T = SPEECH_ERRORS[code] || SPEECH_ERRORS['start-failed'];
+    q('#speech-title').textContent = T.title;
+    q('#speech-lead').textContent = T.lead;
+    const howto = q('#speech-howto');
+    howto.textContent = '';
+    let blocks = T.howto || [];
+    if (code === 'denied') blocks = sup.android ? [HOW_ANDROID, HOW_IOS] : [HOW_IOS, HOW_ANDROID];
+    for (const b of blocks) howto.appendChild(howtoBlock(b));
+    howto.hidden = !blocks.length;
+    q('#btn-speech-retry').textContent = T.retry || 'Thử lại';
+    this.speechEl.hidden = false;
+  }
+  hideSpeechError() { this.speechEl.hidden = true; }
+
+  // trình duyệt không nghe được giọng nói: báo sớm thay cho màn bắt đầu
+  showNoSpeech(sup, url) {
+    const q = (s) => this.noSpeechEl.querySelector(s);
+    let lead, blocks;
+    if (!sup.secure) {
+      q('#nospeech-title').textContent = 'Cần mở bằng link https';
+      lead = 'Micro chỉ chạy khi trang mở bằng link an toàn (https). Mở đúng link game bên dưới bằng Chrome hoặc Safari.';
+      blocks = [];
+    } else if (sup.inApp) {
+      lead = `Đang mở trong ${sup.inApp}, trình duyệt trong app thường không cho nghe micro. Mở link bằng ${sup.ios ? 'Safari' : 'Chrome'} để chơi.`;
+      blocks = [sup.ios ? HOW_INAPP_IOS : HOW_INAPP_ANDROID];
+    } else {
+      lead = 'Mở link game bằng Chrome (điện thoại Android) hoặc Safari (iPhone) để chơi.';
+      blocks = [HOW_OPEN];
+    }
+    q('#nospeech-lead').textContent = lead;
+    const howto = q('#nospeech-howto');
+    howto.textContent = '';
+    for (const b of blocks) howto.appendChild(howtoBlock(b));
+    howto.hidden = !blocks.length;
+    // nút Mở bằng Chrome: chỉ Android trong app (intent://)
+    const a = q('#btn-open-chrome');
+    if (sup.android && sup.inApp) {
+      const u = new URL(url);
+      a.href = `intent://${u.host}${u.pathname}${u.search}#Intent;scheme=https;package=com.android.chrome;end`;
+      a.hidden = false;
+    } else a.hidden = true;
+    q('#btn-try-here').hidden = !(sup.api && sup.inApp && sup.secure);
+    q('#link-box').value = url;
+    this.noSpeechEl.hidden = false; this.start.hidden = true;
+  }
+  hideNoSpeech() { this.noSpeechEl.hidden = true; }
+
+  // gọi trong click: chép link, không được thì hiện ô link để tự chép
+  copyLink(url, btn) {
+    const box = this.noSpeechEl.querySelector('#link-box');
+    const fallback = () => {
+      box.hidden = false; box.value = url;
+      try { box.focus(); box.select(); box.setSelectionRange(0, url.length); } catch (e) { /* bỏ qua */ }
+      btn.textContent = 'Giữ vào ô link để chép';
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => { btn.textContent = 'Đã chép link'; }, fallback);
+        return;
+      }
+    } catch (e) { /* rơi xuống dự phòng */ }
+    fallback();
   }
 
   showStart(best) { this.startBest.textContent = best; this.start.hidden = false; this.result.hidden = true; }
@@ -53,3 +124,46 @@ export class Screens {
   }
   hideError() { this.errorEl.hidden = true; }
 }
+
+// ---------------------------------------------------------------- chữ hướng dẫn
+function howtoBlock({ head, steps }) {
+  const d = document.createElement('div'); d.className = 'howto-block';
+  const h = document.createElement('div'); h.className = 'howto-head'; h.textContent = head; d.appendChild(h);
+  const ol = document.createElement('ol');
+  for (const s of steps) { const li = document.createElement('li'); li.textContent = s; ol.appendChild(li); }
+  d.appendChild(ol);
+  return d;
+}
+
+const HOW_IOS = { head: 'iPhone (Safari)', steps: [
+  'Bấm biểu tượng "aA" trên thanh địa chỉ > Cài đặt trang web > Micro > Cho phép.',
+  'Hoặc: Cài đặt > Safari > Micro > Cho phép.',
+  'Cần bật Đọc chính tả: Cài đặt > Cài đặt chung > Bàn phím > Đọc chính tả.',
+] };
+const HOW_ANDROID = { head: 'Android (Chrome)', steps: [
+  'Bấm biểu tượng ổ khoá (hoặc biểu tượng cài đặt) cạnh địa chỉ trang.',
+  'Chọn Quyền > Micro > Cho phép.',
+] };
+const HOW_INAPP_IOS = { head: 'Mở bằng Safari', steps: [
+  'Bấm Sao chép link bên dưới.',
+  'Mở Safari, dán link vào thanh địa chỉ.',
+  'Hoặc bấm nút ⋯ / chia sẻ ở góc màn hình > Mở bằng trình duyệt.',
+] };
+const HOW_INAPP_ANDROID = { head: 'Mở bằng Chrome', steps: [
+  'Bấm Mở bằng Chrome, hoặc nút ⋮ ở góc trên > Mở bằng trình duyệt.',
+  'Không được thì Sao chép link rồi dán vào Chrome.',
+] };
+const HOW_OPEN = { head: 'Cách mở', steps: [
+  'Bấm Sao chép link.',
+  'Mở Chrome (Android) hoặc Safari (iPhone), dán link vào thanh địa chỉ.',
+] };
+
+const SPEECH_ERRORS = {
+  denied: { title: 'Micro đang bị tắt', lead: 'Game cần micro để nghe đọc. Bật lại quyền micro cho trang này rồi bấm Thử lại.' },
+  'need-tap': { title: 'Micro vừa tắt', lead: 'Điện thoại vừa ngắt micro. Bấm Nghe tiếp để mở lại.', retry: 'Nghe tiếp' },
+  network: { title: 'Cần mạng để nhận giọng', lead: 'Máy nhận giọng của trình duyệt cần mạng. Kiểm tra wifi hoặc 4G rồi bấm Thử lại.' },
+  'audio-capture': { title: 'Không thấy micro', lead: 'Kiểm tra micro, hoặc tắt app khác đang dùng micro (gọi điện, ghi âm) rồi bấm Thử lại.' },
+  'unsupported-lang': { title: 'Chưa nghe được tiếng Việt', lead: 'Trình duyệt này chưa nhận giọng tiếng Việt. Mở bằng Chrome (Android) hoặc Safari (iPhone) bản mới.' },
+  stuck: { title: 'Micro chưa chạy ổn', lead: 'Micro mở lên rồi tắt liên tục. Bấm Thử lại, hoặc tải lại trang.' },
+  'start-failed': { title: 'Chưa mở được micro', lead: 'Có lỗi khi mở micro. Bấm Thử lại, hoặc tải lại trang.' },
+};

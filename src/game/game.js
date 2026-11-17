@@ -1,5 +1,5 @@
 // Vòng chơi lõi: trạng thái, ghe hàng, nhảy, đụng, điểm. Không vẽ gì ở đây (xem renderer.js).
-// API cho B4 (giọng nói): game.onPhraseMatched(roundId, { dialect: boolean })
+// API giọng nói (B4): game.onPhraseMatched(roundId, { dialect: boolean }). Không có điều khiển chạm.
 // Sự kiện (game.addEventListener): state, round, matched, landed, tier, crash, over, pause.
 import { CONFIG } from '../config.js';
 import { PhrasePicker, roundTime, levelForPasses } from './phrases.js';
@@ -77,7 +77,7 @@ export class Game extends EventTarget {
     this.dispatchEvent(new CustomEvent('round', { detail: { ...this.round } }));
   }
 
-  // Thay cho chạm ở B4. Trả true nếu được nhận.
+  // Gọi từ bộ nhận giọng (src/speech/voice.js) khi đọc khớp câu. Trả true nếu được nhận.
   onPhraseMatched(roundId, { dialect = false } = {}) {
     if (this.state !== 'playing' || this.paused || !this.round || roundId !== this.round.id) return false;
     const gained = CONFIG.SCORE_PASS + (dialect ? CONFIG.SCORE_DIALECT_BONUS : 0);
@@ -88,12 +88,6 @@ export class Game extends EventTarget {
     this.setState('jumping');
     this.dispatchEvent(new CustomEvent('matched', { detail: { roundId, dialect, gained, phrase: this.round.phrase, score: this.score, passed: this.passed } }));
     return true;
-  }
-
-  // điều khiển tạm B3: chạm = đọc đúng
-  tap() {
-    if (this.state === 'playing' && this.round) return this.onPhraseMatched(this.round.id, { dialect: false });
-    return false;
   }
 
   get H() { return this.viewH - this.insetBottom; } // mốc đáy để đặt cảnh (trừ vùng an toàn)
