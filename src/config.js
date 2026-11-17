@@ -4,15 +4,14 @@ export const CONFIG = {
   // T = max(SÀN, (TIME_BASE + TIME_PER_WORD x số chữ) x hệ số giảm theo số ghe đã qua).
   // T là thời gian thanh đỏ chạy hết = lúc ghe hàng tới SÁT MŨI ghe mình. Sau đó còn TIME_GRACE ân hạn
   // (ghe hàng nhích nốt khoảng cách cuối) rồi mới đụng: đọc khớp trong ân hạn vẫn nhảy.
-  // 2026-11-17: Khôi yêu cầu trả thời gian về như cũ (nhận giọng trên máy thật bị chậm): 1,6s + 0,55s/chữ, giảm dần tới 60%,
-  // không thấp hơn sàn 1,6s + 0,22s/chữ; ân hạn 0,4s.
-  // Ví dụ (chưa tính ân hạn): câu 2 chữ 2,7s -> 2,04s; câu 6 chữ 4,9s -> 2,94s; câu 15 chữ 9,85s -> 5,91s.
-  TIME_BASE: 1.6,           // giây, lúc mới vào
-  TIME_PER_WORD: 0.55,      // giây cho mỗi chữ (âm tiết) của câu phiên âm, lúc mới vào
-  TIME_DECAY_PER_PASS: 0.012, // mỗi ghe qua được, thời gian còn (1 - n*decay)
-  TIME_MIN_FACTOR: 0.6,     // không nhanh hơn 60% thời gian gốc (khoảng sau 33 ghe)
-  TIME_FLOOR_BASE: 1.6,     // SÀN cứng: không dưới 1,6s + 0,22s/chữ ở cấp cao nhất
-  TIME_FLOOR_PER_WORD: 0.22,
+  // 2026-11-17 (lần 2): Khôi thấy vẫn nhanh -> 2,6s + 0,8s/chữ, giảm 1%/ghe tới 70%, sàn 2,2s + 0,35s/chữ; ân hạn 0,4s.
+  // Ví dụ (chưa tính ân hạn): câu 2 chữ 4,2s -> 2,9s; câu 6 chữ 7,4s -> 5,2s; câu 15 chữ 14,6s -> 10,2s.
+  TIME_BASE: 2.6,           // giây, lúc mới vào
+  TIME_PER_WORD: 0.8,      // giây cho mỗi chữ (âm tiết) của câu phiên âm, lúc mới vào
+  TIME_DECAY_PER_PASS: 0.01, // mỗi ghe qua được, thời gian còn (1 - n*decay)
+  TIME_MIN_FACTOR: 0.7,     // không nhanh hơn 70% thời gian gốc (sau 30 ghe)
+  TIME_FLOOR_BASE: 2.2,     // SÀN cứng: không dưới 2,2s + 0,35s/chữ
+  TIME_FLOOR_PER_WORD: 0.35,
   // Chờ người đang đọc (máy nghe iPhone trả chữ trễ): ghe hàng dừng sát mũi tối đa HOLD_MAX giây
   // nếu đã đọc đúng >= HOLD_MIN_FRAC số chữ và vừa có chữ đúng mới trong HOLD_FRESH giây.
   HOLD_MAX: 1.2,
