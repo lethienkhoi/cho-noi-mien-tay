@@ -1,5 +1,5 @@
 // HUD trên cùng: Điểm, Kỷ lục, nhãn phương tiện (giống pv1).
-import { CONFIG } from '../config.js';
+import { CONFIG } from '../config.js?v=69dfb0d0';
 
 const pad2 = (n) => String(n).padStart(2, '0');
 

@@ -23,3 +23,7 @@ Chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/
 - `dev/design/gen4.py`, `dev/tools/`: code vẽ và xuất hình.
 
 made by Khoi M1nhon
+
+## Trước khi đẩy lên
+
+Chạy `python3 dev/tools/stamp_version.py` để gắn mã phiên bản vào đường dẫn code, tránh điện thoại trộn file cũ (bộ nhớ đệm 10 phút của GitHub Pages) với file mới.

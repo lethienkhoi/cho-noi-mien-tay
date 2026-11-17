@@ -1,5 +1,5 @@
 // Kỷ lục lưu trên máy. localStorage có thể bị chặn (Safari riêng tư, iframe, cookie tắt) -> giữ trong bộ nhớ.
-import { CONFIG } from '../config.js';
+import { CONFIG } from '../config.js?v=69dfb0d0';
 
 let memBest = 0;
 let usable = null;

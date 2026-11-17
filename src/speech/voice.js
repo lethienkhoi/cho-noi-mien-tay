@@ -1,6 +1,6 @@
 // Nối bộ nhận giọng với vòng chơi: mỗi câu mới đặt con trỏ transcript, chấm trên kết quả tạm thời,
 // khớp là gọi game.onPhraseMatched(roundId, {dialect}) ngay (không chờ kết quả cuối).
-import { TranscriptCursor, matchPhrase, matchProgress } from './matcher.js';
+import { TranscriptCursor, matchPhrase, matchProgress } from './matcher.js?v=69dfb0d0';
 
 export class VoiceControl {
   constructor({ game, speech, panel }) {

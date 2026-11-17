@@ -1,16 +1,16 @@
 // Khởi động game: nạp dữ liệu + sprite, nối Game <-> Renderer <-> UI, vòng lặp requestAnimationFrame.
 // Mọi đường dẫn đều tương đối để chạy được trong thư mục con của GitHub Pages.
-import { CONFIG } from './config.js';
-import { Assets } from './game/assets.js';
-import { Game } from './game/game.js';
-import { Renderer } from './game/renderer.js';
-import { Hud } from './ui/hud.js';
-import { Panel } from './ui/panel.js';
-import { Screens } from './ui/screens.js';
-import { SpeechInput, speechSupport } from './speech/recognizer.js';
-import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js';
-import { VoiceControl } from './speech/voice.js';
-import { playTaunt } from './game/sfx.js';
+import { CONFIG } from './config.js?v=69dfb0d0';
+import { Assets } from './game/assets.js?v=69dfb0d0';
+import { Game } from './game/game.js?v=69dfb0d0';
+import { Renderer } from './game/renderer.js?v=69dfb0d0';
+import { Hud } from './ui/hud.js?v=69dfb0d0';
+import { Panel } from './ui/panel.js?v=69dfb0d0';
+import { Screens } from './ui/screens.js?v=69dfb0d0';
+import { SpeechInput, speechSupport } from './speech/recognizer.js?v=69dfb0d0';
+import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=69dfb0d0';
+import { VoiceControl } from './speech/voice.js?v=69dfb0d0';
+import { playTaunt } from './game/sfx.js?v=69dfb0d0';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
