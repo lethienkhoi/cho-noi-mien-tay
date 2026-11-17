@@ -31,7 +31,8 @@ export class PhrasePicker {
     const have = this.list.filter((p) => p.level <= want).map((p) => p.level);
     if (have.length) want = Math.max(...have);
     let pool = this.list.filter((p) => p.level === want && !this.recent.includes(p.id));
-    if (!pool.length) pool = this.list.filter((p) => p.level <= lv && !this.recent.includes(p.id));
+    // hết câu mới ở mức này -> lùi dần xuống mức sát dưới (không rơi thẳng về câu dễ)
+    for (let l = want - 1; !pool.length && l >= 1; l--) pool = this.list.filter((p) => p.level === l && !this.recent.includes(p.id));
     if (!pool.length) pool = this.list.slice();
     const p = pool[Math.floor(this.rnd() * pool.length)];
     this.recent.push(p.id);

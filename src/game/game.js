@@ -107,7 +107,7 @@ export class Game extends EventTarget {
     do { vendor = this.vendors[Math.floor(this.rnd() * this.vendors.length)]; } while (vendor === this.lastVendor && this.vendors.length > 1);
     this.lastVendor = vendor;
     const T = roundTime(phrase, this.passed);
-    this.round = { id: ++this.roundSeq, phrase, T, grace: CONFIG.TIME_GRACE, t: 0, level: levelForPasses(this.passed) };
+    this.round = { id: ++this.roundSeq, phrase, T, grace: CONFIG.TIME_GRACE, t: 0, level: levelForPasses(this.passed), hold: 0, partialK: 0, partialAt: -1 };
     const key = this.manifest.stallMap[phrase.stall] || 'stall_fruit';
     const s = this.stallScale(key);
     this.stall = { key, vendor, face: 'normal', p: 0, x: 0, y: this.laneY, s, rot: 0, phase: this.rnd() * 6 };
@@ -137,6 +137,13 @@ export class Game extends EventTarget {
   }
 
   // Gọi từ bộ nhận giọng (src/speech/voice.js) khi đọc khớp câu. Trả true nếu được nhận (kể cả trong ân hạn).
+  // Giọng nói báo tiến độ: đã đọc đúng k chữ đầu của câu (k tăng thì ghi lại thời điểm).
+  notePartial(roundId, k) {
+    const r = this.round;
+    if (!r || r.id !== roundId || this.state !== 'playing') return;
+    if (k > r.partialK) { r.partialK = k; r.partialAt = this.time; }
+  }
+
   onPhraseMatched(roundId, { dialect = false } = {}) {
     if (this.state !== 'playing' || this.paused || !this.round || roundId !== this.round.id) return false;
     const gained = CONFIG.SCORE_PASS + (dialect ? CONFIG.SCORE_DIALECT_BONUS : 0);
@@ -185,7 +192,12 @@ export class Game extends EventTarget {
 
     if (this.state === 'playing') {
       const r = this.round;
-      r.t += dt;
+      // Đang đọc đúng dần mà máy nghe (iPhone) trả chữ chậm: trong lúc ân hạn, ghe hàng dừng sát mũi chờ thêm
+      // tối đa HOLD_MAX giây, chỉ khi đã đọc đúng ≥ HOLD_MIN_FRAC số chữ và vừa có chữ mới trong HOLD_FRESH giây.
+      const words = r.phrase.phienAm.trim().split(/\s+/).length;
+      const holding = r.t >= r.T && r.hold < CONFIG.HOLD_MAX && r.partialK >= Math.ceil(words * CONFIG.HOLD_MIN_FRAC)
+        && this.time - r.partialAt < CONFIG.HOLD_FRESH;
+      if (holding) r.hold += dt; else r.t += dt;
       this.placeStall();
       if (r.t / r.T >= CONFIG.SHOCK_AT && this.stall.face === 'normal') this.stall.face = 'shock';
       if (r.t >= r.T + r.grace) this.doCrash();

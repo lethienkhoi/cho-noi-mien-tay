@@ -13,6 +13,11 @@ export const CONFIG = {
   TIME_MIN_FACTOR: 0.6,     // không nhanh hơn 60% thời gian gốc (khoảng sau 33 ghe)
   TIME_FLOOR_BASE: 1.6,     // SÀN cứng: không dưới 1,6s + 0,22s/chữ ở cấp cao nhất
   TIME_FLOOR_PER_WORD: 0.22,
+  // Chờ người đang đọc (máy nghe iPhone trả chữ trễ): ghe hàng dừng sát mũi tối đa HOLD_MAX giây
+  // nếu đã đọc đúng >= HOLD_MIN_FRAC số chữ và vừa có chữ đúng mới trong HOLD_FRESH giây.
+  HOLD_MAX: 1.2,
+  HOLD_MIN_FRAC: 0.5,
+  HOLD_FRESH: 1.0,
   TIME_GRACE: 0.4,         // giây ân hạn sau khi thanh thời gian hết, trước khi hai ghe chạm
 
   // ---- level câu theo số ghe đã qua: qua >= mốc thì mở level kế (level 5 chưa có câu -> lấy level cao nhất có sẵn)

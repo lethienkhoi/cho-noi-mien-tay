@@ -129,7 +129,7 @@ def run_vp(b, w, h):
     G = geom(pg)
     ok(G['lane'] + 14 < G['uiBottom'], f'câu dài: khung chữ (y={G["uiBottom"]:.0f}) không đè làn (y={G["lane"]:.0f})')
     lvl = ev(pg, '[0,2,3,6,7,12,13,19,20,30].map((n) => [n, game.picker.pick(n).level])')
-    ok(all(l <= 4 for _, l in lvl), f'mức 5 chưa có câu → vẫn chọn được ({lvl})')
+    ok(all(l >= 1 for _, l in lvl) and any(l == 5 for _, l in lvl), f'chọn được câu mọi mức, có mức 5 ({lvl})')
     thaw(pg)
     # ---- 6. thua không phá kỷ lục: bảng kết quả có mặt mếu
     wait_state(pg, 'over', 15000); pg.wait_for_timeout(400)

@@ -61,3 +61,5 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
    - Mức câu theo số ghe đã qua: 0–2 mức 1, 3–6 mức 2, 7–12 mức 3, 13–19 mức 4, 20+ mức 5 (chưa có câu mức 5 → lấy mức cao nhất có sẵn). 20% lấy câu mức thấp hơn cho đỡ ngộp. (Tính theo số ghe qua, không theo điểm, vì điểm có thưởng +2 làm mức nhảy quá nhanh — CHỜ KHÔI CHỐT.)
 6. B6: độ khó theo level, điểm, kỷ lục, hiệu ứng lên đời 6 cấp.
 7. B7: thử trên iPhone và Android thật, tối ưu.
+
+- 2026-11-17 (Khôi thử iPhone, nhận giọng chậm): trả thời gian về 1,6s + 0,55s/chữ, giảm tới 60%; ân hạn 0,4s; thêm "chờ người đang đọc": đã đọc đúng ≥ nửa câu và vừa có chữ đúng mới trong 1s thì ghe hàng dừng sát mũi chờ thêm tối đa 1,2s.

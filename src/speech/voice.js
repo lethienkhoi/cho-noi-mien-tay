@@ -31,6 +31,8 @@ export class VoiceControl {
       this.done = g.onPhraseMatched(this.roundId, { dialect: m.dialect });
       return;
     }
-    this.panel.setProgress(matchProgress(words, this.phrase));
+    const k = matchProgress(words, this.phrase);
+    this.panel.setProgress(k);
+    if (g.notePartial) g.notePartial(this.roundId, k);
   }
 }
