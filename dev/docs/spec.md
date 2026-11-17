@@ -13,7 +13,7 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 - Chạy trên điện thoại iOS và Android, trình duyệt, màn dọc.
 
 ## 2. Nội dung chữ
-- Nguồn duy nhất: `data/phrases.json` — 18 câu, 4 mức khó; câu chửi khi bị nhảy qua và khi đụng; danh sách 6 phương tiện.
+- Nguồn duy nhất: `data/phrases.json` — 27 câu, 5 mức khó (câu 19–27 lẹo lưỡi, duyệt 2026-11-17); câu chửi khi bị nhảy qua và khi đụng; danh sách 6 phương tiện.
 - Quy tắc phiên âm: r→g, v→d, đuôi -n→-ng, đuôi -t→-c, qu→w, về→dìa, rồi→gồi.
 - Khung chữ: phiên âm to (âm bị đổi tô đỏ) + chính tả nhỏ trong ngoặc, ví dụ "Búng giêu (Bún riêu)". Không hiện câu kế tiếp.
 

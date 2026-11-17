@@ -1,25 +1,250 @@
 {
-  "_note": "ĐÃ DUYỆT 2026-11-13. chinhTa = chữ đúng chính tả, phienAm = chữ phiên âm giọng miền Tây (hiện to để đọc theo). level: 1 dễ, 2 vừa, 3 khó, 4 rất khó.",
+  "_note": "ĐÃ DUYỆT 2026-11-13. chinhTa = chữ đúng chính tả, phienAm = chữ phiên âm giọng miền Tây (hiện to để đọc theo). level: 1 dễ, 2 vừa, 3 khó, 4 rất khó, 5 siêu khó.",
   "rules": "r→g, v→d, đuôi -n→-ng, đuôi -t→-c, qu→w, về→dìa, rồi→gồi",
   "phrases": [
-    {"id": 1,  "stall": "ca-dong",  "stallName": "Ghe cá đồng",  "icon": "Con cá rô",              "chinhTa": "Cá rô", "phienAm": "Cá gô", "level": 1},
-    {"id": 2,  "stall": "bun-rieu", "stallName": "Ghe bún riêu", "icon": "Tô bún riêu",            "chinhTa": "Bún riêu", "phienAm": "Búng giêu", "level": 1},
-    {"id": 3,  "stall": "rau",      "stallName": "Ghe rau",      "icon": "Bó rau muống",           "chinhTa": "Rau muống", "phienAm": "Gau muốn", "level": 1},
-    {"id": 4,  "stall": "trai-cay", "stallName": "Ghe trái cây", "icon": "Trái sầu riêng",         "chinhTa": "Sầu riêng", "phienAm": "Sầu giêng", "level": 1},
-    {"id": 5,  "stall": "nuoc",     "stallName": "Ghe nước",     "icon": "Ly nước mía",            "chinhTa": "Nước mía rẻ rề", "phienAm": "Nước mía gẻ gề", "level": 1},
-    {"id": 6,  "stall": "banh",     "stallName": "Ghe bánh",     "icon": "Đòn bánh tét",           "chinhTa": "Bánh tét lá cẩm", "phienAm": "Bánh téc lá cẩm", "level": 2},
-    {"id": 7,  "stall": "com-tam",  "stallName": "Ghe cơm tấm",  "icon": "Dĩa cơm sườn",           "chinhTa": "Cơm tấm sườn bì", "phienAm": "Cơm tấm sừng bì", "level": 2},
-    {"id": 8,  "stall": "ca-phe",   "stallName": "Ghe cà phê",   "icon": "Ly cà phê đá",           "chinhTa": "Cà phê sữa đá vô liền", "phienAm": "Cà phe sữa đá dô liềng", "level": 2},
-    {"id": 9,  "stall": "ca-dong",  "stallName": "Ghe cá đồng",  "icon": "Rổ cá rô",               "chinhTa": "Cá rô kho tộ ăn hết nồi", "phienAm": "Cá gô kho tộ ăng hớt nồi", "level": 2},
-    {"id": 10, "stall": "hu-tieu",  "stallName": "Ghe hủ tiếu",  "icon": "Tô hủ tiếu",             "chinhTa": "Hủ tiếu ngon quá trời", "phienAm": "Hủ tíu ngon wá chời", "level": 2},
-    {"id": 11, "stall": "snack",    "stallName": "Ghe snack",    "icon": "Xâu bánh tráng, kẹo kéo", "chinhTa": "Bánh tráng kẹo kéo, vui quá ráng ăn", "phienAm": "Bánh tráng kẹo kéo, dui wá gáng ăng", "level": 3},
-    {"id": 12, "stall": "trai-cay", "stallName": "Ghe trái cây", "icon": "Chôm chôm, măng cụt",    "chinhTa": "Chôm chôm măng cụt, rớt xuống sông rồi", "phienAm": "Chôm chôm măng cục, gớt xuống sông gồi", "level": 3},
-    {"id": 13, "stall": "bun-rieu", "stallName": "Ghe bún riêu", "icon": "Nồi riêu cua",           "chinhTa": "Bún riêu cua rau răm, vừa ăn vừa run", "phienAm": "Búng giêu cua gau găm, dừa ăng dừa gung", "level": 3},
-    {"id": 14, "stall": "lau-mam",  "stallName": "Ghe lẩu mắm",  "icon": "Nồi lẩu, bông điên điển", "chinhTa": "Lẩu mắm bông điên điển, ăn một lần nhớ hoài", "phienAm": "Lẩu mắm bông điêng điểng, ăng mộc lầng nhớ quài", "level": 3},
-    {"id": 15, "stall": "vit",      "stallName": "Ghe vịt",      "icon": "Con vịt quay",           "chinhTa": "Vịt về rồi, vịt vô vườn rau", "phienAm": "Dịch dìa gồi, dịch dô dường gau", "level": 3},
-    {"id": 16, "stall": "ca-dong",  "stallName": "Ghe cá đồng",  "icon": "Cá rô, rổ, rá",          "chinhTa": "Con cá rô bỏ trong rổ. Rổ rách, cá rô ra rạch", "phienAm": "Con cá gô bỏ trong gổ. Gổ gách, cá gô ga gạch", "level": 4},
-    {"id": 17, "stall": "ruou",     "stallName": "Ghe rượu",     "icon": "Bình rượu đế",           "chinhTa": "Rượu ra rồi, rót ra ly. Ráng vô một ly rồi về", "phienAm": "Gụ ga gồi, góc ga ly. Gáng dô mộc ly gồi dìa", "level": 4},
-    {"id": 18, "stall": "com-tam",  "stallName": "Ghe cơm tấm",  "icon": "Cơm, sườn, trứng",       "chinhTa": "Cơm tấm sườn bì chả, thêm trứng ốp la. Ăn rồi vui vẻ ra về", "phienAm": "Cơm tấm sừng bì chả, thêm chứng ốp la. Ăng gồi dui dẻ ga dìa", "level": 4}
+    {
+      "id": 1,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Con cá rô",
+      "chinhTa": "Cá rô",
+      "phienAm": "Cá gô",
+      "level": 1
+    },
+    {
+      "id": 2,
+      "stall": "bun-rieu",
+      "stallName": "Ghe bún riêu",
+      "icon": "Tô bún riêu",
+      "chinhTa": "Bún riêu",
+      "phienAm": "Búng giêu",
+      "level": 1
+    },
+    {
+      "id": 3,
+      "stall": "rau",
+      "stallName": "Ghe rau",
+      "icon": "Bó rau muống",
+      "chinhTa": "Rau muống",
+      "phienAm": "Gau muốn",
+      "level": 1
+    },
+    {
+      "id": 4,
+      "stall": "trai-cay",
+      "stallName": "Ghe trái cây",
+      "icon": "Trái sầu riêng",
+      "chinhTa": "Sầu riêng",
+      "phienAm": "Sầu giêng",
+      "level": 1
+    },
+    {
+      "id": 5,
+      "stall": "nuoc",
+      "stallName": "Ghe nước",
+      "icon": "Ly nước mía",
+      "chinhTa": "Nước mía rẻ rề",
+      "phienAm": "Nước mía gẻ gề",
+      "level": 1
+    },
+    {
+      "id": 6,
+      "stall": "banh",
+      "stallName": "Ghe bánh",
+      "icon": "Đòn bánh tét",
+      "chinhTa": "Bánh tét lá cẩm",
+      "phienAm": "Bánh téc lá cẩm",
+      "level": 2
+    },
+    {
+      "id": 7,
+      "stall": "com-tam",
+      "stallName": "Ghe cơm tấm",
+      "icon": "Dĩa cơm sườn",
+      "chinhTa": "Cơm tấm sườn bì",
+      "phienAm": "Cơm tấm sừng bì",
+      "level": 2
+    },
+    {
+      "id": 8,
+      "stall": "ca-phe",
+      "stallName": "Ghe cà phê",
+      "icon": "Ly cà phê đá",
+      "chinhTa": "Cà phê sữa đá vô liền",
+      "phienAm": "Cà phe sữa đá dô liềng",
+      "level": 2
+    },
+    {
+      "id": 9,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Rổ cá rô",
+      "chinhTa": "Cá rô kho tộ ăn hết nồi",
+      "phienAm": "Cá gô kho tộ ăng hớt nồi",
+      "level": 2
+    },
+    {
+      "id": 10,
+      "stall": "hu-tieu",
+      "stallName": "Ghe hủ tiếu",
+      "icon": "Tô hủ tiếu",
+      "chinhTa": "Hủ tiếu ngon quá trời",
+      "phienAm": "Hủ tíu ngon wá chời",
+      "level": 2
+    },
+    {
+      "id": 11,
+      "stall": "snack",
+      "stallName": "Ghe snack",
+      "icon": "Xâu bánh tráng, kẹo kéo",
+      "chinhTa": "Bánh tráng kẹo kéo, vui quá ráng ăn",
+      "phienAm": "Bánh tráng kẹo kéo, dui wá gáng ăng",
+      "level": 3
+    },
+    {
+      "id": 12,
+      "stall": "trai-cay",
+      "stallName": "Ghe trái cây",
+      "icon": "Chôm chôm, măng cụt",
+      "chinhTa": "Chôm chôm măng cụt, rớt xuống sông rồi",
+      "phienAm": "Chôm chôm măng cục, gớt xuống sông gồi",
+      "level": 3
+    },
+    {
+      "id": 13,
+      "stall": "bun-rieu",
+      "stallName": "Ghe bún riêu",
+      "icon": "Nồi riêu cua",
+      "chinhTa": "Bún riêu cua rau răm, vừa ăn vừa run",
+      "phienAm": "Búng giêu cua gau găm, dừa ăng dừa gung",
+      "level": 3
+    },
+    {
+      "id": 14,
+      "stall": "lau-mam",
+      "stallName": "Ghe lẩu mắm",
+      "icon": "Nồi lẩu, bông điên điển",
+      "chinhTa": "Lẩu mắm bông điên điển, ăn một lần nhớ hoài",
+      "phienAm": "Lẩu mắm bông điêng điểng, ăng mộc lầng nhớ quài",
+      "level": 3
+    },
+    {
+      "id": 15,
+      "stall": "vit",
+      "stallName": "Ghe vịt",
+      "icon": "Con vịt quay",
+      "chinhTa": "Vịt về rồi, vịt vô vườn rau",
+      "phienAm": "Dịch dìa gồi, dịch dô dường gau",
+      "level": 3
+    },
+    {
+      "id": 16,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Cá rô, rổ, rá",
+      "chinhTa": "Con cá rô bỏ trong rổ. Rổ rách, cá rô ra rạch",
+      "phienAm": "Con cá gô bỏ trong gổ. Gổ gách, cá gô ga gạch",
+      "level": 4
+    },
+    {
+      "id": 17,
+      "stall": "ruou",
+      "stallName": "Ghe rượu",
+      "icon": "Bình rượu đế",
+      "chinhTa": "Rượu ra rồi, rót ra ly. Ráng vô một ly rồi về",
+      "phienAm": "Gụ ga gồi, góc ga ly. Gáng dô mộc ly gồi dìa",
+      "level": 4
+    },
+    {
+      "id": 18,
+      "stall": "com-tam",
+      "stallName": "Ghe cơm tấm",
+      "icon": "Cơm, sườn, trứng",
+      "chinhTa": "Cơm tấm sườn bì chả, thêm trứng ốp la. Ăn rồi vui vẻ ra về",
+      "phienAm": "Cơm tấm sừng bì chả, thêm chứng ốp la. Ăng gồi dui dẻ ga dìa",
+      "level": 4
+    },
+    {
+      "id": 19,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Rổ rá cá rô",
+      "chinhTa": "Rổ rá rách rồi, rô rớt ra rạch",
+      "phienAm": "Gổ gá gách gồi, gô gớt ga gạch",
+      "level": 3
+    },
+    {
+      "id": 20,
+      "stall": "hu-tieu",
+      "stallName": "Ghe hủ tiếu",
+      "icon": "Tô hủ tiếu",
+      "chinhTa": "Hủ tiếu ráng rưới rau, rưới rồi rinh ra",
+      "phienAm": "Hủ tíu gáng gưới gau, gưới gồi ginh ga",
+      "level": 3
+    },
+    {
+      "id": 21,
+      "stall": "rau",
+      "stallName": "Ghe rau",
+      "icon": "Bó rau răm",
+      "chinhTa": "Rau răm rẻ rề, rau ráp rau rút rộn ràng",
+      "phienAm": "Gau găm gẻ gề, gau gáp gau gúc gộn gàng",
+      "level": 4
+    },
+    {
+      "id": 22,
+      "stall": "vit",
+      "stallName": "Ghe vịt",
+      "icon": "Con vịt vàng",
+      "chinhTa": "Vịt vàng về vườn, vịt vô vũng vui vẻ",
+      "phienAm": "Dịch dàng dìa dường, dịch dô dũng dui dẻ",
+      "level": 4
+    },
+    {
+      "id": 23,
+      "stall": "nuoc",
+      "stallName": "Ghe nước",
+      "icon": "Ly nước mía",
+      "chinhTa": "Nước mía rót ra, rót rồi rót nữa, rót rớt ra ruộng",
+      "phienAm": "Nước mía góc ga, góc gồi góc nữa, góc gớt ga guộng",
+      "level": 4
+    },
+    {
+      "id": 24,
+      "stall": "banh",
+      "stallName": "Ghe bánh",
+      "icon": "Bánh tét, bánh tráng",
+      "chinhTa": "Bánh tét bánh tráng, bán rẻ bán rề, bán về bán vội",
+      "phienAm": "Bánh téc bánh tráng, báng gẻ báng gề, báng dìa báng dội",
+      "level": 4
+    },
+    {
+      "id": 25,
+      "stall": "ca-phe",
+      "stallName": "Ghe cà phê",
+      "icon": "Cà phê vợt",
+      "chinhTa": "Cà phê vợt về, vợt vô vợt ra vui vẻ vô cùng",
+      "phienAm": "Cà phe dợc dìa, dợc dô dợc ga dui dẻ dô cùng",
+      "level": 4
+    },
+    {
+      "id": 26,
+      "stall": "lau-mam",
+      "stallName": "Ghe lẩu mắm",
+      "icon": "Nồi lẩu mắm",
+      "chinhTa": "Lẩu mắm rau rừng, rau răm rau rút, rửa rồi rưới ra",
+      "phienAm": "Lẩu mắm gau gừng, gau găm gau gúc, gửa gồi gưới ga",
+      "level": 4
+    },
+    {
+      "id": 27,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Cá rô, rơm, rổ",
+      "chinhTa": "Con rô rúc rơm, rơm rạ rối rắm, rô rúc rồi ra, rớt vô rổ vịt",
+      "phienAm": "Con gô gúc gơm, gơm gạ gối gắm, gô gúc gồi ga, gớt dô gổ dịch",
+      "level": 5
+    }
   ],
   "taunts": {
     "jumpedOver": [
@@ -35,11 +260,35 @@
     ]
   },
   "vehicles": [
-    {"tier": 0, "id": "ghe",        "name": "Ghe chèo"},
-    {"tier": 1, "id": "cano-may",   "name": "Cano máy"},
-    {"tier": 2, "id": "cano-dien",  "name": "Cano điện"},
-    {"tier": 3, "id": "du-thuyen",  "name": "Du thuyền"},
-    {"tier": 4, "id": "may-bay",    "name": "Máy bay"},
-    {"tier": 5, "id": "tau-vu-tru", "name": "Tàu vũ trụ"}
+    {
+      "tier": 0,
+      "id": "ghe",
+      "name": "Ghe chèo"
+    },
+    {
+      "tier": 1,
+      "id": "cano-may",
+      "name": "Cano máy"
+    },
+    {
+      "tier": 2,
+      "id": "cano-dien",
+      "name": "Cano điện"
+    },
+    {
+      "tier": 3,
+      "id": "du-thuyen",
+      "name": "Du thuyền"
+    },
+    {
+      "tier": 4,
+      "id": "may-bay",
+      "name": "Máy bay"
+    },
+    {
+      "tier": 5,
+      "id": "tau-vu-tru",
+      "name": "Tàu vũ trụ"
+    }
   ]
 }
