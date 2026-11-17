@@ -1,4 +1,4 @@
-/* Chợ nổi miền Tây — B3 + B4 (giọng nói). Kích thước theo --u (= bề rộng khung / 390), khớp keyframe pv1. */
+/* Chợ nổi miền Tây — B3 + B4 (giọng nói) + B5 (chạy ngang, bong bóng chửi). Kích thước theo --u (= bề rộng khung / 390), khớp keyframe pv1. */
 :root {
   --out: #2a2420; --cream: #fff7e3; --acc: #c2331c; --green: #0d7a52; --muted: #55606a; --track: #e9dfc2;
   --fh: 'Baloo 2', 'Arial Rounded MT Bold', 'Trebuchet MS', system-ui, sans-serif;
@@ -106,6 +106,9 @@ body { position: fixed; inset: 0; display: flex; justify-content: center; align-
   background: linear-gradient(#8fd3e8 0 58%, #3fb0a6 58% 100%); display: flex; align-items: center; justify-content: center;
 }
 .res-veh img { max-width: 78%; max-height: 92%; }
+.res-veh { gap: calc(6px * var(--u)); }
+.res-veh .res-hero { max-height: 78%; max-width: 26%; align-self: flex-end; margin-bottom: calc(6px * var(--u)); }
+.res-veh .res-hero:not([hidden]) + img { max-width: 62%; }
 .res-tier { font-family: var(--fh); font-weight: 800; font-size: calc(21px * var(--u)); line-height: 1.15; }
 .steps { display: flex; width: 100%; gap: 2px; }
 .step { display: flex; flex-direction: column; align-items: center; gap: calc(4px * var(--u)); flex: 1; }

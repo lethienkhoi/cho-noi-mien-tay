@@ -1,6 +1,6 @@
 # Game chợ nổi miền Tây — đề bài và các quyết định đã duyệt
 
-Cập nhật: 2026-11-17 (B4). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
+Cập nhật: 2026-11-17 (B5). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
 Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/lethienkhoi/cho-noi-mien-tay
 
 ## 1. Ý tưởng
@@ -44,7 +44,7 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 - BỎ HẲN điều khiển chạm và chế độ dự phòng bằng chạm (Khôi 2026-11-17: "chưa nhận mic đọc không được, bỏ cái bấm tay vô nhảy"). Chạm chỉ dùng cho nút.
 - Trình duyệt không nghe được (Firefox, trình duyệt trong app Zalo/Facebook/Messenger…): báo sớm, hướng dẫn mở bằng Chrome/Safari, nút Sao chép link. Từ chối micro / mất mạng: màn hướng dẫn + nút Thử lại.
 - Model tiếng Việt chạy trên máy (không cần mạng): chưa làm, để sau nếu cần.
-- Code: `src/speech/` (matcher.js chấm, recognizer.js nhận giọng, voice.js nối với game). Test: `node --test dev/tests/`, `python3 dev/tools/qa_b4.py`.
+- Code: `src/speech/` (matcher.js chấm, recognizer.js nhận giọng, voice.js nối với game). Test: `node --test dev/tests/matcher.test.mjs`, `python3 dev/tools/qa_b4.py`, `python3 dev/tools/qa_b5.py`.
 - Tiếng chửi: file âm thanh thu sẵn (giọng AI hoặc Khôi thu).
 - Đưa lên GitHub Pages (https) để micro chạy được trên điện thoại.
 
@@ -53,6 +53,11 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 2. Duyệt keyframe — XONG.
 3. B3: khung game + vòng chơi lõi, điều khiển tạm bằng chạm — XONG, đã lên link chơi.
 4. B4: nhận giọng nói + bộ chấm, bỏ điều khiển chạm — XONG (chờ thử trên điện thoại thật).
-5. B5: hiệu ứng nhảy, cảnh đụng, bong bóng chửi, âm thanh.
+5. B5: bố cục chạy ngang + bong bóng chửi + cảnh đụng + độ khó nhanh hơn — XONG (âm thanh chửi để sau).
+   - Bố cục theo yêu cầu Khôi (2026-11-17, ref game khủng long Chrome), GIỮ KHUNG DỌC 9:16: ghe mình (~21% bề rộng) cố định bên trái ở ~20%, ghe hàng (~25%) chạy ngang từ mép phải sang trên cùng một làn nước nằm ở ~56% chiều cao (trên là hậu cảnh chợ nổi, dưới là khung chữ). Bỏ hiệu ứng ghe từ xa phóng to. Nhảy: ghe mình bay theo cung qua ghe hàng rồi đáp lại đúng làn. Hậu cảnh/tiền cảnh trôi ngang, nhanh dần theo số ghe qua. Ghe trung cảnh vẽ nhỏ lại 80% cho rõ xa gần.
+   - Bong bóng chửi (vẽ trên canvas, trắng viền #2a2420, Baloo 2 đậm, nảy vào, giữ ~1,4s rồi mờ, bám ghe hàng, tự xuống dòng, không bị HUD/khung chữ che): nhảy qua → `taunts.jumpedOver`, đụng → `taunts.crash`; người bán đổi mặt yell lúc chửi. Âm thanh: hàm rỗng `playTaunt(kind, text)` trong `src/game/sfx.js`, gắn sẵn vào sự kiện `taunt`.
+   - Cảnh đụng: rung màn 0,35s, sao vàng "RẦM!", bọt nước tròn trắng viền đậm, nhân vật (hero_scream) văng xoay vòng, nón lá bay riêng, tô bún/cá/sầu riêng bay, người bán yell + bong bóng; bảng kết quả sau 1,6s. Thua mà không phá kỷ lục: bảng kết quả có thêm mặt mếu (hero_sad).
+   - Thời gian mỗi câu (config.js): T = max(1,6s + 0,22s/chữ ; (1,8s + 0,28s/chữ) × (1 − 0,015 × số ghe qua, thấp nhất 0,8)). Thanh thời gian hết đúng lúc ghe hàng tới sát mũi; thêm 0,25s ân hạn rồi mới đụng (đọc khớp trong ân hạn vẫn nhảy). Câu 2 chữ: 2,36s → 2,04s; câu 15 chữ: 6,0s → 4,9s. "Một nửa thời gian cũ" (0,8s + 0,28s/chữ) thấp hơn sàn nhận giọng nên sàn thắng.
+   - Mức câu theo số ghe đã qua: 0–2 mức 1, 3–6 mức 2, 7–12 mức 3, 13–19 mức 4, 20+ mức 5 (chưa có câu mức 5 → lấy mức cao nhất có sẵn). 20% lấy câu mức thấp hơn cho đỡ ngộp. (Tính theo số ghe qua, không theo điểm, vì điểm có thưởng +2 làm mức nhảy quá nhanh — CHỜ KHÔI CHỐT.)
 6. B6: độ khó theo level, điểm, kỷ lục, hiệu ứng lên đời 6 cấp.
 7. B7: thử trên iPhone và Android thật, tối ưu.

@@ -11,10 +11,13 @@ export function wordCount(text) {
   return text.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
 }
 
+// thời gian đọc (giây) = lúc thanh thời gian hết; chưa tính ân hạn CONFIG.TIME_GRACE
 export function roundTime(phrase, passed) {
-  const base = CONFIG.TIME_BASE + CONFIG.TIME_PER_WORD * wordCount(phrase.phienAm);
+  const n = wordCount(phrase.phienAm);
+  const base = CONFIG.TIME_BASE + CONFIG.TIME_PER_WORD * n;
   const f = Math.max(CONFIG.TIME_MIN_FACTOR, 1 - passed * CONFIG.TIME_DECAY_PER_PASS);
-  return base * f;
+  const floor = CONFIG.TIME_FLOOR_BASE + CONFIG.TIME_FLOOR_PER_WORD * n;
+  return Math.max(floor, base * f);
 }
 
 export class PhrasePicker {
@@ -24,6 +27,9 @@ export class PhrasePicker {
     const lv = levelForPasses(passed);
     let want = lv;
     if (lv > 1 && this.rnd() < CONFIG.LOWER_LEVEL_CHANCE) want = 1 + Math.floor(this.rnd() * (lv - 1));
+    // level chưa có câu (vd level 5) -> lấy level cao nhất có sẵn nhưng không quá level đang muốn
+    const have = this.list.filter((p) => p.level <= want).map((p) => p.level);
+    if (have.length) want = Math.max(...have);
     let pool = this.list.filter((p) => p.level === want && !this.recent.includes(p.id));
     if (!pool.length) pool = this.list.filter((p) => p.level <= lv && !this.recent.includes(p.id));
     if (!pool.length) pool = this.list.slice();

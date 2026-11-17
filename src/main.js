@@ -9,6 +9,7 @@ import { Panel } from './ui/panel.js';
 import { Screens } from './ui/screens.js';
 import { SpeechInput, speechSupport } from './speech/recognizer.js';
 import { VoiceControl } from './speech/voice.js';
+import { playTaunt } from './game/sfx.js';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
@@ -33,7 +34,7 @@ setUnit();
 function spriteList(man, phrases) {
   const S = man.sprites, out = new Set();
   const add = (n) => { if (n && S[n]) out.add(n); };
-  ['background', 'hero_scream', 'nonla', 'fg_hyacinth', 'fg_branch'].forEach(add);
+  ['background', 'hero_scream', 'nonla', 'fg_hyacinth', 'fg_branch', 'bowl', 'fish', 'durian'].forEach(add);
   Object.keys(S).filter((n) => /^(far|mid)_\d+$/.test(n)).forEach(add);
   for (const v of man.vehicles) [v.sprite, v.cocky, v.empty, v.play, v.playCocky, v.jump].forEach(add);
   for (const k of man.vendors) for (const f of man.vendorFaces) add(`${k}_${f}`);
@@ -72,9 +73,20 @@ async function boot() {
     renderer.resize(r.width, r.height);
     const cs = getComputedStyle(probe);
     game.insetBottom = (parseFloat(cs.paddingBottom) || 0) / renderer.unit;
+    measureUI();
     if (first) { renderer.bakeAll(); first = false; }
     else { clearTimeout(bakeTimer); bakeTimer = setTimeout(() => renderer.bakeAll(), 160); }
     checkOrientation();
+  }
+
+  // mép dưới HUD và mép trên khung chữ (u) để bong bóng chửi không bị che
+  const hudEl = document.getElementById('hud'), panelEl = document.getElementById('panel');
+  function measureUI() {
+    const a = app.getBoundingClientRect(), u = renderer.unit || 1;
+    const hb = hudEl.hidden ? 0 : hudEl.getBoundingClientRect().bottom - a.top;
+    renderer.uiTop = hb > 0 ? hb / u : 100;
+    const pt = panelEl.hidden ? 0 : panelEl.getBoundingClientRect().top - a.top;
+    renderer.uiBottom = pt > 0 ? pt / u : renderer.H - 160;
   }
 
   // ---- xoay màn: điện thoại nằm ngang thì che và tạm dừng
@@ -86,9 +98,10 @@ async function boot() {
   const running = () => game.state === 'playing' || game.state === 'jumping' || game.state === 'crash';
 
   // ---- nối sự kiện game -> UI
-  game.addEventListener('round', (e) => panel.play(e.detail.phrase));
-  game.addEventListener('matched', (e) => panel.passed(e.detail.phrase, e.detail));
-  game.addEventListener('crash', (e) => panel.crash(e.detail.phrase));
+  game.addEventListener('round', (e) => { panel.play(e.detail.phrase); measureUI(); });
+  game.addEventListener('matched', (e) => { panel.passed(e.detail.phrase, e.detail); measureUI(); });
+  game.addEventListener('crash', (e) => { panel.crash(e.detail.phrase); measureUI(); });
+  game.addEventListener('taunt', (e) => playTaunt(e.detail.kind, e.detail.text));
   game.addEventListener('over', (e) => {
     panel.show(false);
     screens.showResult(e.detail, man.vehicles, (n) => assets.url(n));

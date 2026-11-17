@@ -12,7 +12,7 @@ export class Screens {
     this.startBest = q('#start-best');
     this.res = {
       kicker: q('#res-kicker'), score: q('#res-score'), sub: q('#res-sub'), img: q('#res-veh-img'),
-      tier: q('#res-tier'), steps: q('#res-steps'),
+      tier: q('#res-tier'), steps: q('#res-steps'), hero: q('#res-hero'),
     };
     this.errorMsg = q('#error-msg');
     this.micEl = q('#overlay-mic'); this.speechEl = q('#overlay-speech'); this.noSpeechEl = q('#screen-nospeech');
@@ -97,6 +97,11 @@ export class Screens {
     r.score.textContent = score;
     r.sub.textContent = newRecord ? `Kỷ lục cũ: ${prevBest} điểm` : `Kỷ lục: ${Math.max(prevBest, score)} điểm`;
     r.img.src = spriteUrl(v.sprite); r.img.alt = v.name;
+    // thua mà không phá kỷ lục: thêm mặt mếu (hero_sad) cạnh phương tiện
+    if (r.hero) {
+      r.hero.hidden = !!newRecord;
+      if (!newRecord) { r.hero.src = spriteUrl('hero_sad'); r.hero.alt = 'Mếu'; }
+    }
     r.tier.textContent = `Lên tới cấp ${tier + 1}: ${v.name.charAt(0).toLowerCase() + v.name.slice(1)}`;
     r.steps.textContent = '';
     STEP_NAMES.forEach((n, i) => {
