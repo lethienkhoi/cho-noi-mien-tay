@@ -1,0 +1,1259 @@
+{
+ "_note": "Sinh tự động bởi tools/export_sprites.py từ tools/art.py (hình duyệt trong design/gen4.py). Đơn vị = đơn vị vẽ gen4. ox,oy = vị trí gốc toạ độ hàm vẽ trong sprite; anchors tính từ gốc. Đừng sửa tay.",
+ "sprites": {
+  "hero_happy": {
+   "file": "hero_happy.svg",
+   "w": 181,
+   "h": 224,
+   "ox": 90,
+   "oy": 213,
+   "anchors": {
+    "feet": [
+     0,
+     0
+    ]
+   }
+  },
+  "hero_cocky": {
+   "file": "hero_cocky.svg",
+   "w": 176,
+   "h": 223,
+   "ox": 88,
+   "oy": 212,
+   "anchors": {
+    "feet": [
+     0,
+     0
+    ]
+   }
+  },
+  "hero_scream": {
+   "file": "hero_scream.svg",
+   "w": 180,
+   "h": 187,
+   "ox": 89,
+   "oy": 176,
+   "anchors": {
+    "feet": [
+     0,
+     0
+    ]
+   }
+  },
+  "hero_sad": {
+   "file": "hero_sad.svg",
+   "w": 116,
+   "h": 187,
+   "ox": 58,
+   "oy": 176,
+   "anchors": {
+    "feet": [
+     0,
+     0
+    ]
+   }
+  },
+  "hero_boat_row": {
+   "file": "hero_boat_row.svg",
+   "w": 251,
+   "h": 251,
+   "ox": 123,
+   "oy": 197,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "rider": [
+     -30,
+     16
+    ]
+   }
+  },
+  "hero_boat_row_cocky": {
+   "file": "hero_boat_row_cocky.svg",
+   "w": 251,
+   "h": 250,
+   "ox": 123,
+   "oy": 196,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "rider": [
+     -30,
+     16
+    ]
+   }
+  },
+  "hero_boat_jump": {
+   "file": "hero_boat_jump.svg",
+   "w": 248,
+   "h": 225,
+   "ox": 120,
+   "oy": 197,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "rider": [
+     -30,
+     16
+    ]
+   }
+  },
+  "hero_boat_empty": {
+   "file": "hero_boat_empty.svg",
+   "w": 248,
+   "h": 85,
+   "ox": 120,
+   "oy": 57,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "rider": [
+     -30,
+     16
+    ]
+   }
+  },
+  "girl_normal": {
+   "file": "girl_normal.svg",
+   "w": 181,
+   "h": 196,
+   "ox": 90,
+   "oy": 213,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "girl_shock": {
+   "file": "girl_shock.svg",
+   "w": 181,
+   "h": 194,
+   "ox": 90,
+   "oy": 213,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "girl_yell": {
+   "file": "girl_yell.svg",
+   "w": 181,
+   "h": 196,
+   "ox": 90,
+   "oy": 213,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "granny_normal": {
+   "file": "granny_normal.svg",
+   "w": 116,
+   "h": 180,
+   "ox": 58,
+   "oy": 197,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "granny_shock": {
+   "file": "granny_shock.svg",
+   "w": 120,
+   "h": 178,
+   "ox": 60,
+   "oy": 197,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "granny_yell": {
+   "file": "granny_yell.svg",
+   "w": 116,
+   "h": 180,
+   "ox": 58,
+   "oy": 197,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "oldman_normal": {
+   "file": "oldman_normal.svg",
+   "w": 116,
+   "h": 155,
+   "ox": 58,
+   "oy": 172,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "oldman_shock": {
+   "file": "oldman_shock.svg",
+   "w": 120,
+   "h": 153,
+   "ox": 60,
+   "oy": 172,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "oldman_yell": {
+   "file": "oldman_yell.svg",
+   "w": 116,
+   "h": 159,
+   "ox": 58,
+   "oy": 176,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "dude_normal": {
+   "file": "dude_normal.svg",
+   "w": 116,
+   "h": 156,
+   "ox": 58,
+   "oy": 175,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "dude_shock": {
+   "file": "dude_shock.svg",
+   "w": 120,
+   "h": 156,
+   "ox": 60,
+   "oy": 175,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "dude_yell": {
+   "file": "dude_yell.svg",
+   "w": 116,
+   "h": 159,
+   "ox": 58,
+   "oy": 176,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "cool_normal": {
+   "file": "cool_normal.svg",
+   "w": 120,
+   "h": 173,
+   "ox": 58,
+   "oy": 190,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "cool_shock": {
+   "file": "cool_shock.svg",
+   "w": 122,
+   "h": 171,
+   "ox": 60,
+   "oy": 190,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "cool_yell": {
+   "file": "cool_yell.svg",
+   "w": 120,
+   "h": 173,
+   "ox": 58,
+   "oy": 190,
+   "anchors": {
+    "seat": [
+     0,
+     0
+    ]
+   }
+  },
+  "stall_bun-rieu": {
+   "file": "stall_bun-rieu.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_bun-rieu_back"
+  },
+  "stall_bun-rieu_back": {
+   "file": "stall_bun-rieu_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_com-tam": {
+   "file": "stall_com-tam.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_com-tam_back"
+  },
+  "stall_com-tam_back": {
+   "file": "stall_com-tam_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_fruit": {
+   "file": "stall_fruit.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_fruit_back"
+  },
+  "stall_fruit_back": {
+   "file": "stall_fruit_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_trai-cay": {
+   "file": "stall_trai-cay.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_trai-cay_back"
+  },
+  "stall_trai-cay_back": {
+   "file": "stall_trai-cay_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_ca-dong": {
+   "file": "stall_ca-dong.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_ca-dong_back"
+  },
+  "stall_ca-dong_back": {
+   "file": "stall_ca-dong_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_rau": {
+   "file": "stall_rau.svg",
+   "w": 281,
+   "h": 248,
+   "ox": 138,
+   "oy": 211,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_rau_back"
+  },
+  "stall_rau_back": {
+   "file": "stall_rau_back.svg",
+   "w": 281,
+   "h": 248,
+   "ox": 138,
+   "oy": 211,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_nuoc": {
+   "file": "stall_nuoc.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_nuoc_back"
+  },
+  "stall_nuoc_back": {
+   "file": "stall_nuoc_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_banh": {
+   "file": "stall_banh.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_banh_back"
+  },
+  "stall_banh_back": {
+   "file": "stall_banh_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_ca-phe": {
+   "file": "stall_ca-phe.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_ca-phe_back"
+  },
+  "stall_ca-phe_back": {
+   "file": "stall_ca-phe_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_hu-tieu": {
+   "file": "stall_hu-tieu.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_hu-tieu_back"
+  },
+  "stall_hu-tieu_back": {
+   "file": "stall_hu-tieu_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_snack": {
+   "file": "stall_snack.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_snack_back"
+  },
+  "stall_snack_back": {
+   "file": "stall_snack_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_lau-mam": {
+   "file": "stall_lau-mam.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_lau-mam_back"
+  },
+  "stall_lau-mam_back": {
+   "file": "stall_lau-mam_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_vit": {
+   "file": "stall_vit.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_vit_back"
+  },
+  "stall_vit_back": {
+   "file": "stall_vit_back.svg",
+   "w": 281,
+   "h": 241,
+   "ox": 138,
+   "oy": 204,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "stall_ruou": {
+   "file": "stall_ruou.svg",
+   "w": 281,
+   "h": 242,
+   "ox": 138,
+   "oy": 205,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   },
+   "back": "stall_ruou_back"
+  },
+  "stall_ruou_back": {
+   "file": "stall_ruou_back.svg",
+   "w": 281,
+   "h": 242,
+   "ox": 138,
+   "oy": 205,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ],
+    "seat": [
+     -36,
+     14
+    ]
+   }
+  },
+  "veh_0": {
+   "file": "veh_0.svg",
+   "w": 251,
+   "h": 251,
+   "ox": 123,
+   "oy": 197,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_0_cocky": {
+   "file": "veh_0_cocky.svg",
+   "w": 251,
+   "h": 251,
+   "ox": 123,
+   "oy": 197,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_0_empty": {
+   "file": "veh_0_empty.svg",
+   "w": 251,
+   "h": 136,
+   "ox": 123,
+   "oy": 82,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_1": {
+   "file": "veh_1.svg",
+   "w": 306,
+   "h": 200,
+   "ox": 173,
+   "oy": 163,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_1_cocky": {
+   "file": "veh_1_cocky.svg",
+   "w": 306,
+   "h": 200,
+   "ox": 173,
+   "oy": 163,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_1_empty": {
+   "file": "veh_1_empty.svg",
+   "w": 306,
+   "h": 124,
+   "ox": 173,
+   "oy": 87,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_2": {
+   "file": "veh_2.svg",
+   "w": 276,
+   "h": 191,
+   "ox": 138,
+   "oy": 154,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_2_cocky": {
+   "file": "veh_2_cocky.svg",
+   "w": 276,
+   "h": 191,
+   "ox": 138,
+   "oy": 154,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_2_empty": {
+   "file": "veh_2_empty.svg",
+   "w": 276,
+   "h": 109,
+   "ox": 138,
+   "oy": 72,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_3": {
+   "file": "veh_3.svg",
+   "w": 296,
+   "h": 174,
+   "ox": 148,
+   "oy": 137,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_3_cocky": {
+   "file": "veh_3_cocky.svg",
+   "w": 296,
+   "h": 174,
+   "ox": 148,
+   "oy": 137,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_3_empty": {
+   "file": "veh_3_empty.svg",
+   "w": 296,
+   "h": 153,
+   "ox": 148,
+   "oy": 116,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_4": {
+   "file": "veh_4.svg",
+   "w": 251,
+   "h": 182,
+   "ox": 128,
+   "oy": 145,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_4_cocky": {
+   "file": "veh_4_cocky.svg",
+   "w": 251,
+   "h": 182,
+   "ox": 128,
+   "oy": 145,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_4_empty": {
+   "file": "veh_4_empty.svg",
+   "w": 251,
+   "h": 143,
+   "ox": 128,
+   "oy": 106,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_5": {
+   "file": "veh_5.svg",
+   "w": 234,
+   "h": 261,
+   "ox": 117,
+   "oy": 224,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_5_cocky": {
+   "file": "veh_5_cocky.svg",
+   "w": 234,
+   "h": 261,
+   "ox": 117,
+   "oy": 224,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "veh_5_empty": {
+   "file": "veh_5_empty.svg",
+   "w": 234,
+   "h": 261,
+   "ox": 117,
+   "oy": 224,
+   "anchors": {
+    "water": [
+     0,
+     12
+    ]
+   }
+  },
+  "nonla": {
+   "file": "nonla.svg",
+   "w": 181,
+   "h": 77,
+   "ox": 90,
+   "oy": 64
+  },
+  "bowl": {
+   "file": "bowl.svg",
+   "w": 52,
+   "h": 36,
+   "ox": 26,
+   "oy": 23
+  },
+  "fish": {
+   "file": "fish.svg",
+   "w": 68,
+   "h": 30,
+   "ox": 30,
+   "oy": 15
+  },
+  "durian": {
+   "file": "durian.svg",
+   "w": 50,
+   "h": 68,
+   "ox": 25,
+   "oy": 38
+  },
+  "far_0": {
+   "file": "far_0.svg",
+   "w": 67,
+   "h": 60,
+   "ox": 32,
+   "oy": 47,
+   "anchors": {
+    "water": [
+     0,
+     2.4000000000000004
+    ]
+   }
+  },
+  "far_1": {
+   "file": "far_1.svg",
+   "w": 67,
+   "h": 60,
+   "ox": 32,
+   "oy": 47,
+   "anchors": {
+    "water": [
+     0,
+     2.4000000000000004
+    ]
+   }
+  },
+  "far_2": {
+   "file": "far_2.svg",
+   "w": 67,
+   "h": 60,
+   "ox": 32,
+   "oy": 47,
+   "anchors": {
+    "water": [
+     0,
+     2.4000000000000004
+    ]
+   }
+  },
+  "far_3": {
+   "file": "far_3.svg",
+   "w": 67,
+   "h": 60,
+   "ox": 32,
+   "oy": 47,
+   "anchors": {
+    "water": [
+     0,
+     2.4000000000000004
+    ]
+   }
+  },
+  "mid_0": {
+   "file": "mid_0.svg",
+   "w": 91,
+   "h": 80,
+   "ox": 44,
+   "oy": 65,
+   "anchors": {
+    "water": [
+     0,
+     3.5999999999999996
+    ]
+   }
+  },
+  "mid_1": {
+   "file": "mid_1.svg",
+   "w": 91,
+   "h": 80,
+   "ox": 44,
+   "oy": 65,
+   "anchors": {
+    "water": [
+     0,
+     3.5999999999999996
+    ]
+   }
+  },
+  "fg_hyacinth": {
+   "file": "fg_hyacinth.svg",
+   "w": 205,
+   "h": 153,
+   "ox": 97,
+   "oy": 105
+  },
+  "fg_branch": {
+   "file": "fg_branch.svg",
+   "w": 128,
+   "h": 168,
+   "ox": 15,
+   "oy": 13
+  },
+  "background": {
+   "file": "background.svg",
+   "w": 390,
+   "h": 844,
+   "ox": 0,
+   "oy": 0,
+   "anchors": {
+    "horizon": [
+     0,
+     250
+    ]
+   }
+  }
+ },
+ "vendors": [
+  "girl",
+  "granny",
+  "oldman",
+  "dude",
+  "cool"
+ ],
+ "vendorFaces": [
+  "normal",
+  "shock",
+  "yell"
+ ],
+ "stallMap": {
+  "bun-rieu": "stall_bun-rieu",
+  "com-tam": "stall_com-tam",
+  "fruit": "stall_fruit",
+  "trai-cay": "stall_trai-cay",
+  "ca-dong": "stall_ca-dong",
+  "rau": "stall_rau",
+  "nuoc": "stall_nuoc",
+  "banh": "stall_banh",
+  "ca-phe": "stall_ca-phe",
+  "hu-tieu": "stall_hu-tieu",
+  "snack": "stall_snack",
+  "lau-mam": "stall_lau-mam",
+  "vit": "stall_vit",
+  "ruou": "stall_ruou"
+ },
+ "vehicles": [
+  {
+   "tier": 0,
+   "name": "Ghe chèo",
+   "sprite": "veh_0",
+   "cocky": "veh_0_cocky",
+   "empty": "hero_boat_empty",
+   "play": "hero_boat_row",
+   "playCocky": "hero_boat_row_cocky",
+   "jump": "hero_boat_jump"
+  },
+  {
+   "tier": 1,
+   "name": "Cano máy",
+   "sprite": "veh_1",
+   "cocky": "veh_1_cocky",
+   "empty": "veh_1_empty"
+  },
+  {
+   "tier": 2,
+   "name": "Cano điện Vê Ép 5",
+   "sprite": "veh_2",
+   "cocky": "veh_2_cocky",
+   "empty": "veh_2_empty"
+  },
+  {
+   "tier": 3,
+   "name": "Du thuyền",
+   "sprite": "veh_3",
+   "cocky": "veh_3_cocky",
+   "empty": "veh_3_empty"
+  },
+  {
+   "tier": 4,
+   "name": "Máy bay",
+   "sprite": "veh_4",
+   "cocky": "veh_4_cocky",
+   "empty": "veh_4_empty"
+  },
+  {
+   "tier": 5,
+   "name": "Tàu vũ trụ",
+   "sprite": "veh_5",
+   "cocky": "veh_5_cocky",
+   "empty": "veh_5_empty"
+  }
+ ],
+ "background": {
+  "sprite": "background",
+  "w": 390,
+  "h": 844,
+  "horizon": 250,
+  "waterBottom": "#17777a"
+ }
+}

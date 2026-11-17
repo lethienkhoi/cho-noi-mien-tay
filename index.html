@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#2a9f98">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Chợ nổi miền Tây</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Be+Vietnam+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app" class="is-loading" data-state="boot">
+  <canvas id="scene" aria-label="Cảnh chợ nổi" role="img"></canvas>
+  <div id="safe-probe" aria-hidden="true"></div>
+
+  <header id="hud" class="hud" hidden>
+    <div class="hud-row">
+      <div class="pill"><span class="pill-label">Điểm</span><span class="pill-value" id="hud-score">00</span></div>
+      <div class="pill"><span class="pill-label">Kỷ lục</span><span class="pill-value" id="hud-best">00</span></div>
+    </div>
+    <span class="chip-dark" id="hud-vehicle">Ghe chèo</span>
+  </header>
+
+  <section id="panel" class="panel" hidden aria-live="polite">
+    <div class="panel-title" id="panel-title" hidden>Đụng ghe rồi!</div>
+    <div class="phrase">
+      <span class="phrase-big" id="phrase-big"></span>
+      <span class="phrase-small" id="phrase-small"></span>
+    </div>
+    <div class="bar" id="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    <div class="chips" id="chips" hidden></div>
+  </section>
+
+  <section id="screen-start" class="screen" hidden>
+    <div class="card start-card">
+      <div class="kicker">Đọc giọng miền Tây</div>
+      <h1 class="title">Chợ nổi<br>miền Tây</h1>
+      <p class="lead">Ghe hàng chạy tới. Đọc to câu trên ghe cho kịp để nhảy qua, chậm là đụng ghe.</p>
+      <p class="note" id="start-note">Bản thử: chạm màn hình thay cho đọc.</p>
+      <div class="start-best">Kỷ lục: <b id="start-best">0</b> điểm</div>
+      <button class="btn btn-primary" id="btn-start" type="button">Bắt đầu</button>
+    </div>
+    <div class="signature">made by Khoi M1nhon</div>
+  </section>
+
+  <section id="screen-result" class="screen" hidden>
+    <div class="card result-card">
+      <div class="kicker" id="res-kicker">HẾT LƯỢT</div>
+      <div class="res-score" id="res-score">0</div>
+      <div class="res-sub" id="res-sub">Kỷ lục: 0 điểm</div>
+      <div class="res-veh"><img id="res-veh-img" alt=""></div>
+      <div class="res-tier" id="res-tier">Lên tới cấp 1: ghe chèo</div>
+      <div class="steps" id="res-steps"></div>
+      <div class="res-actions">
+        <button class="btn btn-primary" id="btn-again" type="button">Chơi lại</button>
+        <button class="btn btn-ghost" id="btn-home" type="button">Về bến</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="overlay-pause" class="overlay" hidden>
+    <div class="card small-card">
+      <div class="title-sm">Tạm dừng</div>
+      <p class="lead">Ghe đang neo chờ.</p>
+      <button class="btn btn-primary" id="btn-resume" type="button">Chơi tiếp</button>
+    </div>
+  </div>
+
+  <div id="overlay-rotate" class="overlay" hidden>
+    <div class="card small-card">
+      <div class="rotate-icon" aria-hidden="true"></div>
+      <div class="title-sm">Xoay dọc điện thoại</div>
+      <p class="lead">Game chơi theo màn dọc.</p>
+    </div>
+  </div>
+
+  <div id="overlay-loading" class="overlay overlay-solid">
+    <div class="loading">
+      <div class="title-sm">Đang dọn chợ…</div>
+      <div class="bar"><div class="bar-fill" id="load-fill" style="transform:scaleX(0)"></div></div>
+    </div>
+  </div>
+
+  <div id="overlay-error" class="overlay" hidden>
+    <div class="card small-card">
+      <div class="title-sm">Chưa tải đủ hình</div>
+      <p class="lead" id="error-msg">Mạng chập chờn nên thiếu vài hình. Tải lại trang thử nha.</p>
+      <div class="res-actions">
+        <button class="btn btn-primary" id="btn-reload" type="button">Tải lại</button>
+        <button class="btn btn-ghost" id="btn-continue" type="button">Vẫn chơi</button>
+      </div>
+    </div>
+  </div>
+</div>
+<noscript><p style="padding:24px;font-family:sans-serif;color:#fff">Cần bật JavaScript để chơi.</p></noscript>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
