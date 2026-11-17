@@ -4,16 +4,16 @@ export const CONFIG = {
   // T = max(SÀN, (TIME_BASE + TIME_PER_WORD x số chữ) x hệ số giảm theo số ghe đã qua).
   // T là thời gian thanh đỏ chạy hết = lúc ghe hàng tới SÁT MŨI ghe mình. Sau đó còn TIME_GRACE ân hạn
   // (ghe hàng nhích nốt khoảng cách cuối) rồi mới đụng: đọc khớp trong ân hạn vẫn nhảy.
-  // Ví dụ (chưa tính ân hạn): câu 2 chữ 2,36s -> sàn 2,04s; câu 6 chữ 3,48s -> sàn 2,92s; câu 14 chữ 5,72s -> sàn 4,68s.
-  // (B4 cũ: 1,6s + 0,55s/chữ, giảm tới 60%. "Một nửa" = 0,8s + 0,28s/chữ thấp hơn sàn ở mọi độ dài câu,
-  //  nên giữ 0,28s/chữ như yêu cầu và dùng sàn 1,6s + 0,22s/chữ làm mức nhanh nhất.)
-  TIME_BASE: 1.8,           // giây, lúc mới vào
-  TIME_PER_WORD: 0.28,      // giây cho mỗi chữ (âm tiết) của câu phiên âm, lúc mới vào
-  TIME_DECAY_PER_PASS: 0.015, // mỗi ghe qua được, thời gian còn (1 - n*decay)
-  TIME_MIN_FACTOR: 0.8,     // hệ số thấp nhất (qua ~13 ghe là chạm sàn với mọi câu)
+  // 2026-11-17: Khôi yêu cầu trả thời gian về như cũ (nhận giọng trên máy thật bị chậm): 1,6s + 0,55s/chữ, giảm dần tới 60%,
+  // không thấp hơn sàn 1,6s + 0,22s/chữ; ân hạn 0,4s.
+  // Ví dụ (chưa tính ân hạn): câu 2 chữ 2,7s -> 2,04s; câu 6 chữ 4,9s -> 2,94s; câu 15 chữ 9,85s -> 5,91s.
+  TIME_BASE: 1.6,           // giây, lúc mới vào
+  TIME_PER_WORD: 0.55,      // giây cho mỗi chữ (âm tiết) của câu phiên âm, lúc mới vào
+  TIME_DECAY_PER_PASS: 0.012, // mỗi ghe qua được, thời gian còn (1 - n*decay)
+  TIME_MIN_FACTOR: 0.6,     // không nhanh hơn 60% thời gian gốc (khoảng sau 33 ghe)
   TIME_FLOOR_BASE: 1.6,     // SÀN cứng: không dưới 1,6s + 0,22s/chữ ở cấp cao nhất
   TIME_FLOOR_PER_WORD: 0.22,
-  TIME_GRACE: 0.25,         // giây ân hạn sau khi thanh thời gian hết, trước khi hai ghe chạm
+  TIME_GRACE: 0.4,         // giây ân hạn sau khi thanh thời gian hết, trước khi hai ghe chạm
 
   // ---- level câu theo số ghe đã qua: qua >= mốc thì mở level kế (level 5 chưa có câu -> lấy level cao nhất có sẵn)
   LEVEL_AT: [0, 3, 7, 13, 20], // level 1: 0–2, level 2: 3–6, level 3: 7–12, level 4: 13–19, level 5: 20+
