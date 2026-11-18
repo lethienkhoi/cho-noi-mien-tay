@@ -1,0 +1,824 @@
+{
+ "_note": "Tạo bằng dev/tools/make_taunt_audio.py. Giọng Piper vi_VN-vais1000-medium (VAIS-1000, CC BY 4.0). File thu tay đặt ở assets/audio/taunts_custom/ cùng tên sẽ được ưu tiên.",
+ "voice": "piper vi_VN-vais1000-medium",
+ "format": "mp3",
+ "vendors": {
+  "girl": "cô gái",
+  "granny": "bà già",
+  "oldman": "ông già",
+  "dude": "thanh niên",
+  "cool": "thanh niên kính đen"
+ },
+ "kinds": {
+  "jumpedOver": {
+   "prefix": "jumped",
+   "items": [
+    {
+     "id": 0,
+     "text": "Mèn đét ơi, cái thằng quỷ sứ!",
+     "tts": "Mèng đéc ơi, cái thằng quỷ sứ!",
+     "files": {
+      "girl": {
+       "file": "jumped_00_girl.mp3",
+       "h": "9c7e3624",
+       "bytes": 9631
+      },
+      "granny": {
+       "file": "jumped_00_granny.mp3",
+       "h": "fd3ce733",
+       "bytes": 10806
+      },
+      "oldman": {
+       "file": "jumped_00_oldman.mp3",
+       "h": "089e883f",
+       "bytes": 10153
+      },
+      "dude": {
+       "file": "jumped_00_dude.mp3",
+       "h": "22353032",
+       "bytes": 9500
+      },
+      "cool": {
+       "file": "jumped_00_cool.mp3",
+       "h": "5c720f59",
+       "bytes": 9762
+      }
+     }
+    },
+    {
+     "id": 1,
+     "text": "Trời đất ơi, bộ ghe tui là cái cầu hả?",
+     "tts": "Trời đấc ơi, bộ ghe tui là cái cầu hả?",
+     "files": {
+      "girl": {
+       "file": "jumped_01_girl.mp3",
+       "h": "0758030d",
+       "bytes": 12504
+      },
+      "granny": {
+       "file": "jumped_01_granny.mp3",
+       "h": "b1c595df",
+       "bytes": 13549
+      },
+      "oldman": {
+       "file": "jumped_01_oldman.mp3",
+       "h": "6aeb5512",
+       "bytes": 12374
+      },
+      "dude": {
+       "file": "jumped_01_dude.mp3",
+       "h": "4837cdc6",
+       "bytes": 11982
+      },
+      "cool": {
+       "file": "jumped_01_cool.mp3",
+       "h": "6c8276a5",
+       "bytes": 12374
+      }
+     }
+    },
+    {
+     "id": 2,
+     "text": "Nhảy dị đổ nồi nước lèo của tui gồi!",
+     "tts": "Nhảy dị đổ nồi nước lèo của tui gồi!",
+     "files": {
+      "girl": {
+       "file": "jumped_02_girl.mp3",
+       "h": "d6e49171",
+       "bytes": 11198
+      },
+      "granny": {
+       "file": "jumped_02_granny.mp3",
+       "h": "a078f139",
+       "bytes": 12635
+      },
+      "oldman": {
+       "file": "jumped_02_oldman.mp3",
+       "h": "d15dbfd5",
+       "bytes": 11982
+      },
+      "dude": {
+       "file": "jumped_02_dude.mp3",
+       "h": "a5d10438",
+       "bytes": 10937
+      },
+      "cool": {
+       "file": "jumped_02_cool.mp3",
+       "h": "d463d23a",
+       "bytes": 11460
+      }
+     }
+    },
+    {
+     "id": 3,
+     "text": "Đồ cà chớn, dìa tui méc má mầy!",
+     "tts": "Đồ cà chớng, dìa tui méc má mầy!",
+     "files": {
+      "girl": {
+       "file": "jumped_03_girl.mp3",
+       "h": "ce18627c",
+       "bytes": 10806
+      },
+      "granny": {
+       "file": "jumped_03_granny.mp3",
+       "h": "51212a9a",
+       "bytes": 13288
+      },
+      "oldman": {
+       "file": "jumped_03_oldman.mp3",
+       "h": "73f1035d",
+       "bytes": 11068
+      },
+      "dude": {
+       "file": "jumped_03_dude.mp3",
+       "h": "726d0eba",
+       "bytes": 11198
+      },
+      "cool": {
+       "file": "jumped_03_cool.mp3",
+       "h": "3b36c592",
+       "bytes": 11329
+      }
+     }
+    },
+    {
+     "id": 4,
+     "text": "Trời đất quỷ thần ơi, nhảy qua đầu tui luôn!",
+     "tts": "Trời đấc quỷ thầng ơi, nhảy qua đầu tui luông!",
+     "files": {
+      "girl": {
+       "file": "jumped_04_girl.mp3",
+       "h": "107c6927",
+       "bytes": 11460
+      },
+      "granny": {
+       "file": "jumped_04_granny.mp3",
+       "h": "56d1744b",
+       "bytes": 12504
+      },
+      "oldman": {
+       "file": "jumped_04_oldman.mp3",
+       "h": "da950176",
+       "bytes": 12113
+      },
+      "dude": {
+       "file": "jumped_04_dude.mp3",
+       "h": "a2099791",
+       "bytes": 11590
+      },
+      "cool": {
+       "file": "jumped_04_cool.mp3",
+       "h": "d5d2d4ae",
+       "bytes": 11982
+      }
+     }
+    },
+    {
+     "id": 5,
+     "text": "Cha nội, nhảy gì mà như con cóc dị?",
+     "tts": "Cha nội, nhảy gì mà như cong cóc dị?",
+     "files": {
+      "girl": {
+       "file": "jumped_05_girl.mp3",
+       "h": "243efbdf",
+       "bytes": 11329
+      },
+      "granny": {
+       "file": "jumped_05_granny.mp3",
+       "h": "9c381e60",
+       "bytes": 12504
+      },
+      "oldman": {
+       "file": "jumped_05_oldman.mp3",
+       "h": "8c58d6c3",
+       "bytes": 11851
+      },
+      "dude": {
+       "file": "jumped_05_dude.mp3",
+       "h": "35ebbc92",
+       "bytes": 10806
+      },
+      "cool": {
+       "file": "jumped_05_cool.mp3",
+       "h": "f4987fc2",
+       "bytes": 11329
+      }
+     }
+    },
+    {
+     "id": 6,
+     "text": "Mắc dịch, văng nước vô nồi bún của tui gồi!",
+     "tts": "Mắc dịch, dăng nước dô nồi búng của tui gồi!",
+     "files": {
+      "girl": {
+       "file": "jumped_06_girl.mp3",
+       "h": "f3e5361c",
+       "bytes": 13027
+      },
+      "granny": {
+       "file": "jumped_06_granny.mp3",
+       "h": "61833986",
+       "bytes": 14333
+      },
+      "oldman": {
+       "file": "jumped_06_oldman.mp3",
+       "h": "6319f6fc",
+       "bytes": 13027
+      },
+      "dude": {
+       "file": "jumped_06_dude.mp3",
+       "h": "e285a4d9",
+       "bytes": 12374
+      },
+      "cool": {
+       "file": "jumped_06_cool.mp3",
+       "h": "9d936f14",
+       "bytes": 12766
+      }
+     }
+    },
+    {
+     "id": 7,
+     "text": "Ê ê, ghe tui chớ bộ cái cầu khỉ hả?",
+     "tts": "Ê ê, ghe tui chớ bộ cái cầu khỉ hả?",
+     "files": {
+      "girl": {
+       "file": "jumped_07_girl.mp3",
+       "h": "5622d61e",
+       "bytes": 11851
+      },
+      "granny": {
+       "file": "jumped_07_granny.mp3",
+       "h": "cf7a0688",
+       "bytes": 13288
+      },
+      "oldman": {
+       "file": "jumped_07_oldman.mp3",
+       "h": "57095793",
+       "bytes": 12766
+      },
+      "dude": {
+       "file": "jumped_07_dude.mp3",
+       "h": "f07ae05c",
+       "bytes": 11329
+      },
+      "cool": {
+       "file": "jumped_07_cool.mp3",
+       "h": "220a0417",
+       "bytes": 11590
+      }
+     }
+    },
+    {
+     "id": 8,
+     "text": "Bà nội ơi, hú hồn chim én!",
+     "tts": "Bà nội ơi, hú hồng chim éng!",
+     "files": {
+      "girl": {
+       "file": "jumped_08_girl.mp3",
+       "h": "a73c9a3f",
+       "bytes": 9762
+      },
+      "granny": {
+       "file": "jumped_08_granny.mp3",
+       "h": "b1612840",
+       "bytes": 11198
+      },
+      "oldman": {
+       "file": "jumped_08_oldman.mp3",
+       "h": "29b8d154",
+       "bytes": 10415
+      },
+      "dude": {
+       "file": "jumped_08_dude.mp3",
+       "h": "aa3b1d5d",
+       "bytes": 9631
+      },
+      "cool": {
+       "file": "jumped_08_cool.mp3",
+       "h": "9a17c3d6",
+       "bytes": 10415
+      }
+     }
+    },
+    {
+     "id": 9,
+     "text": "Dzô duyên dễ sợ, hông hỏi một tiếng!",
+     "tts": "Dzô duyêng dể sợ, hông hỏi mộc tiếng!",
+     "files": {
+      "girl": {
+       "file": "jumped_09_girl.mp3",
+       "h": "0448ce7a",
+       "bytes": 10284
+      },
+      "granny": {
+       "file": "jumped_09_granny.mp3",
+       "h": "f21ec208",
+       "bytes": 11590
+      },
+      "oldman": {
+       "file": "jumped_09_oldman.mp3",
+       "h": "418f521c",
+       "bytes": 10806
+      },
+      "dude": {
+       "file": "jumped_09_dude.mp3",
+       "h": "70875f36",
+       "bytes": 10153
+      },
+      "cool": {
+       "file": "jumped_09_cool.mp3",
+       "h": "fdea2700",
+       "bytes": 10676
+      }
+     }
+    },
+    {
+     "id": 10,
+     "text": "Đồ quỷ sứ, làm tui rớt cái vá!",
+     "tts": "Đồ quỷ sứ, làm tui rớc cái dá!",
+     "files": {
+      "girl": {
+       "file": "jumped_10_girl.mp3",
+       "h": "a34fe8c6",
+       "bytes": 11068
+      },
+      "granny": {
+       "file": "jumped_10_granny.mp3",
+       "h": "ee5a8821",
+       "bytes": 12374
+      },
+      "oldman": {
+       "file": "jumped_10_oldman.mp3",
+       "h": "172f7f00",
+       "bytes": 12113
+      },
+      "dude": {
+       "file": "jumped_10_dude.mp3",
+       "h": "a635f4af",
+       "bytes": 11198
+      },
+      "cool": {
+       "file": "jumped_10_cool.mp3",
+       "h": "2a911f31",
+       "bytes": 11851
+      }
+     }
+    },
+    {
+     "id": 11,
+     "text": "Nhảy giỏi dữ, bữa nào nhảy dìa nhà vợ luôn đi!",
+     "tts": "Nhảy giỏi dử, bửa nào nhảy dìa nhà dợ luông đi!",
+     "files": {
+      "girl": {
+       "file": "jumped_11_girl.mp3",
+       "h": "1b62f8dc",
+       "bytes": 14855
+      },
+      "granny": {
+       "file": "jumped_11_granny.mp3",
+       "h": "825f541c",
+       "bytes": 16292
+      },
+      "oldman": {
+       "file": "jumped_11_oldman.mp3",
+       "h": "9128e39e",
+       "bytes": 15117
+      },
+      "dude": {
+       "file": "jumped_11_dude.mp3",
+       "h": "d302cd35",
+       "bytes": 14464
+      },
+      "cool": {
+       "file": "jumped_11_cool.mp3",
+       "h": "a341e46b",
+       "bytes": 14855
+      }
+     }
+    },
+    {
+     "id": 12,
+     "text": "Hết hồn hết vía, tưởng đâu cá lóc nhảy!",
+     "tts": "Hết hồng hết día, tưởng đâu cá lóc nhảy!",
+     "files": {
+      "girl": {
+       "file": "jumped_12_girl.mp3",
+       "h": "19c3e597",
+       "bytes": 12113
+      },
+      "granny": {
+       "file": "jumped_12_granny.mp3",
+       "h": "32399a18",
+       "bytes": 13027
+      },
+      "oldman": {
+       "file": "jumped_12_oldman.mp3",
+       "h": "3258faec",
+       "bytes": 12374
+      },
+      "dude": {
+       "file": "jumped_12_dude.mp3",
+       "h": "f9224a9e",
+       "bytes": 11721
+      },
+      "cool": {
+       "file": "jumped_12_cool.mp3",
+       "h": "8d2151be",
+       "bytes": 11982
+      }
+     }
+    }
+   ]
+  },
+  "crash": {
+   "prefix": "crash",
+   "items": [
+    {
+     "id": 0,
+     "text": "Chèn đéc ơi, chạy ghe kiểu gì dị chời!",
+     "tts": "Chèng đéc ơi, chạy ghe kiểu gì dị chời!",
+     "files": {
+      "girl": {
+       "file": "crash_00_girl.mp3",
+       "h": "799919fc",
+       "bytes": 12766
+      },
+      "granny": {
+       "file": "crash_00_granny.mp3",
+       "h": "9a22e881",
+       "bytes": 13549
+      },
+      "oldman": {
+       "file": "crash_00_oldman.mp3",
+       "h": "d85fc677",
+       "bytes": 12896
+      },
+      "dude": {
+       "file": "crash_00_dude.mp3",
+       "h": "e0e4652c",
+       "bytes": 11982
+      },
+      "cool": {
+       "file": "crash_00_cool.mp3",
+       "h": "d88e251e",
+       "bytes": 12766
+      }
+     }
+    },
+    {
+     "id": 1,
+     "text": "Úi chời ơi, đổ hết gồi, đền đi mầy!",
+     "tts": "Úi chời ơi, đổ hết gồi, đền đi mầy!",
+     "files": {
+      "girl": {
+       "file": "crash_01_girl.mp3",
+       "h": "4eac3b4d",
+       "bytes": 12635
+      },
+      "granny": {
+       "file": "crash_01_granny.mp3",
+       "h": "502d8e64",
+       "bytes": 13811
+      },
+      "oldman": {
+       "file": "crash_01_oldman.mp3",
+       "h": "512dd4f3",
+       "bytes": 13157
+      },
+      "dude": {
+       "file": "crash_01_dude.mp3",
+       "h": "567c45de",
+       "bytes": 11982
+      },
+      "cool": {
+       "file": "crash_01_cool.mp3",
+       "h": "7fc07847",
+       "bytes": 12896
+      }
+     }
+    },
+    {
+     "id": 2,
+     "text": "Mắt mũi để đâu dị cha nội!",
+     "tts": "Mắc mủi để đâu dị cha nội!",
+     "files": {
+      "girl": {
+       "file": "crash_02_girl.mp3",
+       "h": "bcb2b79b",
+       "bytes": 8847
+      },
+      "granny": {
+       "file": "crash_02_granny.mp3",
+       "h": "7015ff69",
+       "bytes": 8978
+      },
+      "oldman": {
+       "file": "crash_02_oldman.mp3",
+       "h": "ef266b6d",
+       "bytes": 9109
+      },
+      "dude": {
+       "file": "crash_02_dude.mp3",
+       "h": "1d6cc38b",
+       "bytes": 8717
+      },
+      "cool": {
+       "file": "crash_02_cool.mp3",
+       "h": "90ce067f",
+       "bytes": 8847
+      }
+     }
+    },
+    {
+     "id": 3,
+     "text": "Trời ơi đất hỡi, chìm ghe tui gồi!",
+     "tts": "Trời ơi đấc hởi, chìm ghe tui gồi!",
+     "files": {
+      "girl": {
+       "file": "crash_03_girl.mp3",
+       "h": "6fee65ba",
+       "bytes": 9500
+      },
+      "granny": {
+       "file": "crash_03_granny.mp3",
+       "h": "30b9c4b1",
+       "bytes": 10545
+      },
+      "oldman": {
+       "file": "crash_03_oldman.mp3",
+       "h": "0f6bb9e8",
+       "bytes": 10023
+      },
+      "dude": {
+       "file": "crash_03_dude.mp3",
+       "h": "afe8bbdd",
+       "bytes": 9370
+      },
+      "cool": {
+       "file": "crash_03_cool.mp3",
+       "h": "0d3a8b57",
+       "bytes": 9500
+      }
+     }
+    },
+    {
+     "id": 4,
+     "text": "Chạy ghe hay chạy giặc dị cha?",
+     "tts": "Chạy ghe hay chạy giặc dị cha?",
+     "files": {
+      "girl": {
+       "file": "crash_04_girl.mp3",
+       "h": "d115bd3c",
+       "bytes": 7149
+      },
+      "granny": {
+       "file": "crash_04_granny.mp3",
+       "h": "6708023d",
+       "bytes": 7933
+      },
+      "oldman": {
+       "file": "crash_04_oldman.mp3",
+       "h": "4278c7a7",
+       "bytes": 7411
+      },
+      "dude": {
+       "file": "crash_04_dude.mp3",
+       "h": "487df02e",
+       "bytes": 7149
+      },
+      "cool": {
+       "file": "crash_04_cool.mp3",
+       "h": "a313dd39",
+       "bytes": 7019
+      }
+     }
+    },
+    {
+     "id": 5,
+     "text": "Đền! Đền nguyên nồi bún riêu cho tui!",
+     "tts": "Đền! Đền nguyêng nồi búng riêu cho tui!",
+     "files": {
+      "girl": {
+       "file": "crash_05_girl.mp3",
+       "h": "e52e891f",
+       "bytes": 10153
+      },
+      "granny": {
+       "file": "crash_05_granny.mp3",
+       "h": "84558c7e",
+       "bytes": 11198
+      },
+      "oldman": {
+       "file": "crash_05_oldman.mp3",
+       "h": "2afdaff3",
+       "bytes": 10284
+      },
+      "dude": {
+       "file": "crash_05_dude.mp3",
+       "h": "043d5a17",
+       "bytes": 10023
+      },
+      "cool": {
+       "file": "crash_05_cool.mp3",
+       "h": "6c64410d",
+       "bytes": 10153
+      }
+     }
+    },
+    {
+     "id": 6,
+     "text": "Mắt để sau ót hả trời?",
+     "tts": "Mắc để sau óc hả trời?",
+     "files": {
+      "girl": {
+       "file": "crash_06_girl.mp3",
+       "h": "aefb0dfe",
+       "bytes": 7933
+      },
+      "granny": {
+       "file": "crash_06_granny.mp3",
+       "h": "ae73dff4",
+       "bytes": 8455
+      },
+      "oldman": {
+       "file": "crash_06_oldman.mp3",
+       "h": "ce484ef9",
+       "bytes": 7933
+      },
+      "dude": {
+       "file": "crash_06_dude.mp3",
+       "h": "6b4b387a",
+       "bytes": 7802
+      },
+      "cool": {
+       "file": "crash_06_cool.mp3",
+       "h": "456d5f07",
+       "bytes": 7672
+      }
+     }
+    },
+    {
+     "id": 7,
+     "text": "Đụng cái rầm, rớt hết hàng họ gồi!",
+     "tts": "Đụng cái rầm, rớc hết hàng họ gồi!",
+     "files": {
+      "girl": {
+       "file": "crash_07_girl.mp3",
+       "h": "1ee31aec",
+       "bytes": 10806
+      },
+      "granny": {
+       "file": "crash_07_granny.mp3",
+       "h": "b6887825",
+       "bytes": 11982
+      },
+      "oldman": {
+       "file": "crash_07_oldman.mp3",
+       "h": "47cbce4d",
+       "bytes": 10676
+      },
+      "dude": {
+       "file": "crash_07_dude.mp3",
+       "h": "4f5db1cd",
+       "bytes": 10806
+      },
+      "cool": {
+       "file": "crash_07_cool.mp3",
+       "h": "876499c3",
+       "bytes": 10937
+      }
+     }
+    },
+    {
+     "id": 8,
+     "text": "Thôi xong, bữa nay khỏi bán buôn gì nữa!",
+     "tts": "Thôi xong, bửa nay khỏi báng buông gì nửa!",
+     "files": {
+      "girl": {
+       "file": "crash_08_girl.mp3",
+       "h": "284e4862",
+       "bytes": 11590
+      },
+      "granny": {
+       "file": "crash_08_granny.mp3",
+       "h": "02a77cfc",
+       "bytes": 12896
+      },
+      "oldman": {
+       "file": "crash_08_oldman.mp3",
+       "h": "adbdc76c",
+       "bytes": 11851
+      },
+      "dude": {
+       "file": "crash_08_dude.mp3",
+       "h": "c2e39337",
+       "bytes": 11460
+      },
+      "cool": {
+       "file": "crash_08_cool.mp3",
+       "h": "7825fbb5",
+       "bytes": 11590
+      }
+     }
+    },
+    {
+     "id": 9,
+     "text": "Lái ghe kiểu này dìa quê cày ruộng đi!",
+     "tts": "Lái ghe kiểu này dìa quê cày ruộng đi!",
+     "files": {
+      "girl": {
+       "file": "crash_09_girl.mp3",
+       "h": "bda6433a",
+       "bytes": 11198
+      },
+      "granny": {
+       "file": "crash_09_granny.mp3",
+       "h": "4d009af2",
+       "bytes": 12374
+      },
+      "oldman": {
+       "file": "crash_09_oldman.mp3",
+       "h": "96194177",
+       "bytes": 11460
+      },
+      "dude": {
+       "file": "crash_09_dude.mp3",
+       "h": "46ed08f7",
+       "bytes": 10937
+      },
+      "cool": {
+       "file": "crash_09_cool.mp3",
+       "h": "46a3c7b4",
+       "bytes": 10937
+      }
+     }
+    },
+    {
+     "id": 10,
+     "text": "Đồ cà chớn cà cháo, đụng ghe người ta!",
+     "tts": "Đồ cà chớng cà cháo, đụng ghe người ta!",
+     "files": {
+      "girl": {
+       "file": "crash_10_girl.mp3",
+       "h": "9a89ed7a",
+       "bytes": 12504
+      },
+      "granny": {
+       "file": "crash_10_granny.mp3",
+       "h": "7f4ee937",
+       "bytes": 13549
+      },
+      "oldman": {
+       "file": "crash_10_oldman.mp3",
+       "h": "84190562",
+       "bytes": 13288
+      },
+      "dude": {
+       "file": "crash_10_dude.mp3",
+       "h": "2a9a6086",
+       "bytes": 11982
+      },
+      "cool": {
+       "file": "crash_10_cool.mp3",
+       "h": "77c90263",
+       "bytes": 12766
+      }
+     }
+    },
+    {
+     "id": 11,
+     "text": "Hông biết đọc thì để tui đọc dùm cho!",
+     "tts": "Hông biếc đọc thì để tui đọc dùm cho!",
+     "files": {
+      "girl": {
+       "file": "crash_11_girl.mp3",
+       "h": "6f09cebe",
+       "bytes": 10284
+      },
+      "granny": {
+       "file": "crash_11_granny.mp3",
+       "h": "a98773f8",
+       "bytes": 11460
+      },
+      "oldman": {
+       "file": "crash_11_oldman.mp3",
+       "h": "67c3ae37",
+       "bytes": 10545
+      },
+      "dude": {
+       "file": "crash_11_dude.mp3",
+       "h": "5678baf7",
+       "bytes": 10284
+      },
+      "cool": {
+       "file": "crash_11_cool.mp3",
+       "h": "4a20b59f",
+       "bytes": 10545
+      }
+     }
+    }
+   ]
+  }
+ }
+}

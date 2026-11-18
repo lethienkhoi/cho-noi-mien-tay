@@ -32,3 +32,23 @@ for f in files:
     if t != s:
         open(f, 'w', encoding='utf-8').write(t); changed += 1
 print(f'phiên bản {V}: sửa {changed} file')
+
+
+# B6: giọng chửi Khôi tự thu — liệt kê file trong assets/audio/taunts_custom/ vào manifest.json để game biết mà ưu tiên
+# (game không dò file bằng cách thử tải, tránh lỗi 404 trên console). Tên file: <jumped|crash>_<NN>[_<vendor>].<m4a|mp3|wav>
+CUSTOM = os.path.join(ROOT, 'assets', 'audio', 'taunts_custom')
+if os.path.isdir(CUSTOM):
+    import json
+    NAME = re.compile(r'^(jumped|crash)_\d{2}(_(girl|granny|oldman|dude|cool))?\.(m4a|mp3|wav)$')
+    found, skipped = [], []
+    for n in sorted(os.listdir(CUSTOM)):
+        if n == 'manifest.json' or n.startswith('.') or n.lower() == 'readme.txt': continue
+        if NAME.match(n):
+            found.append({'file': n, 'h': hashlib.sha1(open(os.path.join(CUSTOM, n), 'rb').read()).hexdigest()[:8]})
+        else: skipped.append(n)
+    out = {'_note': 'Tự tạo bởi dev/tools/stamp_version.py từ các file trong thư mục này. Đừng sửa tay.', 'files': found}
+    mp = os.path.join(CUSTOM, 'manifest.json')
+    old = open(mp, encoding='utf-8').read() if os.path.exists(mp) else ''
+    new = json.dumps(out, ensure_ascii=False, indent=1) + '\n'
+    if new != old: open(mp, 'w', encoding='utf-8').write(new)
+    print(f'giọng tự thu: {len(found)} file' + (f'; BỎ QUA tên không đúng mẫu: {", ".join(skipped)}' if skipped else ''))

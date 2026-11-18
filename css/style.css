@@ -197,3 +197,35 @@ body { position: fixed; inset: 0; display: flex; justify-content: center; align-
 .chips.pop > :nth-child(2) { animation-delay: .08s; }
 @keyframes chippop { 0% { transform: translateY(calc(10px * var(--u))) scale(.6); opacity: 0; } 100% { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .chips.pop > * { animation: none; } }
+
+/* ---- nút loa (B6): góc trên phải, dưới ô Kỷ lục; nổi trên màn bắt đầu/kết quả, dưới các hộp thoại */
+.btn-sound {
+  position: absolute; z-index: 4; top: calc(var(--sat) + 63px * var(--u)); right: calc(var(--sar) + 18px * var(--u));
+  width: calc(32px * var(--u)); height: calc(32px * var(--u)); padding: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--cream); border: calc(3px * var(--u)) solid var(--out); border-radius: 50%;
+  box-shadow: 0 calc(3px * var(--u)) 0 var(--out); cursor: pointer; touch-action: manipulation; color: var(--out);
+  -webkit-tap-highlight-color: transparent;
+}
+/* màn bắt đầu / kết quả: không có HUD, đưa nút lên sát góc cho khỏi đè thẻ */
+#app[data-state="title"] .btn-sound, #app[data-state="over"] .btn-sound { top: calc(var(--sat) + 14px * var(--u)); right: calc(var(--sar) + 14px * var(--u)); width: calc(38px * var(--u)); height: calc(38px * var(--u)); }
+#app[data-state="title"] .sound-ico, #app[data-state="over"] .sound-ico { width: calc(24px * var(--u)); height: calc(24px * var(--u)); }
+.btn-sound:active { transform: translateY(calc(2px * var(--u))); box-shadow: 0 calc(1px * var(--u)) 0 var(--out); }
+#app.is-loading .btn-sound { display: none; }
+.sound-ico { width: calc(21px * var(--u)); height: calc(21px * var(--u)); overflow: visible; }
+.sound-ico path, .sound-ico circle { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sound-ico .spk { fill: currentColor; }
+.sound-ico .x { display: none; }
+.sound-badge { position: absolute; right: calc(-5px * var(--u)); bottom: calc(-5px * var(--u)); width: calc(18px * var(--u)); height: calc(18px * var(--u)); display: none; }
+.sound-badge circle { fill: var(--acc); stroke: var(--out); stroke-width: 1.4; }
+.sound-badge .bn { fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sound-badge circle.bn { fill: #fff; stroke: none; }
+.sound-badge .bs { stroke: #fff; stroke-width: 1.6; stroke-linecap: round; }
+.btn-sound[data-mode="sfx"] .sound-badge { display: block; }
+.btn-sound[data-mode="off"] .w1, .btn-sound[data-mode="off"] .w2 { display: none; }
+.btn-sound[data-mode="off"] .x { display: inline; stroke: var(--acc); stroke-width: 2.4; }
+.btn-sound[data-mode="off"] { background: #f1e6c8; }
+.sound-tip {
+  position: absolute; right: calc(100% + 8px * var(--u)); top: 50%; transform: translateY(-50%);
+  background: var(--out); color: #fff; font-size: calc(12px * var(--u)); font-weight: 600; white-space: nowrap;
+  padding: calc(4px * var(--u)) calc(10px * var(--u)); border-radius: 999px; pointer-events: none;
+}

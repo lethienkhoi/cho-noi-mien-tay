@@ -17,6 +17,18 @@ Cập nhật: 2026-11-18 (B4b). Văn bản giấy phép đầy đủ đi kèm ga
 
 Không phụ thuộc CDN/HuggingFace lúc chạy: mọi tệp nằm trong repo, GitHub Pages phục vụ, lưu vào Cache Storage của trình duyệt.
 
+## Âm thanh (B6, `assets/audio/`)
+
+| Tệp | Nguồn | Giấy phép |
+|---|---|---|
+| `assets/audio/taunts/*.mp3` (125 file: 25 câu chửi × 5 kiểu người bán) + `manifest.json` | Đọc bằng Piper TTS, giọng `vi_VN-vais1000-medium` (HuggingFace `rhasspy/piper-voices`, `vi/vi_VN/vais1000/medium`; dữ liệu VAIS-1000, một giọng nữ miền Bắc). Đổi tốc độ, cao độ, rung giọng bằng `dev/tools/make_taunt_audio.py` (ffmpeg rubberband, LAME). | CC BY 4.0 (dữ liệu VAIS-1000, thẻ mô hình Piper). Ghi công: "VAIS-1000 Vietnamese Speech Synthesis Corpus" (IEEE DataPort) + Piper (rhasspy). Đã ghi trong hộp "Nguồn và giấy phép" của game và `assets/audio/LICENSES.txt`. |
+| Tiếng động, nhạc nền | Tổng hợp bằng code lúc chạy (`src/game/sfx.js`, Web Audio), không dùng file mẫu. | Của dự án |
+| `assets/audio/taunts_custom/` | Giọng Khôi tự thu (nếu có) | Của Khôi |
+
+Công cụ chỉ chạy trên máy dev, không đưa vào game: gói pip `piper-tts` 1.8.0 (GPL-3.0), ffmpeg (librubberband GPL-2.0+, libmp3lame LGPL). File âm thanh do công cụ tạo ra không bị ràng buộc bởi giấy phép công cụ.
+
+Giọng đã xem xét nhưng KHÔNG dùng: `vi_VN-vivos-x_low` (dữ liệu VIVOS, CC BY-NC-SA 4.0: cấm dùng thương mại; nhiều người đọc, có giọng miền Nam), `vi_VN-25hours_single-low` (dữ liệu InfoRe, thẻ mô hình ghi giấy phép "Unknown"). Các giọng AI tiếng Việt miễn phí khác (MMS-TTS, viXTTS, F5-TTS tiếng Việt) đều giấy phép phi thương mại.
+
 ## Chỉ dùng để kiểm thử (KHÔNG đưa vào repo/game)
 
 - `test_wavs/0.wav, 1.wav, 2.wav` trong gói mô hình: lấy từ HuggingFace `nguyenvulebinh/wav2vec2-base-vietnamese-250h` (CC BY-NC 4.0) → chỉ dùng thử, không chép vào repo.

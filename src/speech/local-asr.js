@@ -60,7 +60,7 @@ export class LocalSpeechInput extends EventTarget {
     }
     if (!this.worker) {
       try {
-        this.worker = new Worker(new URL('asr-worker.js?v=c077d626', HERE));
+        this.worker = new Worker(new URL('asr-worker.js?v=8d4b1e05', HERE));
       } catch (e) {
         this.loadState = 'error';
         this.emit('load-error', { code: 'init', message: String(e.message || e) });
@@ -139,7 +139,7 @@ export class LocalSpeechInput extends EventTarget {
     const constraints = { audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } };
     navigator.mediaDevices.getUserMedia(constraints).then(async (stream) => {
       if (!this.want) { stream.getTracks().forEach((t) => t.stop()); ctx.close().catch(() => {}); this.state = 'idle'; return; }
-      await ctx.audioWorklet.addModule(new URL('mic-worklet.js?v=c077d626', HERE));
+      await ctx.audioWorklet.addModule(new URL('mic-worklet.js?v=8d4b1e05', HERE));
       const src = ctx.createMediaStreamSource(stream);
       const node = new AudioWorkletNode(ctx, 'cho-noi-mic', { numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [1], channelCount: 1, channelCountMode: 'explicit' });
       node.port.onmessage = (e) => this.onAudio(e.data);

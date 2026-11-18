@@ -6,6 +6,7 @@ export class Fireworks {
   constructor(canvas) {
     this.cv = canvas; this.ctx = canvas.getContext('2d');
     this.raf = 0; this.parts = []; this.bursts = []; this.t = 0; this.running = false;
+    this.onBoom = null;          // B6: tiếng nổ lách tách (main.js gắn sfx.crackle)
   }
 
   start() {
@@ -31,6 +32,7 @@ export class Fireworks {
   }
 
   boom(b) {
+    if (this.onBoom) { try { this.onBoom(b); } catch (e) { /* âm thanh lỗi không làm hỏng pháo hoa */ } }
     const k = this.w / 390, c1 = COLORS[Math.floor(Math.random() * COLORS.length)];
     const c2 = COLORS[Math.floor(Math.random() * COLORS.length)];
     const N = this.reduce ? 44 : 64, sp = (150 + Math.random() * 60) * k;

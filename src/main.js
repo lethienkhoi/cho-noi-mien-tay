@@ -1,16 +1,17 @@
 // Khởi động game: nạp dữ liệu + sprite, nối Game <-> Renderer <-> UI, vòng lặp requestAnimationFrame.
 // Mọi đường dẫn đều tương đối để chạy được trong thư mục con của GitHub Pages.
-import { CONFIG } from './config.js?v=c077d626';
-import { Assets } from './game/assets.js?v=c077d626';
-import { Game } from './game/game.js?v=c077d626';
-import { Renderer } from './game/renderer.js?v=c077d626';
-import { Hud } from './ui/hud.js?v=c077d626';
-import { Panel } from './ui/panel.js?v=c077d626';
-import { Screens } from './ui/screens.js?v=c077d626';
-import { SpeechInput, speechSupport } from './speech/recognizer.js?v=c077d626';
-import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=c077d626';
-import { VoiceControl } from './speech/voice.js?v=c077d626';
-import { playTaunt } from './game/sfx.js?v=c077d626';
+import { CONFIG } from './config.js?v=8d4b1e05';
+import { Assets } from './game/assets.js?v=8d4b1e05';
+import { Game } from './game/game.js?v=8d4b1e05';
+import { Renderer } from './game/renderer.js?v=8d4b1e05';
+import { Hud } from './ui/hud.js?v=8d4b1e05';
+import { Panel } from './ui/panel.js?v=8d4b1e05';
+import { Screens } from './ui/screens.js?v=8d4b1e05';
+import { SpeechInput, speechSupport } from './speech/recognizer.js?v=8d4b1e05';
+import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=8d4b1e05';
+import { VoiceControl } from './speech/voice.js?v=8d4b1e05';
+import { sfx, playTaunt } from './game/sfx.js?v=8d4b1e05';
+import { SoundButton } from './ui/sound-button.js?v=8d4b1e05';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
@@ -159,7 +160,8 @@ async function boot() {
   const hudEl = document.getElementById('hud'), panelEl = document.getElementById('panel');
   function measureUI() {
     const a = app.getBoundingClientRect(), u = renderer.unit || 1;
-    const hb = hudEl.hidden ? 0 : hudEl.getBoundingClientRect().bottom - a.top;
+    const sb = document.getElementById('btn-sound');   // nút loa (B6) nằm ngay dưới ô Kỷ lục
+    const hb = hudEl.hidden ? 0 : Math.max(hudEl.getBoundingClientRect().bottom, sb ? sb.getBoundingClientRect().bottom : 0) - a.top;
     renderer.uiTop = hb > 0 ? hb / u : 100;
     const pt = panelEl.hidden ? 0 : panelEl.getBoundingClientRect().top - a.top;
     renderer.uiBottom = pt > 0 ? pt / u : renderer.H - 160;
@@ -176,24 +178,34 @@ async function boot() {
   // ---- nối sự kiện game -> UI
   // bộ nghe cục bộ: mỗi câu mới đặt hotwords + mốc cắt âm thanh; nhảy/đụng thì ngừng giải mã cho nhẹ máy
   game.addEventListener('round', (e) => {
+    sfx.prefetch(e.detail.vendor, e.detail.tauntPick);   // B6: nạp lười đúng 2 câu chửi của ghe này
     const T = e.detail.T || (game.round && game.round.T) || 8;
     speech.setContext(e.detail.phrase, { maxSec: T + CONFIG.TIME_GRACE + CONFIG.HOLD_MAX + 1 });
     panel.play(e.detail.phrase); measureUI();
   });
-  game.addEventListener('matched', (e) => { speech.setContext(null); panel.passed(e.detail.phrase, e.detail); measureUI(); });
+  game.addEventListener('matched', (e) => {
+    speech.setContext(null); panel.passed(e.detail.phrase, e.detail); measureUI();
+    sfx.whoosh(); sfx.ting(!!e.detail.dialect);
+  });
+  game.addEventListener('landed', () => sfx.splash());
+  game.addEventListener('tier', () => sfx.fanfare());
   game.addEventListener('crash', (e) => {
     speech.setContext(null); panel.crash(e.detail.phrase); measureUI();
     shot.ok = false; shot.taken = false;
+    sfx.crash();
   });
-  game.addEventListener('taunt', (e) => playTaunt(e.detail.kind, e.detail.text));
+  game.addEventListener('taunt', (e) => playTaunt(e.detail.kind, e.detail.text, e.detail.vendor, e.detail.index));
   game.addEventListener('over', (e) => {
     panel.show(false); hud.show(false);
     if (!shot.taken) { shot.taken = true; snapCrash(); }  // dự phòng (vd. tạm dừng ngay lúc đụng)
     screens.showResult(e.detail, pickRoast(e.detail.score, e.detail.newRecord));
     paintShot();
   });
-  game.addEventListener('state', (e) => { app.dataset.state = e.detail.state; });
+  // nhạc nền: đang chơi (micro mở) thì hạ rất nhỏ; màn bắt đầu/kết quả/tạm dừng thì to lại
+  const syncRun = () => sfx.setRun(!game.paused && (game.state === 'playing' || game.state === 'jumping'));
+  game.addEventListener('state', (e) => { app.dataset.state = e.detail.state; syncRun(); });
   game.addEventListener('pause', (e) => {
+    syncRun();
     const { paused, reason } = e.detail;
     screens.setPaused(paused && reason !== 'qa' && reason !== 'speech');
     if (paused) { speech && speech.stop(); panel.setMic('off'); }
@@ -289,6 +301,7 @@ async function boot() {
     new VoiceControl({ game, speech, panel });
     speech.addEventListener('listening', () => {
       panel.setMic('on');
+      if (waitFor) { sfx.unlock(); sfx.micBeep(); }       // bíp nhẹ khi micro bắt đầu nghe (lúc bắt đầu / chơi tiếp)
       const w = waitFor; waitFor = null;
       screens.showMicWait(false);
       if (w === 'start') beginRun();
@@ -316,6 +329,7 @@ async function boot() {
   }
 
   function startRun() {
+    sfx.unlock();                                        // iOS: mở khoá âm thanh ngay trong cú bấm Bắt đầu / Chơi lại
     if (btnStart.disabled && !screens.start.hidden) return;
     if (pendingUse && speech && !running()) { speech.use(...pendingUse); app.dataset.asr = pendingUse[1]; pendingUse = null; }
     screens.hideStart(); screens.hideResult(); screens.hideSpeechError();
@@ -338,6 +352,7 @@ async function boot() {
   }
   function showNoSpeech() { hud.show(false); panel.show(false); screens.showNoSpeech(support, pageUrl); }
   function resumeRun() {
+    sfx.unlock();
     if (!screens.rotateEl.hidden) return;
     screens.setPaused(false);
     listen('resume');
@@ -366,6 +381,14 @@ async function boot() {
   document.getElementById('btn-licenses').addEventListener('click', () => { licEl.hidden = false; });
   document.getElementById('btn-licenses-close').addEventListener('click', () => { licEl.hidden = true; });
 
+  // ---- âm thanh (B6): nút loa, pháo hoa, tab ẩn thì tắt tiếng
+  const soundBtn = new SoundButton(document.getElementById('btn-sound'), sfx);
+  screens.fireworks.onBoom = () => sfx.crackle();
+  // chạm lần đầu ở bất kỳ đâu cũng mở khoá (nhạc màn bắt đầu chạy sau cú chạm đầu tiên)
+  document.addEventListener('pointerdown', () => sfx.unlock(), { once: true, capture: true });
+  document.addEventListener('visibilitychange', () => sfx.setHidden(document.hidden));
+  window.addEventListener('pageshow', () => sfx.setHidden(document.hidden));
+
   // ---- tab ẩn: tạm dừng
   // bộ nghe cục bộ: trang ẩn thì trả micro hẳn (tắt đèn micro), bấm Chơi tiếp sẽ xin lại
   document.addEventListener('visibilitychange', () => {
@@ -373,7 +396,7 @@ async function boot() {
     if (running()) game.pause('hidden');
     if (speech && speech.kind === 'local') speech.release();
   });
-  window.addEventListener('pagehide', () => { if (running()) game.pause('hidden'); if (speech) speech.release(); });
+  window.addEventListener('pagehide', () => { if (running()) game.pause('hidden'); if (speech) speech.release(); sfx.setHidden(true); });
 
   window.addEventListener('resize', layout);
   window.addEventListener('orientationchange', () => setTimeout(layout, 120));
@@ -381,13 +404,19 @@ async function boot() {
   layout();
 
   // ---- vòng lặp
-  let last = performance.now();
+  let last = performance.now(), paddleT = 0.5;
   function loop(now) {
     let dt = (now - last) / 1000; last = now;
     if (dt > 0.05) dt = 0.05;          // tab vừa hiện lại / máy giật: không nhảy cóc
     if (document.hidden) dt = 0;
     game.update(dt);
     renderer.frame(dt);
+    // mái chèo khua nước theo nhịp, chỉ khi đang chèo ghe (cấp 0) và ghe hàng đang tới
+    if (game.state === 'playing' && !game.paused && !game.frozen && game.tier === 0 && dt > 0) {
+      paddleT += dt;
+      const every = 0.78 / Math.min(1.5, game.driftFactor);
+      if (paddleT >= every) { paddleT = 0; sfx.paddle(); }
+    } else paddleT = 0.5;
     if (game.state === 'crash' && !shot.taken && game.crash && game.crash.t >= CONFIG.CRASH_SNAP_T) { shot.taken = true; snapCrash(); }
     if (game.state === 'playing') panel.setTime(game.remainingFrac);
     if (game.state !== 'title') hud.update(game);
@@ -407,7 +436,7 @@ async function boot() {
 
   // cho B4 và kiểm thử
   window.game = game;
-  window.__choNoi = { shot, paintShot, pickRoast, game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support, localAsr, webSpeech, localSup };
+  window.__choNoi = { shot, paintShot, pickRoast, game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support, localAsr, webSpeech, localSup, sfx, soundBtn };
 }
 
 boot().catch((e) => {

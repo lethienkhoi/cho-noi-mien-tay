@@ -1,0 +1,13 @@
+Giấy phép âm thanh trong thư mục assets/audio (game Chợ nổi miền Tây). Xem thêm dev/docs/licenses.md.
+
+1. taunts/*.mp3 — giọng người bán chửi (25 câu x 5 kiểu người bán)
+   Đọc bằng Piper TTS (https://github.com/rhasspy/piper), giọng vi_VN-vais1000-medium
+   (https://huggingface.co/rhasspy/piper-voices/tree/main/vi/vi_VN/vais1000/medium).
+   Dữ liệu huấn luyện: VAIS-1000 Vietnamese Speech Synthesis Corpus
+   (https://ieee-dataport.org/documents/vais-1000-vietnamese-speech-synthesis-corpus),
+   giấy phép Creative Commons Attribution 4.0 (CC BY 4.0) https://creativecommons.org/licenses/by/4.0/
+   Đã chỉnh sửa: đổi tốc độ, cao độ, rung giọng, nén MP3 (dev/tools/make_taunt_audio.py).
+
+2. taunts_custom/ — giọng Khôi tự thu (nếu có), thuộc quyền của Khôi.
+
+3. Tiếng động và nhạc nền: tổng hợp bằng code lúc chạy (src/game/sfx.js), không có file mẫu.

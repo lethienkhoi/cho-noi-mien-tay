@@ -1,6 +1,6 @@
 // HUD trên cùng: Điểm, Kỷ lục, nhãn phương tiện (giống pv1).
-import { CONFIG } from '../config.js?v=c077d626';
-import { fmtScore } from './format.js?v=c077d626';
+import { CONFIG } from '../config.js?v=8d4b1e05';
+import { fmtScore } from './format.js?v=8d4b1e05';
 
 export class Hud {
   constructor(root, vehicles) {

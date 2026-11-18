@@ -2,9 +2,9 @@
 // B5: bố cục chạy ngang kiểu game khủng long trong khung dọc — ghe mình cố định bên trái, ghe hàng chạy từ phải sang
 // trên cùng một làn nước. API giọng nói (B4): game.onPhraseMatched(roundId, { dialect: boolean }).
 // Sự kiện (game.addEventListener): state, round, matched, landed, tier, crash, over, pause, taunt.
-import { CONFIG } from '../config.js?v=c077d626';
-import { PhrasePicker, roundTime, levelForPasses } from './phrases.js?v=c077d626';
-import { loadBest, recordScore } from './storage.js?v=c077d626';
+import { CONFIG } from '../config.js?v=8d4b1e05';
+import { PhrasePicker, roundTime, levelForPasses } from './phrases.js?v=8d4b1e05';
+import { loadBest, recordScore } from './storage.js?v=8d4b1e05';
 
 const lerp = (a, b, t) => a + (b - a) * t;
 const clamp01 = (t) => Math.max(0, Math.min(1, t));
@@ -107,7 +107,9 @@ export class Game extends EventTarget {
     do { vendor = this.vendors[Math.floor(this.rnd() * this.vendors.length)]; } while (vendor === this.lastVendor && this.vendors.length > 1);
     this.lastVendor = vendor;
     const T = roundTime(phrase, this.passed);
-    this.round = { id: ++this.roundSeq, phrase, T, grace: CONFIG.TIME_GRACE, t: 0, level: levelForPasses(this.passed), hold: 0, partialK: 0, partialAt: -1 };
+    this.round = { id: ++this.roundSeq, phrase, T, grace: CONFIG.TIME_GRACE, t: 0, level: levelForPasses(this.passed), hold: 0, partialK: 0, partialAt: -1, vendor };
+    // B6: chọn trước câu chửi của ghe này (nhảy qua / đụng) để âm thanh nạp sẵn đúng 2 file giọng
+    this.round.tauntPick = { jumpedOver: this.pickTauntIndex('jumpedOver'), crash: this.pickTauntIndex('crash') };
     const key = this.manifest.stallMap[phrase.stall] || 'stall_fruit';
     const s = this.stallScale(key);
     this.stall = { key, vendor, face: 'normal', p: 0, x: 0, y: this.laneY, s, rot: 0, phase: this.rnd() * 6 };
@@ -165,20 +167,24 @@ export class Game extends EventTarget {
   get remainingFrac() { return this.round ? clamp01(1 - this.round.t / this.round.T) : 0; }
 
   // ---------------------------------------------------------------- bong bóng chửi
-  pickTaunt(kind) {
+  // chỉ số câu chửi (thứ tự trong data/phrases.json), tránh lặp lại câu vừa chửi
+  pickTauntIndex(kind) {
     const list = (this.data.taunts && this.data.taunts[kind]) || [];
-    if (!list.length) return '';
+    if (!list.length) return -1;
     let i = Math.floor(this.rnd() * list.length);
     if (list.length > 1 && list[i] === this.lastTaunt[kind]) i = (i + 1) % list.length;
-    this.lastTaunt[kind] = list[i];
-    return list[i];
+    return i;
   }
   taunt(kind) {
     const st = this.stall; if (!st) return;
-    const text = this.pickTaunt(kind); if (!text) return;
+    const list = (this.data.taunts && this.data.taunts[kind]) || [];
+    const pre = this.round && this.round.tauntPick ? this.round.tauntPick[kind] : -1;
+    const index = pre >= 0 && pre < list.length ? pre : this.pickTauntIndex(kind);
+    const text = list[index]; if (!text) return;
+    this.lastTaunt[kind] = text;
     st.face = 'yell';
     this.taunts = [{ kind, text, t: 0, stall: st }]; // mỗi lúc một bong bóng
-    this.dispatchEvent(new CustomEvent('taunt', { detail: { kind, text, vendor: st.vendor } }));
+    this.dispatchEvent(new CustomEvent('taunt', { detail: { kind, text, vendor: st.vendor, index } }));
   }
 
   // ---------------------------------------------------------------- cập nhật

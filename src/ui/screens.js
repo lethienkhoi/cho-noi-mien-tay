@@ -1,6 +1,6 @@
 // Màn bắt đầu, bảng kết quả, lớp phủ (tạm dừng, xoay màn, đang tải, lỗi, micro/giọng nói).
-import { fmtScore } from './format.js?v=c077d626';
-import { Fireworks } from './fireworks.js?v=c077d626';
+import { fmtScore } from './format.js?v=8d4b1e05';
+import { Fireworks } from './fireworks.js?v=8d4b1e05';
 
 export class Screens {
   constructor(app) {

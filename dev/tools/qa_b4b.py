@@ -181,6 +181,11 @@ def main():
             t = ev(pg, '__t')
             st = ev(pg, '({s: __choNoi.localAsr.stats, l: __choNoi.localAsr.lastDecode})')
             ok(jumped, f'nghe câu qua micro giả → nhảy (nghe được: "{t.get("last")}")')
+            # B6: game phát tiếng (AudioContext riêng) cùng lúc bộ nghe thu micro (AudioContext riêng của src/speech)
+            au = ev(pg, '''({ g: __choNoi.sfx.ctx && __choNoi.sfx.ctx.state, m: __choNoi.localAsr.audio && __choNoi.localAsr.audio.ctx.state,
+                same: !!(__choNoi.localAsr.audio && __choNoi.sfx.ctx === __choNoi.localAsr.audio.ctx), c: __choNoi.sfx.counts })''')
+            ok(au['g'] == 'running' and au['m'] == 'running' and not au['same'] and au['c'].get('beep', 0) >= 1 and au['c'].get('musicStart', 0) >= 1,
+               f'phát tiếng + thu micro cùng lúc: context game {au["g"]}, context micro {au["m"]}, tiếng đã gọi {au["c"]}')
             if jumped:
                 metrics['round_to_jump_ms'] = round(t['matched'] - t['round'])
                 pg.wait_for_function('game.jump && game.jump.t > .35', timeout=3000)
