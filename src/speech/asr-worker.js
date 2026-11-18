@@ -9,7 +9,7 @@
 //           {type:'result', id, text, ms, audioSec, at (giây âm thanh tính từ lúc mở micro, cuối đoạn), interval}
 /* global ChoNoiAsrCore, createChoNoiAsr */
 'use strict';
-importScripts('asr-core.js?v=69dfb0d0');
+importScripts('asr-core.js?v=b170c2bd');
 
 const SR = 16000;
 const FRAME = 320;                 // 20 ms

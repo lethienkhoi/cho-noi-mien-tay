@@ -142,7 +142,7 @@ def main():
             pg.screenshot(path=f'{QA}/b4b_1_loading.png')
             txt = ev(pg, 'document.getElementById("asr-text").textContent')
             FAIL['slow'] = False
-            ok(('Đang tải bộ nghe tiếng Việt' in txt and 'MB' in txt or 'Đang khởi động' in txt) and ev(pg, 'document.getElementById("btn-start").disabled'),
+            ok(('chợ đang dọn hàng ra' in txt and '%' in txt or 'sắp mở chợ' in txt) and ev(pg, 'document.getElementById("btn-start").disabled'),
                f'màn tải: "{txt}", nút Bắt đầu tắt')
             pg.wait_for_function(READY, timeout=180000)
             info = ev(pg, '__choNoi.localAsr.info')

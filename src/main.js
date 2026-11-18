@@ -1,16 +1,16 @@
 // Khởi động game: nạp dữ liệu + sprite, nối Game <-> Renderer <-> UI, vòng lặp requestAnimationFrame.
 // Mọi đường dẫn đều tương đối để chạy được trong thư mục con của GitHub Pages.
-import { CONFIG } from './config.js?v=69dfb0d0';
-import { Assets } from './game/assets.js?v=69dfb0d0';
-import { Game } from './game/game.js?v=69dfb0d0';
-import { Renderer } from './game/renderer.js?v=69dfb0d0';
-import { Hud } from './ui/hud.js?v=69dfb0d0';
-import { Panel } from './ui/panel.js?v=69dfb0d0';
-import { Screens } from './ui/screens.js?v=69dfb0d0';
-import { SpeechInput, speechSupport } from './speech/recognizer.js?v=69dfb0d0';
-import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=69dfb0d0';
-import { VoiceControl } from './speech/voice.js?v=69dfb0d0';
-import { playTaunt } from './game/sfx.js?v=69dfb0d0';
+import { CONFIG } from './config.js?v=b170c2bd';
+import { Assets } from './game/assets.js?v=b170c2bd';
+import { Game } from './game/game.js?v=b170c2bd';
+import { Renderer } from './game/renderer.js?v=b170c2bd';
+import { Hud } from './ui/hud.js?v=b170c2bd';
+import { Panel } from './ui/panel.js?v=b170c2bd';
+import { Screens } from './ui/screens.js?v=b170c2bd';
+import { SpeechInput, speechSupport } from './speech/recognizer.js?v=b170c2bd';
+import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=b170c2bd';
+import { VoiceControl } from './speech/voice.js?v=b170c2bd';
+import { playTaunt } from './game/sfx.js?v=b170c2bd';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
@@ -164,7 +164,7 @@ async function boot() {
   function updateStartBtn() {
     const ok = !!(speech && speech.inner && (speech.kind === 'webspeech' || (localAsr && localAsr.ready)));
     btnStart.disabled = !ok;
-    btnStart.textContent = ok ? 'Bắt đầu' : 'Đang tải bộ nghe…';
+    btnStart.textContent = ok ? 'Bắt đầu' : 'Chợ đang dọn hàng…';
   }
   const MB = (b) => (b / 1048576).toFixed(b < 10485760 ? 1 : 0);
   const fallbackWeb = (why) => {
@@ -177,12 +177,12 @@ async function boot() {
     asrUI(`Trình duyệt này chưa chạy được bộ nghe trên máy (thiếu ${localSup.why.join(', ')}).`, { cls: 'error' });
   } else if (localAsr) {
     useSpeech(localAsr, 'local');
-    asrUI('Đang tải bộ nghe tiếng Việt…', { frac: 0 });
+    asrUI('Bạn chờ một chút nhé, chợ đang dọn hàng ra…', { frac: 0 });
     localAsr.addEventListener('load-progress', (e) => {
       const { loaded, total } = e.detail;
       if (speech.kind !== 'local') return;
-      if (loaded >= total) asrUI('Đang khởi động bộ nghe tiếng Việt…', { frac: 1 });
-      else asrUI(`Đang tải bộ nghe tiếng Việt… ${Math.floor(100 * loaded / Math.max(1, total))}% (${MB(loaded)}/${MB(total)} MB)`, { frac: loaded / Math.max(1, total) });
+      if (loaded >= total) asrUI('Hàng bày xong rồi, sắp mở chợ…', { frac: 1 });
+      else asrUI(`Bạn chờ một chút nhé, chợ đang dọn hàng ra… ${Math.floor(100 * loaded / Math.max(1, total))}%`, { frac: loaded / Math.max(1, total) });
     });
     localAsr.addEventListener('load-ready', (e) => {
       const { rtf, cached, heapMB, loadMs } = e.detail;
