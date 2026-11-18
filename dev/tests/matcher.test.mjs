@@ -53,8 +53,18 @@ test('7. thừa chữ trước và sau → vẫn qua', () => {
   assert.equal(r.matched, true); assert.equal(r.start, 4);
 });
 
-test('8. chữ chen giữa câu → không qua (phải liên tiếp)', () => {
-  assert.equal(m('bún ờ riêu', 2).matched, false);
+test('8. đọc trật rồi đọc tiếp / chen chữ lạ giữa câu → vẫn qua (2026-11-18, theo Khôi)', () => {
+  assert.equal(m('bún ờ riêu', 2).matched, true);
+  assert.equal(m('nước mía rẻ tề rẻ rề', 5).matched, true);       // trật "rẻ tề" rồi đọc lại
+  assert.equal(m('nước mía ừm ừm gẻ gề', 5).matched, true);        // ngập ngừng rồi đọc tiếp
+  assert.equal(m('nước mía ghẻ ghề', 5).matched, true);            // máy viết đúng chính tả gh
+  assert.equal(m('nước mía ghẻ ghề', 5).dialect, true);
+  assert.equal(m('nước mía', 5).matched, false);                   // thiếu chữ vẫn không qua
+  assert.equal(matchProgress(normalizeWords('nước mía ờ ờ rẻ'), P[5]), 3);
+});
+
+test('8b. chen quá nhiều chữ lạ → không qua', () => {
+  assert.equal(m('bún a b c d e f g h i riêu', 2).matched, false);
 });
 
 test('9. sai 1 ký tự: câu ngắn không qua, câu dài lệch một chữ thì qua', () => {

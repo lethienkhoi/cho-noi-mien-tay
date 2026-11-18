@@ -16,13 +16,16 @@ export const PASS_AVG = 0.8;
 const DIGITS = { 0: 'không', 1: 'một', 2: 'hai', 3: 'ba', 4: 'bốn', 5: 'năm', 6: 'sáu', 7: 'bảy', 8: 'tám', 9: 'chín', 10: 'mười' };
 
 // NFC, chữ thường, bỏ dấu câu (gạch nối coi như khoảng trắng), gộp khoảng trắng → mảng chữ.
+// "ghẻ" và "gẻ", "nghe" và "nge" là cùng một âm (chính tả bắt viết gh/ngh trước e, ê, i): so sánh theo một dạng.
+const canon = (w) => w.replace(/^ngh/, 'ng').replace(/^gh/, 'g');
+
 export function normalizeWords(text) {
   if (!text) return [];
   const s = String(text).normalize('NFC').toLowerCase()
     .replace(/[^\p{L}\p{N}\s]+/gu, ' ')
     .trim();
   if (!s) return [];
-  return s.split(/\s+/).map((w) => (Object.prototype.hasOwnProperty.call(DIGITS, w) ? DIGITS[w] : w));
+  return s.split(/\s+/).map((w) => canon(Object.prototype.hasOwnProperty.call(DIGITS, w) ? DIGITS[w] : w));
 }
 export const normalizeText = (text) => normalizeWords(text).join(' ');
 
@@ -61,50 +64,75 @@ export function preparePhrase(phrase) {
   return [{ ct, pa: ct }, { ct: pa, pa, dialectIfMatched: pa.join(' ') !== ct.join(' ') }];
 }
 
-function matchAt(words, start, form) {
-  let dialect = false, sum = 0;
-  const n = form.ct.length;
-  for (let i = 0; i < n; i++) {
-    const h = words[start + i];
-    if (h === undefined) return null;
-    const sc = wordScore(h, form.ct[i]), sp = wordScore(h, form.pa[i]);
-    const best = Math.max(sc, sp);
-    if (best === 0) return null;
-    sum += best;
-    if (form.ct[i] !== form.pa[i] && h === form.pa[i]) dialect = true;
+// Khớp theo DÃY CON đúng thứ tự (2026-11-18, theo Khôi): các chữ của câu phải xuất hiện đúng thứ tự trong transcript,
+// nhưng ĐƯỢC CHEN chữ lạ ở giữa — đọc trật một chữ thì đọc lại chữ đó / đọc tiếp phần còn lại vẫn được tính.
+// Giới hạn chữ chen: tối đa MAX_GAP_WORDS(n) chữ lạ trong cả đoạn khớp, để nói lung tung không tự lọt qua.
+export const MAX_GAP_WORDS = (n) => 2 * n + 4;
+
+// Quy hoạch động: tìm cách khớp n chữ đích vào words (đúng thứ tự, mỗi chữ nghe dùng 1 lần) có tổng điểm cao nhất
+// trong các cách có số chữ chen ≤ giới hạn. Trả { k: số chữ đích khớp được tính từ đầu, score, start, end, dialect } cho k = n.
+function bestSubsequence(words, form) {
+  const n = form.ct.length, m = words.length;
+  if (!n || !m) return null;
+  const sc = form.ct.map((ct, i) => words.map((h) => {
+    const a = wordScore(h, ct), b = wordScore(h, form.pa[i]);
+    return { s: Math.max(a, b), dialect: ct !== form.pa[i] && h === form.pa[i] };
+  }));
+  let best = null;
+  // thử mọi điểm bắt đầu (chữ đích đầu tiên khớp ở words[s]); n, m nhỏ nên đủ nhanh
+  for (let s = 0; s < m; s++) {
+    if (!sc[0][s].s) continue;
+    // dp[i] = {sum, end, dialect} tốt nhất khi đã khớp i+1 chữ đầu, chữ thứ i ở vị trí end
+    let cur = { sum: sc[0][s].s, end: s, dialect: sc[0][s].dialect };
+    const limit = s + n + MAX_GAP_WORDS(n);
+    let ok = true;
+    for (let i = 1; i < n; i++) {
+      // tham lam có nhìn trước: chọn vị trí kế tiếp có điểm cao nhất trong cửa sổ trước khi gặp chữ đích kế sau đó
+      let pick = -1;
+      for (let j = cur.end + 1; j < Math.min(m, limit); j++) {
+        if (!sc[i][j].s) continue;
+        if (pick < 0 || sc[i][j].s > sc[i][pick].s) pick = j;
+        if (sc[i][j].s === 1) break;
+        // nếu chữ đích kế tiếp đã xuất hiện thì thôi tìm xa hơn (không vượt mặt chữ sau)
+        if (i + 1 < n && sc[i + 1][j] && sc[i + 1][j].s === 1 && pick >= 0) break;
+      }
+      if (pick < 0) { ok = false; break; }
+      cur = { sum: cur.sum + sc[i][pick].s, end: pick, dialect: cur.dialect || sc[i][pick].dialect };
+    }
+    if (!ok) continue;
+    const avg = cur.sum / n;
+    if (avg < PASS_AVG) continue;
+    const cand = { score: avg, start: s, end: cur.end, dialect: cur.dialect };
+    if (!best || (cand.dialect && !best.dialect) || (cand.dialect === best.dialect && cand.score > best.score)) best = cand;
   }
-  if (sum / n < PASS_AVG) return null;
-  return { dialect, score: sum / n };
+  return best;
 }
 
-// words: mảng chữ đã chuẩn hoá. Trả { matched, dialect, start } — ưu tiên lần khớp có giọng miền Tây.
+// words: mảng chữ đã chuẩn hoá. Trả { matched, dialect, start, length } — length = số chữ nghe từ đầu tới cuối đoạn khớp.
 export function matchPhrase(words, phrase) {
   let best = null;
   for (const form of preparePhrase(phrase)) {
-    const n = form.ct.length;
-    if (!n) continue;
-    for (let s = 0; s + n <= words.length; s++) {
-      const m = matchAt(words, s, form);
-      if (!m) continue;
-      const dialect = m.dialect || !!form.dialectIfMatched;
-      if (!best || (dialect && !best.dialect)) best = { matched: true, dialect, start: s, length: n };
-      if (best.dialect) return best;
-    }
+    const r = bestSubsequence(words, form);
+    if (!r) continue;
+    const dialect = r.dialect || !!form.dialectIfMatched;
+    const cand = { matched: true, dialect, start: r.start, length: r.end - r.start + 1 };
+    if (!best || (dialect && !best.dialect)) best = cand;
   }
   return best || { matched: false, dialect: false, start: -1, length: 0 };
 }
 
-// Số chữ đầu câu đã đọc đúng (để tô dần trên khung chữ): dãy dài nhất trong transcript khớp phần đầu câu.
+// Số chữ đầu câu đã đọc đúng (để tô dần trên khung chữ): khớp dãy con đúng thứ tự, được chen chữ lạ, dài nhất có thể.
+// Đọc trật rồi đọc tiếp thì phần đã đúng vẫn giữ màu.
 export function matchProgress(words, phrase) {
   let bestK = 0;
   for (const form of preparePhrase(phrase)) {
     const n = form.ct.length;
     for (let s = 0; s < words.length; s++) {
-      let k = 0;
-      while (k < n && s + k < words.length) {
-        const h = words[s + k];
-        if (Math.max(wordScore(h, form.ct[k]), wordScore(h, form.pa[k])) === 0) break;
-        k++;
+      if (Math.max(wordScore(words[s], form.ct[0]), wordScore(words[s], form.pa[0])) === 0) continue;
+      let k = 1, pos = s, gaps = 0;
+      for (let j = s + 1; j < words.length && k < n; j++) {
+        if (Math.max(wordScore(words[j], form.ct[k]), wordScore(words[j], form.pa[k])) > 0) { k++; pos = j; }
+        else if (++gaps > MAX_GAP_WORDS(n)) break;
       }
       if (k > bestK) bestK = k;
       if (bestK === n) return n;

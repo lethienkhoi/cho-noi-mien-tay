@@ -1,6 +1,6 @@
 {
   "_note": "ĐÃ DUYỆT 2026-11-13. chinhTa = chữ đúng chính tả, phienAm = chữ phiên âm giọng miền Tây (hiện to để đọc theo). level: 1 dễ, 2 vừa, 3 khó, 4 rất khó, 5 siêu khó.",
-  "rules": "r→g, v→d, đuôi -n→-ng, đuôi -t→-c, qu→w, về→dìa, rồi→gồi",
+  "rules": "r→g (trước i, e, ê viết gh), v→d, tr→ch, đuôi -n→-ng, đuôi -t→-c, qu→w, về→dìa, rồi→gồi, hết→hớc",
   "phrases": [
     {
       "id": 1,
@@ -17,7 +17,7 @@
       "stallName": "Ghe bún riêu",
       "icon": "Tô bún riêu",
       "chinhTa": "Bún riêu",
-      "phienAm": "Búng giêu",
+      "phienAm": "Búng ghiêu",
       "level": 1
     },
     {
@@ -35,7 +35,7 @@
       "stallName": "Ghe trái cây",
       "icon": "Trái sầu riêng",
       "chinhTa": "Sầu riêng",
-      "phienAm": "Sầu giêng",
+      "phienAm": "Sầu ghiêng",
       "level": 1
     },
     {
@@ -44,7 +44,7 @@
       "stallName": "Ghe nước",
       "icon": "Ly nước mía",
       "chinhTa": "Nước mía rẻ rề",
-      "phienAm": "Nước mía gẻ gề",
+      "phienAm": "Nước mía ghẻ ghề",
       "level": 1
     },
     {
@@ -116,7 +116,7 @@
       "stallName": "Ghe bún riêu",
       "icon": "Nồi riêu cua",
       "chinhTa": "Bún riêu cua rau răm, vừa ăn vừa run",
-      "phienAm": "Búng giêu cua gau găm, dừa ăng dừa gung",
+      "phienAm": "Búng ghiêu cua gau găm, dừa ăng dừa gung",
       "level": 3
     },
     {
@@ -179,7 +179,7 @@
       "stallName": "Ghe hủ tiếu",
       "icon": "Tô hủ tiếu",
       "chinhTa": "Hủ tiếu ráng rưới rau, rưới rồi rinh ra",
-      "phienAm": "Hủ tíu gáng gưới gau, gưới gồi ginh ga",
+      "phienAm": "Hủ tíu gáng gưới gau, gưới gồi ghinh ga",
       "level": 3
     },
     {
@@ -188,7 +188,7 @@
       "stallName": "Ghe rau",
       "icon": "Bó rau răm",
       "chinhTa": "Rau răm rẻ rề, rau ráp rau rút rộn ràng",
-      "phienAm": "Gau găm gẻ gề, gau gáp gau gúc gộn gàng",
+      "phienAm": "Gau găm ghẻ ghề, gau gáp gau gúc gộn gàng",
       "level": 4
     },
     {
@@ -215,7 +215,7 @@
       "stallName": "Ghe bánh",
       "icon": "Bánh tét, bánh tráng",
       "chinhTa": "Bánh tét bánh tráng, bán rẻ bán rề, bán về bán vội",
-      "phienAm": "Bánh téc bánh tráng, báng gẻ báng gề, báng dìa báng dội",
+      "phienAm": "Bánh téc bánh tráng, báng ghẻ báng ghề, báng dìa báng dội",
       "level": 4
     },
     {
@@ -244,6 +244,87 @@
       "chinhTa": "Con rô rúc rơm, rơm rạ rối rắm, rô rúc rồi ra, rớt vô rổ vịt",
       "phienAm": "Con gô gúc gơm, gơm gạ gối gắm, gô gúc gồi ga, gớt dô gổ dịch",
       "level": 5
+    },
+    {
+      "id": 28,
+      "stall": "nuoc",
+      "stallName": "Ghe nước",
+      "icon": "Ly nước mía",
+      "chinhTa": "Chèn đét ơi",
+      "phienAm": "Chèng đéc ơi",
+      "level": 1
+    },
+    {
+      "id": 29,
+      "stall": "banh",
+      "stallName": "Ghe bánh",
+      "icon": "Đòn bánh tét",
+      "chinhTa": "Mèn đét ơi",
+      "phienAm": "Mèng đéc ơi",
+      "level": 1
+    },
+    {
+      "id": 30,
+      "stall": "com-tam",
+      "stallName": "Ghe cơm tấm",
+      "icon": "Dĩa cơm sườn",
+      "chinhTa": "Hết sẩy",
+      "phienAm": "Hớc sẩy",
+      "level": 1
+    },
+    {
+      "id": 31,
+      "stall": "trai-cay",
+      "stallName": "Ghe trái cây",
+      "icon": "Trái sầu riêng",
+      "chinhTa": "Rẻ quá trời",
+      "phienAm": "Ghẻ wá chời",
+      "level": 1
+    },
+    {
+      "id": 32,
+      "stall": "hu-tieu",
+      "stallName": "Ghe hủ tiếu",
+      "icon": "Tô hủ tiếu",
+      "chinhTa": "Chèn đét ơi, ngon quá trời",
+      "phienAm": "Chèng đéc ơi, ngon wá chời",
+      "level": 2
+    },
+    {
+      "id": 33,
+      "stall": "com-tam",
+      "stallName": "Ghe cơm tấm",
+      "icon": "Dĩa cơm sườn",
+      "chinhTa": "Hết sẩy con bà bảy",
+      "phienAm": "Hớc sẩy con bà bảy",
+      "level": 2
+    },
+    {
+      "id": 34,
+      "stall": "rau",
+      "stallName": "Ghe rau",
+      "icon": "Bó rau muống",
+      "chinhTa": "Mèn đét ơi, rau rẻ rề",
+      "phienAm": "Mèng đéc ơi, gau ghẻ ghề",
+      "level": 2
+    },
+    {
+      "id": 35,
+      "stall": "bun-rieu",
+      "stallName": "Ghe bún riêu",
+      "icon": "Tô bún riêu",
+      "chinhTa": "Vô đây ăn bún riêu nè",
+      "phienAm": "Dô đây ăng búng ghiêu nè",
+      "level": 2
+    },
+    {
+      "id": 36,
+      "stall": "ruou",
+      "stallName": "Ghe rượu",
+      "icon": "Bình rượu đế",
+      "chinhTa": "Trời đất ơi, rượu ra rồi, về thôi",
+      "phienAm": "Chời đấc ơi, gụ ga gồi, dìa thôi",
+      "level": 3
     }
   ],
   "taunts": {
