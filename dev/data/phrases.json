@@ -325,6 +325,240 @@
       "chinhTa": "Trời đất ơi, rượu ra rồi, về thôi",
       "phienAm": "Chời đấc ơi, gụ ga gồi, dìa thôi",
       "level": 3
+    },
+    {
+      "id": 37,
+      "stall": "ca-phe",
+      "stallName": "Ghe cà phê",
+      "icon": "Ly cà phê đá",
+      "chinhTa": "Cà phê vô liền",
+      "phienAm": "Cà phe dô liềng",
+      "level": 1
+    },
+    {
+      "id": 38,
+      "stall": "nuoc",
+      "stallName": "Ghe nước",
+      "icon": "Ly trà đá",
+      "chinhTa": "Trà đá nè",
+      "phienAm": "Chà đá nè",
+      "level": 1
+    },
+    {
+      "id": 39,
+      "stall": "snack",
+      "stallName": "Ghe snack",
+      "icon": "Bịch bánh tráng trộn",
+      "chinhTa": "Bánh tráng trộn",
+      "phienAm": "Bánh tráng chộng",
+      "level": 1
+    },
+    {
+      "id": 40,
+      "stall": "trai-cay",
+      "stallName": "Ghe trái cây",
+      "icon": "Chùm chôm chôm",
+      "chinhTa": "Trái chôm chôm",
+      "phienAm": "Chái chôm chôm",
+      "level": 1
+    },
+    {
+      "id": 41,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Con cá lóc",
+      "chinhTa": "Cá lóc nướng trui",
+      "phienAm": "Cá lóc nướng chui",
+      "level": 1
+    },
+    {
+      "id": 42,
+      "stall": "vit",
+      "stallName": "Ghe vịt",
+      "icon": "Nồi vịt nấu chao",
+      "chinhTa": "Vịt nấu chao",
+      "phienAm": "Dịch nấu chao",
+      "level": 1
+    },
+    {
+      "id": 43,
+      "stall": "lau-mam",
+      "stallName": "Ghe lẩu mắm",
+      "icon": "Nồi lẩu mắm",
+      "chinhTa": "Quá trời ngon",
+      "phienAm": "Wá chời ngon",
+      "level": 1
+    },
+    {
+      "id": 44,
+      "stall": "rau",
+      "stallName": "Ghe rau",
+      "icon": "Bó rau rừng",
+      "chinhTa": "Rau rừng",
+      "phienAm": "Gau gừng",
+      "level": 1
+    },
+    {
+      "id": 45,
+      "stall": "ca-phe",
+      "stallName": "Ghe cà phê",
+      "icon": "Ly cà phê vợt",
+      "chinhTa": "Cà phê vợt ngon quá trời",
+      "phienAm": "Cà phe dợc ngon wá chời",
+      "level": 2
+    },
+    {
+      "id": 46,
+      "stall": "snack",
+      "stallName": "Ghe snack",
+      "icon": "Bịch bánh tráng trộn",
+      "chinhTa": "Bánh tráng trộn ăn vui quá",
+      "phienAm": "Bánh tráng chộng ăng dui wá",
+      "level": 2
+    },
+    {
+      "id": 47,
+      "stall": "nuoc",
+      "stallName": "Ghe nước",
+      "icon": "Ly trà đá",
+      "chinhTa": "Trà đá miễn phí nè trời",
+      "phienAm": "Chà đá miễng phí nè chời",
+      "level": 2
+    },
+    {
+      "id": 48,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Nồi cá kho tiêu",
+      "chinhTa": "Cá rô đồng kho tiêu",
+      "phienAm": "Cá gô đồng kho tiêu",
+      "level": 2
+    },
+    {
+      "id": 49,
+      "stall": "vit",
+      "stallName": "Ghe vịt",
+      "icon": "Con vịt quay",
+      "chinhTa": "Vịt quay vàng ruộm",
+      "phienAm": "Dịch wai dàng guộm",
+      "level": 2
+    },
+    {
+      "id": 50,
+      "stall": "trai-cay",
+      "stallName": "Ghe trái cây",
+      "icon": "Rổ trái cây",
+      "chinhTa": "Trái cây vườn nhà, rẻ rề",
+      "phienAm": "Chái cây dường nhà, ghẻ ghề",
+      "level": 2
+    },
+    {
+      "id": 51,
+      "stall": "hu-tieu",
+      "stallName": "Ghe hủ tiếu",
+      "icon": "Tô hủ tiếu",
+      "chinhTa": "Hủ tiếu Mỹ Tho đây",
+      "phienAm": "Hủ tíu Mỹ Tho đây",
+      "level": 2
+    },
+    {
+      "id": 52,
+      "stall": "lau-mam",
+      "stallName": "Ghe lẩu mắm",
+      "icon": "Nồi lẩu cá linh",
+      "chinhTa": "Lẩu mắm cá linh về rồi",
+      "phienAm": "Lẩu mắm cá linh dìa gồi",
+      "level": 2
+    },
+    {
+      "id": 53,
+      "stall": "bun-rieu",
+      "stallName": "Ghe bún riêu",
+      "icon": "Tô bún riêu",
+      "chinhTa": "Bún riêu ăn rồi còn muốn ăn nữa",
+      "phienAm": "Búng ghiêu ăng gồi còng muốn ăng nữa",
+      "level": 3
+    },
+    {
+      "id": 54,
+      "stall": "rau",
+      "stallName": "Ghe rau",
+      "icon": "Bó rau rền",
+      "chinhTa": "Rau muống rau rền, rẻ quá rẻ",
+      "phienAm": "Gau muống gau ghềng, ghẻ wá ghẻ",
+      "level": 3
+    },
+    {
+      "id": 55,
+      "stall": "ca-phe",
+      "stallName": "Ghe cà phê",
+      "icon": "Ly cà phê vợt",
+      "chinhTa": "Cà phê vợt về rồi, vô uống một ly",
+      "phienAm": "Cà phe dợc dìa gồi, dô uống mộc ly",
+      "level": 3
+    },
+    {
+      "id": 56,
+      "stall": "vit",
+      "stallName": "Ghe vịt",
+      "icon": "Con vịt vàng",
+      "chinhTa": "Vịt vàng vô vườn, vợ về vội vàng",
+      "phienAm": "Dịch dàng dô dường, dợ dìa dội dàng",
+      "level": 3
+    },
+    {
+      "id": 57,
+      "stall": "trai-cay",
+      "stallName": "Ghe trái cây",
+      "icon": "Rổ trái cây",
+      "chinhTa": "Trái cây trên ghe, trưa trời rẻ rề",
+      "phienAm": "Chái cây chêng ghe, chưa chời ghẻ ghề",
+      "level": 3
+    },
+    {
+      "id": 58,
+      "stall": "snack",
+      "stallName": "Ghe snack",
+      "icon": "Cây kẹo kéo",
+      "chinhTa": "Kẹo kéo kéo hoài, kéo rồi kéo nữa",
+      "phienAm": "Kẹo kéo kéo quài, kéo gồi kéo nữa",
+      "level": 3
+    },
+    {
+      "id": 59,
+      "stall": "ruou",
+      "stallName": "Ghe rượu",
+      "icon": "Bình rượu đế",
+      "chinhTa": "Rượu rót ra rồi, ráng rót ra, rót rồi rót nữa",
+      "phienAm": "Gụ góc ga gồi, gáng góc ga, góc gồi góc nữa",
+      "level": 4
+    },
+    {
+      "id": 60,
+      "stall": "com-tam",
+      "stallName": "Ghe cơm tấm",
+      "icon": "Dĩa cơm tấm",
+      "chinhTa": "Trưa trời trật trợt, trèo lên trên ghe cơm tấm",
+      "phienAm": "Chưa chời chậc chợc, chèo lêng chêng ghe cơm tấm",
+      "level": 4
+    },
+    {
+      "id": 61,
+      "stall": "ca-dong",
+      "stallName": "Ghe cá đồng",
+      "icon": "Rổ cá rô",
+      "chinhTa": "Rổ rá rách rồi, rô rớt ra rạch, rạch rộng rô rúc, rô rời rổ rá",
+      "phienAm": "Gổ gá gách gồi, gô gớt ga gạch, gạch gộng gô gúc, gô gời gổ gá",
+      "level": 5
+    },
+    {
+      "id": 62,
+      "stall": "vit",
+      "stallName": "Ghe vịt",
+      "icon": "Bầy vịt",
+      "chinhTa": "Vịt về vườn vội, vợ vác vá vô, vịt vỗ vai vợ, vợ vui vẻ về",
+      "phienAm": "Dịch dìa dường dội, dợ dác dá dô, dịch dỗ dai dợ, dợ dui dẻ dìa",
+      "level": 5
     }
   ],
   "taunts": {
