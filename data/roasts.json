@@ -1,35 +1,79 @@
 {
-  "_note": "ĐÃ DUYỆT 2026-11-18. Câu chọc ở màn kết quả theo điểm (đơn vị trăm). Giọng miền Tây láo láo kiểu Duolingo, không xưng mày/tao. min/max tính theo điểm hiển thị (100 = qua 1 ghe).",
+  "_note": "ĐÃ DUYỆT 2026-11-18, thêm câu 2026-11-18 theo yêu cầu Khôi: dưới 800 điểm là chửi, từ 800 mới khen. Giọng miền Tây láo láo kiểu Duolingo, không xưng mày/tao. min/max tính theo điểm hiển thị (100 = qua 1 ghe).",
   "brackets": [
-    { "min": 0, "max": 0, "lines": [
-      "Không điểm. Ghe chưa kịp chèo đã đụng, giỏi ghê hông!",
-      "Mở miệng ra đọc dùm cái, chợ chứ đâu phải thư viện."
-    ]},
-    { "min": 100, "max": 200, "lines": [
-      "Nhìn tưởng thông minh, ai dè… thôi khỏi nói.",
-      "Tưởng như thế lào, hóa ra óc gà.",
-      "Đọc dị thì bà bán bún riêu cũng nhảy qua đầu được."
-    ]},
-    { "min": 300, "max": 400, "lines": [
-      "Cũng ráng dữ ha, mà ráng chưa tới.",
-      "Lưỡi bắt đầu dẻo rồi đó, còn cái đầu thì chưa."
-    ]},
-    { "min": 500, "max": 700, "lines": [
-      "Cũng ổn… ổn lòi lìa.",
-      "Wao, nhìn dị mà hông phải dị.",
-      "Được đó, mà đừng có lên mặt nha."
-    ]},
-    { "min": 800, "max": 1200, "lines": [
-      "Ủa, ai cho phép giỏi dữ dị?",
-      "Dân chợ nổi gốc đây rồi, mà chắc ăn hên."
-    ]},
-    { "min": 1300, "max": 999999, "lines": [
-      "Thôi thua, cái lưỡi này đem ra chợ bán được đó.",
-      "Kỷ lục gì kỳ cục dị trời, ghe hàng xin rút lui."
-    ]}
+    {
+      "min": 0,
+      "max": 0,
+      "lines": [
+        "Không điểm. Ghe chưa kịp chèo đã đụng, giỏi ghê hông!",
+        "Mở miệng ra đọc dùm cái, chợ chứ đâu phải thư viện.",
+        "Không điểm tròn trĩnh như cái trứng vịt.",
+        "Ghe còn chưa rời bến mà đã đụng, tài thiệt!",
+        "Đọc thầm hả? Ở chợ phải la lên mới bán được chớ."
+      ]
+    },
+    {
+      "min": 100,
+      "max": 200,
+      "lines": [
+        "Nhìn tưởng thông minh, ai dè… thôi khỏi nói.",
+        "Tưởng như thế lào, hóa ra óc gà.",
+        "Đọc dị thì bà bán bún riêu cũng nhảy qua đầu được.",
+        "Chèo được một khúc rồi chìm, y chang lời hứa của người yêu cũ.",
+        "Lưỡi để đâu, để quên ở nhà hả?",
+        "Có cố gắng, mà cố gắng nhẹ hều.",
+        "Con cá rô còn đọc giỏi hơn."
+      ]
+    },
+    {
+      "min": 300,
+      "max": 400,
+      "lines": [
+        "Cũng ráng dữ ha, mà ráng chưa tới.",
+        "Lưỡi bắt đầu dẻo rồi đó, còn cái đầu thì chưa.",
+        "Điểm này vừa đủ mua ly trà đá.",
+        "Tưởng ngon lành, ai dè mới tới chợ đã đụng.",
+        "Học thêm giọng miền Tây đi, đọc như người trên trời rớt xuống.",
+        "Hơi hơi được, mà chủ yếu là hơi hơi."
+      ]
+    },
+    {
+      "min": 500,
+      "max": 700,
+      "lines": [
+        "Cũng ổn… ổn lòi lìa.",
+        "Wao, nhìn dị mà hông phải dị.",
+        "Gần tới rồi đó, mà gần là chưa tới.",
+        "Nói thiệt, thấy cũng tội, mà thôi kệ.",
+        "Lưỡi dẻo nửa chừng, đầu óc nửa vời.",
+        "Ráng thêm chút nữa, chút nữa thôi, mà chắc hông nổi đâu."
+      ]
+    },
+    {
+      "min": 800,
+      "max": 1200,
+      "lines": [
+        "Ủa, ai cho phép giỏi dữ dị?",
+        "Dân chợ nổi gốc đây rồi, mà chắc ăn hên.",
+        "Được nha, đọc rần rần như dân Cái Răng chính hiệu.",
+        "Giỏi dị sao hông đi bán hàng rong luôn?",
+        "Thôi được, lần này công nhận."
+      ]
+    },
+    {
+      "min": 1300,
+      "max": 999999,
+      "lines": [
+        "Thôi thua, cái lưỡi này đem ra chợ bán được đó.",
+        "Kỷ lục gì kỳ cục dị trời, ghe hàng xin rút lui.",
+        "Bá cháy bọ chét, cả chợ nổi vỗ tay!",
+        "Lưỡi này mà đi bán vé số chắc giàu to."
+      ]
+    }
   ],
   "newBest": [
     "Kỷ lục mới! Bữa nay ăn trúng cái gì dị?",
-    "Phá kỷ lục rồi kìa, cả chợ nổi đứng hình."
+    "Phá kỷ lục rồi kìa, cả chợ nổi đứng hình.",
+    "Kỷ lục mới! Mà đừng tưởng bở, lần sau chưa chắc đâu."
   ]
 }
