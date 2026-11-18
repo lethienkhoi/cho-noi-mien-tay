@@ -131,10 +131,10 @@ def run_vp(b, w, h):
     lvl = ev(pg, '[0,2,3,6,7,12,13,19,20,30].map((n) => [n, game.picker.pick(n).level])')
     ok(all(l >= 1 for _, l in lvl) and any(l == 5 for _, l in lvl), f'chọn được câu mọi mức, có mức 5 ({lvl})')
     thaw(pg)
-    # ---- 6. thua không phá kỷ lục: bảng kết quả có mặt mếu
+    # ---- 6. thua: bảng kết quả chỉ hiện hình vụ đụng cuối, không hiện các cấp (Khôi 2026-11-18)
     wait_state(pg, 'over', 15000); pg.wait_for_timeout(400)
-    sad = ev(pg, '({rec: document.getElementById("res-kicker").textContent, vis: !document.getElementById("res-hero").hidden, src: document.getElementById("res-hero").getAttribute("src") || ""})')
-    ok(sad['rec'] == 'HẾT LƯỢT' and sad['vis'] and 'hero_sad' in sad['src'], f'thua không phá kỷ lục → bảng có hero_sad ({sad})')
+    sad = ev(pg, '({badge: document.getElementById("res-badge").hidden, cv: document.getElementById("res-shot-cv").width, old: !!document.getElementById("res-steps") || /HẾT LƯỢT/.test(document.getElementById("screen-result").textContent)})')
+    ok(sad['cv'] > 50 and not sad['old'], f'thua → bảng có ảnh vụ đụng, không HẾT LƯỢT / các cấp ({sad})')
     pg.screenshot(path=f'{QA}/b5_{tag}_7_result_sad.png')
     ok(not errs, 'console không lỗi' + ('' if not errs else ': ' + ' | '.join(errs[:3])))
     ctx.close()

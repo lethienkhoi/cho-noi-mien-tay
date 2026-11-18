@@ -1,7 +1,7 @@
 // Khung chữ dưới: phiên âm to (âm đổi tô đỏ) + chính tả nhỏ trong ngoặc + thanh thời gian
 // + dòng "Đang nghe: …" (B4) và tô dần các chữ đã đọc đúng. Không bao giờ hiện câu kế tiếp.
-import { phoneticSegments } from '../game/phrases.js?v=b170c2bd';
-import { CONFIG } from '../config.js?v=b170c2bd';
+import { phoneticSegments } from '../game/phrases.js?v=c077d626';
+import { CONFIG } from '../config.js?v=c077d626';
 
 // cỡ chữ (px ở khung 390) theo độ dài câu phiên âm
 function fontSizeFor(text) {
@@ -66,6 +66,8 @@ export class Panel {
     const a = document.createElement('span'); a.className = 'chip-green'; a.textContent = `Qua ghe +${CONFIG.SCORE_PASS}`; this.chips.appendChild(a);
     if (dialect) { const b = document.createElement('span'); b.className = 'chip-outline'; b.textContent = `Chuẩn miền Tây +${CONFIG.SCORE_DIALECT_BONUS}`; this.chips.appendChild(b); }
     this.chips.hidden = false;
+    // chữ +100 / +200 nảy lên
+    this.chips.classList.remove('pop'); void this.chips.offsetWidth; this.chips.classList.add('pop');
   }
 
   crash(p) {

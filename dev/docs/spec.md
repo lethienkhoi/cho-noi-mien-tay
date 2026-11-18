@@ -1,6 +1,6 @@
 # Game chợ nổi miền Tây — đề bài và các quyết định đã duyệt
 
-Cập nhật: 2026-11-18 (B4b). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
+Cập nhật: 2026-11-18 (B4b + màn kết quả mới). Người duyệt: Khôi. Ký tên sản phẩm: "made by Khoi M1nhon".
 Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/lethienkhoi/cho-noi-mien-tay
 
 ## 1. Ý tưởng
@@ -22,11 +22,17 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
 - Khớp CHÍNH XÁC từng chữ (sau chuẩn hoá NFC, chữ thường, bỏ dấu câu), không dung sai: đọc lộn thứ tự, thiếu chữ, sai dấu thanh, sai chữ → không qua, hết giờ là đụng (Khôi chốt 2026-11-17). Chữ thừa trước/sau câu thì vẫn được.
 - Chỉ tính chữ nghe được sau khi ghe hiện tại bắt đầu; chấm trên kết quả tạm thời để nhảy ngay khi đọc xong.
 - Thưởng "Chuẩn miền Tây" khi máy nghe ra dạng phiên âm ở ít nhất một chữ có đổi âm.
-- Điểm: hiện tạm qua ghe +1, chuẩn miền Tây +2. (CHỜ KHÔI CHỐT)
+- Điểm (Khôi chốt 2026-11-18): tính theo đơn vị trăm — qua ghe +100, thưởng "Chuẩn miền Tây" +200 (thay cho +1/+2). HUD trong lúc chơi hiện số thường, không đệm số 0 (0, 200, 1.200; dấu chấm ngăn hàng nghìn); chữ "Qua ghe +100" / "Chuẩn miền Tây +200" nảy lên ở khung chữ khi qua ghe.
+- Lên đời và mức câu vẫn tính theo SỐ GHE qua (mỗi 5 ghe một cấp; mức câu theo bảng ở mục 7), không theo điểm.
 
 ## 4. Kỷ lục và lên đời
 - Luôn hiện điểm cao nhất, lưu trên máy người chơi.
-- Lên đời ngay trong lượt chơi, mỗi 5 câu một cấp (mốc 5, 10, 15, 20, 25): ghe chèo → cano máy → cano điện "Vê Ép 5" (kèm tia sét, không logo hãng) → du thuyền → máy bay → tàu vũ trụ. (Khôi viết "5 chữ", đang hiểu là 5 câu — CHỜ KHÔI CHỐT)
+- 2026-11-18: lưu BẢNG 4 ĐIỂM CAO NHẤT (điểm + ngày dd/mm) trong localStorage khoá `choNoiMienTay.top.v2` (try/catch; bị chặn thì giữ trong bộ nhớ). Lượt 0 điểm không ghi. Kỷ lục = hạng 1. Chuyển đổi một lần: chưa có bảng mà có kỷ lục cũ thang +1 (khoá `choNoiMienTay.best.v1`, vd 7) thì ghi thành 700 (ngày hiện "trước đây"), không nhân lại lần sau. Màn bắt đầu: "Kỷ lục: X điểm" theo thang trăm.
+- Màn kết quả (Khôi 2026-11-18): bỏ dòng "HẾT LƯỢT", bỏ danh sách 6 cấp phương tiện và dòng "Lên tới cấp …"; HUD ẩn. Từ trên xuống: nhãn nhỏ "KỶ LỤC MỚI" (chỉ khi phá kỷ lục) · số điểm rất to · câu chọc (Baloo 2 đậm, tối đa 3 dòng) · bảng 4 điểm cao nhất (hạng, điểm, ngày; dòng lượt vừa chơi tô vàng nếu lọt top) · ảnh khoảnh khắc đụng cuối · nút Chơi lại / Về bến. Thẻ co giãn theo chiều cao màn (khung ảnh co trước), không cuộn, chừa safe-area và thanh địa chỉ Safari.
+  - Câu chọc: `data/roasts.json` (BẢN NHÁP chờ Khôi duyệt) — chọn ngẫu nhiên theo khung điểm hiển thị (`brackets` min/max); phá kỷ lục thì lấy `newBest`. File lỗi/thiếu thì không hiện câu, màn vẫn bình thường.
+  - Ảnh vụ đụng: 0,42s sau va chạm (RẦM!, nhân vật đang văng, bong bóng chửi đã nảy xong — bong bóng vẽ trên canvas nên có trong ảnh) chép cả canvas MỘT lần bằng drawImage sang canvas phụ; khi bảng hiện thì cắt vùng quanh va chạm (điểm va, ghe hàng, nhân vật, bong bóng) theo đúng tỉ lệ khung ảnh. Không dùng toDataURL.
+  - Phá kỷ lục: pháo hoa nhiều màu trên canvas riêng phủ màn kết quả (không nhận chạm), 5 chùm trong ~3 giây rồi tắt; máy bật giảm chuyển động thì 1 chùm.
+- Lên đời ngay trong lượt chơi, mỗi 5 câu một cấp (mốc 5, 10, 15, 20, 25): ghe chèo → cano máy → cano điện "Vê Ép 5" (kèm tia sét, không logo hãng) → du thuyền → máy bay → tàu vũ trụ. (Khôi xác nhận 2026-11-18: lên đời theo số ghe qua, mỗi 5 ghe.)
 
 ## 5. Hình ảnh
 - Không dùng Higgsfield hay ảnh AI. Toàn bộ vẽ bằng code, 2D, không 3D.
@@ -49,7 +55,7 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
   - Dựng lại wasm: `dev/asr-build/build.sh` (emsdk 4.0.23, sherpa-onnx 2.0.1); sau khi đổi tệp trong `assets/asr/` chạy `python3 dev/tools/asr_manifest.py`. Nguồn + giấy phép: `dev/docs/licenses.md`.
 - BỎ HẲN điều khiển chạm và chế độ dự phòng bằng chạm (Khôi 2026-11-17: "chưa nhận mic đọc không được, bỏ cái bấm tay vô nhảy"). Chạm chỉ dùng cho nút.
 - Trình duyệt không nghe được (Firefox, trình duyệt trong app Zalo/Facebook/Messenger…): báo sớm, hướng dẫn mở bằng Chrome/Safari, nút Sao chép link. Từ chối micro / mất mạng: màn hướng dẫn + nút Thử lại.
-- Code: `src/speech/` (matcher.js chấm, local-asr.js + asr-worker.js + asr-core.js + mic-worklet.js bộ nghe cục bộ, recognizer.js Web Speech, voice.js nối với game). Test: `node --test dev/tests/matcher.test.mjs`, `python3 dev/tools/qa_b4.py`, `python3 dev/tools/qa_b5.py`, `python3 dev/tools/qa_hold.py`, `python3 dev/tools/qa_b4b.py` (micro giả đọc wav), `node dev/tools/asr_node_test.cjs` (WER, hotwords, tốc độ).
+- Code: `src/speech/` (matcher.js chấm, local-asr.js + asr-worker.js + asr-core.js + mic-worklet.js bộ nghe cục bộ, recognizer.js Web Speech, voice.js nối với game). Test: `node --test dev/tests/matcher.test.mjs`, `python3 dev/tools/qa_b4.py`, `python3 dev/tools/qa_b5.py`, `python3 dev/tools/qa_result.py` (màn kết quả, top 4, đổi kỷ lục cũ), `python3 dev/tools/qa_hold.py`, `python3 dev/tools/qa_b4b.py` (micro giả đọc wav), `node dev/tools/asr_node_test.cjs` (WER, hotwords, tốc độ).
 - Tiếng chửi: file âm thanh thu sẵn (giọng AI hoặc Khôi thu).
 - Đưa lên GitHub Pages (https) để micro chạy được trên điện thoại.
 
@@ -63,7 +69,7 @@ Link chơi: https://lethienkhoi.github.io/cho-noi-mien-tay/ · Code: github.com/
    - Bong bóng chửi (vẽ trên canvas, trắng viền #2a2420, Baloo 2 đậm, nảy vào, giữ ~1,4s rồi mờ, bám ghe hàng, tự xuống dòng, không bị HUD/khung chữ che): nhảy qua → `taunts.jumpedOver`, đụng → `taunts.crash`; người bán đổi mặt yell lúc chửi. Âm thanh: hàm rỗng `playTaunt(kind, text)` trong `src/game/sfx.js`, gắn sẵn vào sự kiện `taunt`.
    - Cảnh đụng: rung màn 0,35s, sao vàng "RẦM!", bọt nước tròn trắng viền đậm, nhân vật (hero_scream) văng xoay vòng, nón lá bay riêng, tô bún/cá/sầu riêng bay, người bán yell + bong bóng; bảng kết quả sau 1,6s. Thua mà không phá kỷ lục: bảng kết quả có thêm mặt mếu (hero_sad).
    - Thời gian mỗi câu (config.js): T = max(1,6s + 0,22s/chữ ; (1,8s + 0,28s/chữ) × (1 − 0,015 × số ghe qua, thấp nhất 0,8)). Thanh thời gian hết đúng lúc ghe hàng tới sát mũi; thêm 0,25s ân hạn rồi mới đụng (đọc khớp trong ân hạn vẫn nhảy). Câu 2 chữ: 2,36s → 2,04s; câu 15 chữ: 6,0s → 4,9s. "Một nửa thời gian cũ" (0,8s + 0,28s/chữ) thấp hơn sàn nhận giọng nên sàn thắng.
-   - Mức câu theo số ghe đã qua: 0–2 mức 1, 3–6 mức 2, 7–12 mức 3, 13–19 mức 4, 20+ mức 5 (chưa có câu mức 5 → lấy mức cao nhất có sẵn). 20% lấy câu mức thấp hơn cho đỡ ngộp. (Tính theo số ghe qua, không theo điểm, vì điểm có thưởng +2 làm mức nhảy quá nhanh — CHỜ KHÔI CHỐT.)
+   - Mức câu theo số ghe đã qua: 0–2 mức 1, 3–6 mức 2, 7–12 mức 3, 13–19 mức 4, 20+ mức 5 (chưa có câu mức 5 → lấy mức cao nhất có sẵn). 20% lấy câu mức thấp hơn cho đỡ ngộp. (Tính theo số ghe qua, không theo điểm — Khôi xác nhận 2026-11-18.)
 5b. B4b: bộ nghe tiếng Việt chạy trong trình duyệt (sherpa-onnx WebAssembly, Zipformer vi INT8, hotwords) thay Web Speech làm mặc định — XONG, chờ thử trên iPhone thật.
    - Đo trên máy thử (Chromium headless, CPU máy chủ x86, 1 luồng): hệ số thời gian thực 0,07–0,12; giải mã đoạn 1,5–2s mất ~120–220 ms; từ lúc nói xong tới lúc nhảy ~0,7s; tải lần đầu ~4s mạng nội bộ, lần sau ~2,5–3s (khởi tạo); bộ nhớ: heap wasm 133 MB, tiến trình trang ~400 MB khi chơi (game không bộ nghe ~190 MB), đỉnh lúc tải ~570 MB.
    - Thử bằng giọng TTS tiếng Việt (Piper, đọc 27 câu × 2 dạng): không hotwords qua ghe 2/54, có hotwords 10/54, không nhận nhầm câu khác (0/54). Giọng TTS máy khác xa người thật nên chỉ để so sánh tương đối.

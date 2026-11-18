@@ -137,7 +137,7 @@ def run_main(b):
     say(pg, p1['pa'])
     pg.wait_for_function('game.state === "jumping"', timeout=2000)
     m = ev(pg, '__matched[0]')
-    ok(m and m['id'] == p1['id'] and m['dialect'] is True and m['gained'] == 3, f'đọc phiên âm (chưa final) → qua ghe, chuẩn miền Tây +3 ({m})')
+    ok(m and m['id'] == p1['id'] and m['dialect'] is True and m['gained'] == 300, f'đọc phiên âm (chưa final) → qua ghe, chuẩn miền Tây +300 ({m})')
     pg.wait_for_function('game.jump && game.jump.t > .4', timeout=3000)
     ev(pg, 'game.frozen = true'); pg.wait_for_timeout(80)
     pg.screenshot(path=f'{QA}/b4_3_passed.png')
@@ -159,7 +159,7 @@ def run_main(b):
     say(pg, p2['ct'], False, True)
     pg.wait_for_function('game.state === "jumping"', timeout=2000)
     m = ev(pg, '__matched[1]')
-    ok(m and m['dialect'] is False and m['gained'] == 1, f'đọc chính tả → qua ghe +1, không thưởng giọng ({m})')
+    ok(m and m['dialect'] is False and m['gained'] == 100, f'đọc chính tả → qua ghe +100, không thưởng giọng ({m})')
 
     # ---- câu 3: người chơi nói câu 3 TRƯỚC khi câu 3 bắt đầu (lúc đang nhảy) → không tính
     pg.wait_for_function('game.jump && game.jump.t > .3', timeout=3000)
@@ -202,7 +202,7 @@ def run_main(b):
     ok(not ev(pg, '__srRunning()'), 'đụng ghe → tắt micro')
     wait_state(pg, 'over', 5000); pg.wait_for_timeout(300)
     pg.screenshot(path=f'{QA}/b4_5_result.png')
-    ok(ev(pg, 'game.score') == 3 + 1 + 1, f'điểm = 3 + 1 + 1 (score={ev(pg, "game.score")})')
+    ok(ev(pg, 'game.score') == 300 + 100 + 100, f'điểm = 300 + 100 + 100 (thang trăm 2026-11-18) (score={ev(pg, "game.score")})')
     # chơi lại: mở micro lại
     starts0 = ev(pg, '__sr.starts')
     pg.click('#btn-again'); wait_state(pg, 'playing')

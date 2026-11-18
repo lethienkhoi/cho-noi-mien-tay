@@ -1,7 +1,6 @@
 // HUD trên cùng: Điểm, Kỷ lục, nhãn phương tiện (giống pv1).
-import { CONFIG } from '../config.js?v=b170c2bd';
-
-const pad2 = (n) => String(n).padStart(2, '0');
+import { CONFIG } from '../config.js?v=c077d626';
+import { fmtScore } from './format.js?v=c077d626';
 
 export class Hud {
   constructor(root, vehicles) {
@@ -23,8 +22,8 @@ export class Hud {
     const key = game.score + '|' + game.liveBest + '|' + label;
     if (key === this.last) return;
     this.last = key;
-    this.score.textContent = pad2(game.score);
-    this.best.textContent = pad2(game.liveBest);
+    this.score.textContent = fmtScore(game.score);
+    this.best.textContent = fmtScore(game.liveBest);
     this.veh.textContent = label;
   }
 }

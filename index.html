@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Be+Vietnam+Pro:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=b170c2bd">
+<link rel="stylesheet" href="css/style.css?v=c077d626">
 </head>
 <body>
 <div id="app" class="is-loading" data-state="boot">
@@ -20,8 +20,8 @@
 
   <header id="hud" class="hud" hidden>
     <div class="hud-row">
-      <div class="pill"><span class="pill-label">Điểm</span><span class="pill-value" id="hud-score">00</span></div>
-      <div class="pill"><span class="pill-label">Kỷ lục</span><span class="pill-value" id="hud-best">00</span></div>
+      <div class="pill"><span class="pill-label">Điểm</span><span class="pill-value" id="hud-score">0</span></div>
+      <div class="pill"><span class="pill-label">Kỷ lục</span><span class="pill-value" id="hud-best">0</span></div>
     </div>
     <span class="chip-dark" id="hud-vehicle">Ghe chèo</span>
   </header>
@@ -70,17 +70,17 @@
 
   <section id="screen-result" class="screen" hidden>
     <div class="card result-card">
-      <div class="kicker" id="res-kicker">HẾT LƯỢT</div>
+      <div class="res-badge" id="res-badge" hidden>KỶ LỤC MỚI</div>
       <div class="res-score" id="res-score">0</div>
-      <div class="res-sub" id="res-sub">Kỷ lục: 0 điểm</div>
-      <div class="res-veh"><img id="res-hero" class="res-hero" alt="" hidden><img id="res-veh-img" alt=""></div>
-      <div class="res-tier" id="res-tier">Lên tới cấp 1: ghe chèo</div>
-      <div class="steps" id="res-steps"></div>
+      <p class="res-roast" id="res-roast"></p>
+      <ol class="res-top" id="res-top" aria-label="4 điểm cao nhất"></ol>
+      <div class="res-shot" id="res-shot"><canvas id="res-shot-cv" aria-label="Khoảnh khắc đụng ghe" role="img"></canvas></div>
       <div class="res-actions">
         <button class="btn btn-primary" id="btn-again" type="button">Chơi lại</button>
         <button class="btn btn-ghost" id="btn-home" type="button">Về bến</button>
       </div>
     </div>
+    <canvas class="fireworks" id="fireworks" aria-hidden="true" hidden></canvas>
   </section>
 
   <div id="overlay-pause" class="overlay" hidden>
@@ -154,6 +154,6 @@
   </div>
 </div>
 <noscript><p style="padding:24px;font-family:sans-serif;color:#fff">Cần bật JavaScript để chơi.</p></noscript>
-<script type="module" src="src/main.js?v=b170c2bd"></script>
+<script type="module" src="src/main.js?v=c077d626"></script>
 </body>
 </html>

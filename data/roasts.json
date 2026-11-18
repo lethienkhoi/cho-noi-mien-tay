@@ -1,0 +1,35 @@
+{
+  "_note": "ĐÃ DUYỆT 2026-11-18. Câu chọc ở màn kết quả theo điểm (đơn vị trăm). Giọng miền Tây láo láo kiểu Duolingo, không xưng mày/tao. min/max tính theo điểm hiển thị (100 = qua 1 ghe).",
+  "brackets": [
+    { "min": 0, "max": 0, "lines": [
+      "Không điểm. Ghe chưa kịp chèo đã đụng, giỏi ghê hông!",
+      "Mở miệng ra đọc dùm cái, chợ chứ đâu phải thư viện."
+    ]},
+    { "min": 100, "max": 200, "lines": [
+      "Nhìn tưởng thông minh, ai dè… thôi khỏi nói.",
+      "Tưởng như thế lào, hóa ra óc gà.",
+      "Đọc dị thì bà bán bún riêu cũng nhảy qua đầu được."
+    ]},
+    { "min": 300, "max": 400, "lines": [
+      "Cũng ráng dữ ha, mà ráng chưa tới.",
+      "Lưỡi bắt đầu dẻo rồi đó, còn cái đầu thì chưa."
+    ]},
+    { "min": 500, "max": 700, "lines": [
+      "Cũng ổn… ổn lòi lìa.",
+      "Wao, nhìn dị mà hông phải dị.",
+      "Được đó, mà đừng có lên mặt nha."
+    ]},
+    { "min": 800, "max": 1200, "lines": [
+      "Ủa, ai cho phép giỏi dữ dị?",
+      "Dân chợ nổi gốc đây rồi, mà chắc ăn hên."
+    ]},
+    { "min": 1300, "max": 999999, "lines": [
+      "Thôi thua, cái lưỡi này đem ra chợ bán được đó.",
+      "Kỷ lục gì kỳ cục dị trời, ghe hàng xin rút lui."
+    ]}
+  ],
+  "newBest": [
+    "Kỷ lục mới! Bữa nay ăn trúng cái gì dị?",
+    "Phá kỷ lục rồi kìa, cả chợ nổi đứng hình."
+  ]
+}

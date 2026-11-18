@@ -1,5 +1,5 @@
 // Chọn câu theo level + tách phần âm đổi (tô đỏ) giữa phiên âm và chính tả.
-import { CONFIG } from '../config.js?v=b170c2bd';
+import { CONFIG } from '../config.js?v=c077d626';
 
 export function levelForPasses(passed) {
   let lv = 1;

@@ -2,9 +2,9 @@
 // B5: bố cục chạy ngang kiểu game khủng long trong khung dọc — ghe mình cố định bên trái, ghe hàng chạy từ phải sang
 // trên cùng một làn nước. API giọng nói (B4): game.onPhraseMatched(roundId, { dialect: boolean }).
 // Sự kiện (game.addEventListener): state, round, matched, landed, tier, crash, over, pause, taunt.
-import { CONFIG } from '../config.js?v=b170c2bd';
-import { PhrasePicker, roundTime, levelForPasses } from './phrases.js?v=b170c2bd';
-import { loadBest, saveBest } from './storage.js?v=b170c2bd';
+import { CONFIG } from '../config.js?v=c077d626';
+import { PhrasePicker, roundTime, levelForPasses } from './phrases.js?v=c077d626';
+import { loadBest, recordScore } from './storage.js?v=c077d626';
 
 const lerp = (a, b, t) => a + (b - a) * t;
 const clamp01 = (t) => Math.max(0, Math.min(1, t));
@@ -273,8 +273,9 @@ export class Game extends EventTarget {
   finish() {
     const prev = this.prevBest;
     const newRecord = this.score > prev;
-    if (newRecord) { this.best = this.score; saveBest(this.score); }
+    const { top, rank } = recordScore(this.score);
+    if (newRecord) this.best = this.score;
     this.setState('over');
-    this.dispatchEvent(new CustomEvent('over', { detail: { score: this.score, passed: this.passed, prevBest: prev, best: this.best, newRecord, tier: this.tier } }));
+    this.dispatchEvent(new CustomEvent('over', { detail: { score: this.score, passed: this.passed, prevBest: prev, best: this.best, newRecord, tier: this.tier, top, rank } }));
   }
 }

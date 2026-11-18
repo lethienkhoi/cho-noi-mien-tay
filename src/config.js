@@ -25,8 +25,9 @@ export const CONFIG = {
   AVOID_RECENT: 4,          // không lặp lại N câu gần nhất
 
   // ---- điểm
-  SCORE_PASS: 1,            // qua ghe +1
-  SCORE_DIALECT_BONUS: 2,   // thêm khi máy nghe đúng giọng miền Tây (B4) — chờ Khôi chốt cách tính
+  // 2026-11-18 Khôi: điểm theo đơn vị trăm. Lên đời và mức câu vẫn tính theo SỐ GHE qua, không theo điểm.
+  SCORE_PASS: 100,          // qua ghe +100
+  SCORE_DIALECT_BONUS: 200, // thưởng "Chuẩn miền Tây" +200
   PASSES_PER_TIER: 5,       // cứ 5 câu lên đời phương tiện
   MAX_TIER: 5,
 
@@ -56,6 +57,7 @@ export const CONFIG = {
   // ---- đụng
   CRASH_TO_RESULT: 1.6,     // giây trước khi hiện bảng kết quả
   SHAKE_TIME: 0.35,
+  CRASH_SNAP_T: 0.42,       // giây sau va chạm thì chụp ảnh cho bảng kết quả (RẦM!, nhân vật đang văng, bong bóng chửi đã nảy xong)
 
   // ---- bong bóng chửi
   TAUNT_HOLD: 1.4,          // giây giữ bong bóng (chưa tính lúc mờ đi)
@@ -71,5 +73,6 @@ export const CONFIG = {
   WATER_STREAKS: 16,
   DRIFT_FAR: 9, DRIFT_MID: 18, DRIFT_FG: 70, // u/giây, cảnh trôi sang trái
 
-  STORAGE_KEY: 'choNoiMienTay.best.v1',
+  LEGACY_BEST_KEY: 'choNoiMienTay.best.v1', // kỷ lục cũ thang +1 — chỉ đọc một lần để đổi ×100
+  TOP_KEY: 'choNoiMienTay.top.v2',          // bảng 4 điểm cao nhất [{s, d:'dd/mm'}] thang trăm
 };

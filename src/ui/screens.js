@@ -1,5 +1,6 @@
 // Màn bắt đầu, bảng kết quả, lớp phủ (tạm dừng, xoay màn, đang tải, lỗi, micro/giọng nói).
-const STEP_NAMES = ['Ghe chèo', 'Cano máy', 'Vê Ép 5', 'Du thuyền', 'Máy bay', 'Tàu vũ trụ'];
+import { fmtScore } from './format.js?v=c077d626';
+import { Fireworks } from './fireworks.js?v=c077d626';
 
 export class Screens {
   constructor(app) {
@@ -11,9 +12,10 @@ export class Screens {
     this.loadFill = q('#load-fill');
     this.startBest = q('#start-best');
     this.res = {
-      kicker: q('#res-kicker'), score: q('#res-score'), sub: q('#res-sub'), img: q('#res-veh-img'),
-      tier: q('#res-tier'), steps: q('#res-steps'), hero: q('#res-hero'),
+      badge: q('#res-badge'), score: q('#res-score'), roast: q('#res-roast'), top: q('#res-top'),
+      shot: q('#res-shot'), shotCv: q('#res-shot-cv'),
     };
+    this.fireworks = new Fireworks(q('#fireworks'));
     this.errorMsg = q('#error-msg');
     this.micEl = q('#overlay-mic'); this.speechEl = q('#overlay-speech'); this.noSpeechEl = q('#screen-nospeech');
   }
@@ -88,32 +90,34 @@ export class Screens {
     fallback();
   }
 
-  showStart(best) { this.startBest.textContent = best; this.start.hidden = false; this.result.hidden = true; }
+  showStart(best) { this.startBest.textContent = fmtScore(best); this.start.hidden = false; this.result.hidden = true; }
   hideStart() { this.start.hidden = true; }
 
-  showResult({ score, prevBest, newRecord, tier }, vehicles, spriteUrl) {
-    const r = this.res, v = vehicles[tier] || vehicles[0];
-    r.kicker.textContent = newRecord ? 'KỶ LỤC MỚI' : 'HẾT LƯỢT';
-    r.score.textContent = score;
-    r.sub.textContent = newRecord ? `Kỷ lục cũ: ${prevBest} điểm` : `Kỷ lục: ${Math.max(prevBest, score)} điểm`;
-    r.img.src = spriteUrl(v.sprite); r.img.alt = v.name;
-    // thua mà không phá kỷ lục: thêm mặt mếu (hero_sad) cạnh phương tiện
-    if (r.hero) {
-      r.hero.hidden = !!newRecord;
-      if (!newRecord) { r.hero.src = spriteUrl('hero_sad'); r.hero.alt = 'Mếu'; }
+  // 2026-11-18 Khôi: không HẾT LƯỢT, không các cấp phương tiện. Điểm to nhất, câu chọc, 4 điểm cao nhất,
+  // ảnh khoảnh khắc đụng cuối (main.js vẽ vào #res-shot-cv sau khi bảng hiện, theo cỡ khung), pháo hoa khi phá kỷ lục.
+  showResult({ score, newRecord, top = [], rank = -1 }, roast = '') {
+    const r = this.res;
+    r.badge.hidden = !newRecord;
+    const txt = fmtScore(score);
+    r.score.textContent = txt;
+    r.score.style.setProperty('--len', String(Math.max(3, txt.length)));
+    r.roast.textContent = roast || '';
+    r.roast.hidden = !roast;
+    r.top.textContent = '';
+    for (let i = 0; i < 4; i++) {
+      const row = top[i];
+      const li = document.createElement('li');
+      li.className = 'top-row' + (i === rank ? ' is-me' : '') + (row ? '' : ' is-empty');
+      const n = document.createElement('span'); n.className = 'top-rank'; n.textContent = String(i + 1);
+      const v = document.createElement('span'); v.className = 'top-score'; v.textContent = row ? fmtScore(row.s) : '—';
+      const d = document.createElement('span'); d.className = 'top-date'; d.textContent = row ? (row.d || 'trước đây') : '';
+      li.append(n, v, d);
+      r.top.appendChild(li);
     }
-    r.tier.textContent = `Lên tới cấp ${tier + 1}: ${v.name.charAt(0).toLowerCase() + v.name.slice(1)}`;
-    r.steps.textContent = '';
-    STEP_NAMES.forEach((n, i) => {
-      const d = document.createElement('div');
-      d.className = 'step' + (i <= tier ? ' on' : '') + (i === tier ? ' cur' : '');
-      d.innerHTML = `<span class="step-dot">${i + 1}</span><span class="step-name"></span>`;
-      d.querySelector('.step-name').textContent = n;
-      r.steps.appendChild(d);
-    });
     this.result.hidden = false;
+    if (newRecord) this.fireworks.start(); else this.fireworks.stop();
   }
-  hideResult() { this.result.hidden = true; }
+  hideResult() { this.result.hidden = true; this.fireworks.stop(); }
 
   setPaused(on) { this.pauseEl.hidden = !on; }
   setRotate(on) { this.rotateEl.hidden = !on; }

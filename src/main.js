@@ -1,16 +1,16 @@
 // Khởi động game: nạp dữ liệu + sprite, nối Game <-> Renderer <-> UI, vòng lặp requestAnimationFrame.
 // Mọi đường dẫn đều tương đối để chạy được trong thư mục con của GitHub Pages.
-import { CONFIG } from './config.js?v=b170c2bd';
-import { Assets } from './game/assets.js?v=b170c2bd';
-import { Game } from './game/game.js?v=b170c2bd';
-import { Renderer } from './game/renderer.js?v=b170c2bd';
-import { Hud } from './ui/hud.js?v=b170c2bd';
-import { Panel } from './ui/panel.js?v=b170c2bd';
-import { Screens } from './ui/screens.js?v=b170c2bd';
-import { SpeechInput, speechSupport } from './speech/recognizer.js?v=b170c2bd';
-import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=b170c2bd';
-import { VoiceControl } from './speech/voice.js?v=b170c2bd';
-import { playTaunt } from './game/sfx.js?v=b170c2bd';
+import { CONFIG } from './config.js?v=c077d626';
+import { Assets } from './game/assets.js?v=c077d626';
+import { Game } from './game/game.js?v=c077d626';
+import { Renderer } from './game/renderer.js?v=c077d626';
+import { Hud } from './ui/hud.js?v=c077d626';
+import { Panel } from './ui/panel.js?v=c077d626';
+import { Screens } from './ui/screens.js?v=c077d626';
+import { SpeechInput, speechSupport } from './speech/recognizer.js?v=c077d626';
+import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=c077d626';
+import { VoiceControl } from './speech/voice.js?v=c077d626';
+import { playTaunt } from './game/sfx.js?v=c077d626';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
@@ -74,6 +74,68 @@ async function boot() {
 
   const game = new Game({ phrases, manifest: man });
   const renderer = new Renderer(canvas, assets, game);
+  // ---- ảnh khoảnh khắc đụng cuối (2026-11-18): chụp cả khung canvas MỘT lần bằng drawImage sang canvas phụ
+  // lúc RẦM!, nhân vật đang văng và bong bóng chửi (vẽ trên canvas) đã nảy xong; khi bảng kết quả hiện thì cắt
+  // vùng quanh va chạm theo đúng tỉ lệ khung ảnh. Không dùng toDataURL.
+  const shot = { cv: document.createElement('canvas'), box: null, ok: false };
+  function snapCrash() {
+    try {
+      const W = canvas.width, H = canvas.height, k = renderer.unit * renderer.dpr;
+      if (shot.cv.width !== W || shot.cv.height !== H) { shot.cv.width = W; shot.cv.height = H; }
+      shot.cv.getContext('2d').drawImage(canvas, 0, 0);
+      // hộp (u) bao: điểm va + chữ RẦM!, ghe hàng, nhân vật đang văng, bong bóng chửi
+      const cr = game.crash, st = game.stall, hs = game.heroPos.s;
+      let L = cr.at.x - 66, R = cr.at.x + 62, T = cr.at.y - 108, B = game.laneY + 22;
+      const add = (l, t, r, b) => { L = Math.min(L, l); T = Math.min(T, t); R = Math.max(R, r); B = Math.max(B, b); };
+      add(CONFIG.HERO_X - 48, game.laneY - 60, CONFIG.HERO_X + 48, game.laneY + 22);
+      if (game.state === 'crash') add(cr.hx - 170 * hs, cr.hy - 200 * hs, cr.hx + 170 * hs, cr.hy + 120 * hs);
+      if (st) add(st.x - 60, st.y - 120, st.x + 60, st.y + 22);
+      const tb = renderer.lastTaunt;
+      if (tb && game.taunts.length && game.taunts[0].kind === 'crash') add(tb.L, tb.T, tb.R, tb.B);
+      shot.box = { L, T, R, B, k, W: W / k, H: H / k };
+      shot.ok = true;
+    } catch (err) { shot.ok = false; console.warn('[cho-noi] chụp vụ đụng lỗi', err); }
+  }
+  // vẽ ảnh đã chụp vào khung kết quả, cắt theo tỉ lệ khung
+  function paintShot() {
+    const frame = screens.res.shot, out = screens.res.shotCv;
+    const fr = frame.getBoundingClientRect();
+    if (!shot.ok || fr.width < 10 || fr.height < 10) { frame.hidden = !shot.ok; return; }
+    frame.hidden = false;
+    const b = shot.box, pad = 12, A = fr.width / fr.height;
+    let w = b.R - b.L + pad * 2, h = b.B - b.T + pad * 2;
+    const cx = (b.L + b.R) / 2, cy = (b.T + b.B) / 2;
+    if (w / h < A) w = h * A; else h = w / A;           // nới cạnh ngắn cho đúng tỉ lệ khung
+    if (w > b.W) { w = b.W; h = w / A; }                // không vượt khung game: giữ tỉ lệ khung, lề cắt bớt chút trên dưới
+    if (h > b.H) { h = b.H; w = Math.min(b.W, h * A); }
+    const x = Math.max(0, Math.min(b.W - w, cx - w / 2)), y = Math.max(0, Math.min(b.H - h, cy - h / 2));
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const ow = Math.round(Math.min(w * b.k, fr.width * dpr)), oh = Math.round(ow * h / w);
+    out.width = ow; out.height = oh;
+    out.getContext('2d').drawImage(shot.cv, x * b.k, y * b.k, w * b.k, h * b.k, 0, 0, ow, oh);
+  }
+
+  // ---- câu chọc ở màn kết quả (data/roasts.json). Lỗi thì không hiện câu, không vỡ màn.
+  let roasts = null;
+  fetch('data/roasts.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).then((j) => { roasts = j; })
+    .catch((e) => { console.info('[cho-noi] không tải được roasts.json', e); });
+  const lastRoast = {};
+  function pickRoast(score, newRecord) {
+    try {
+      if (!roasts) return '';
+      let key = 'newBest', list = newRecord ? roasts.newBest : null;
+      if (!Array.isArray(list) || !list.length) {
+        const br = (roasts.brackets || []).find((x) => score >= x.min && score <= x.max);
+        list = br && br.lines; key = br ? 'b' + br.min : '';
+      }
+      list = (Array.isArray(list) ? list : []).filter((x) => typeof x === 'string' && x.trim());
+      if (!list.length) return '';
+      let i = Math.floor(Math.random() * list.length);
+      if (list.length > 1 && list[i] === lastRoast[key]) i = (i + 1) % list.length;
+      lastRoast[key] = list[i];
+      return list[i];
+    } catch (e) { return ''; }
+  }
   renderer.setSprites(names);
   const hud = new Hud(document.getElementById('hud'), man.vehicles);
   const panel = new Panel(document.getElementById('panel'));
@@ -90,6 +152,7 @@ async function boot() {
     if (first) { renderer.bakeAll(); first = false; }
     else { clearTimeout(bakeTimer); bakeTimer = setTimeout(() => renderer.bakeAll(), 160); }
     checkOrientation();
+    if (!screens.result.hidden) paintShot();
   }
 
   // mép dưới HUD và mép trên khung chữ (u) để bong bóng chửi không bị che
@@ -118,11 +181,16 @@ async function boot() {
     panel.play(e.detail.phrase); measureUI();
   });
   game.addEventListener('matched', (e) => { speech.setContext(null); panel.passed(e.detail.phrase, e.detail); measureUI(); });
-  game.addEventListener('crash', (e) => { speech.setContext(null); panel.crash(e.detail.phrase); measureUI(); });
+  game.addEventListener('crash', (e) => {
+    speech.setContext(null); panel.crash(e.detail.phrase); measureUI();
+    shot.ok = false; shot.taken = false;
+  });
   game.addEventListener('taunt', (e) => playTaunt(e.detail.kind, e.detail.text));
   game.addEventListener('over', (e) => {
-    panel.show(false);
-    screens.showResult(e.detail, man.vehicles, (n) => assets.url(n));
+    panel.show(false); hud.show(false);
+    if (!shot.taken) { shot.taken = true; snapCrash(); }  // dự phòng (vd. tạm dừng ngay lúc đụng)
+    screens.showResult(e.detail, pickRoast(e.detail.score, e.detail.newRecord));
+    paintShot();
   });
   game.addEventListener('state', (e) => { app.dataset.state = e.detail.state; });
   game.addEventListener('pause', (e) => {
@@ -320,6 +388,7 @@ async function boot() {
     if (document.hidden) dt = 0;
     game.update(dt);
     renderer.frame(dt);
+    if (game.state === 'crash' && !shot.taken && game.crash && game.crash.t >= CONFIG.CRASH_SNAP_T) { shot.taken = true; snapCrash(); }
     if (game.state === 'playing') panel.setTime(game.remainingFrac);
     if (game.state !== 'title') hud.update(game);
     requestAnimationFrame(loop);
@@ -338,7 +407,7 @@ async function boot() {
 
   // cho B4 và kiểm thử
   window.game = game;
-  window.__choNoi = { game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support, localAsr, webSpeech, localSup };
+  window.__choNoi = { shot, paintShot, pickRoast, game, renderer, assets, panel, hud, screens, startRun, toTitle, speech, support, localAsr, webSpeech, localSup };
 }
 
 boot().catch((e) => {
