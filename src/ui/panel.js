@@ -1,7 +1,7 @@
 // Khung chữ dưới: phiên âm to (âm đổi tô đỏ) + chính tả nhỏ trong ngoặc + thanh thời gian
 // + dòng "Đang nghe: …" (B4) và tô dần các chữ đã đọc đúng. Không bao giờ hiện câu kế tiếp.
-import { phoneticSegments } from '../game/phrases.js?v=8d4b1e05';
-import { CONFIG } from '../config.js?v=8d4b1e05';
+import { phoneticSegments } from '../game/phrases.js?v=e2f13414';
+import { CONFIG } from '../config.js?v=e2f13414';
 
 // cỡ chữ (px ở khung 390) theo độ dài câu phiên âm
 function fontSizeFor(text) {

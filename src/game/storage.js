@@ -1,6 +1,6 @@
 // Kỷ lục + bảng 4 điểm cao nhất, lưu trên máy. localStorage có thể bị chặn (Safari riêng tư, iframe, cookie tắt)
 // -> giữ trong bộ nhớ. 2026-11-18: điểm theo thang trăm (qua ghe +100). Kỷ lục cũ (khoá v1, thang +1) đổi ×100 một lần.
-import { CONFIG } from '../config.js?v=8d4b1e05';
+import { CONFIG } from '../config.js?v=e2f13414';
 
 const TOP_N = 4;
 let memTop = null;   // [{ s: điểm, d: 'dd/mm' }] giảm dần — bản trong bộ nhớ khi không ghi được localStorage

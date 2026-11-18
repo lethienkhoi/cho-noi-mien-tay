@@ -2,9 +2,9 @@
 // B5: bố cục chạy ngang kiểu game khủng long trong khung dọc — ghe mình cố định bên trái, ghe hàng chạy từ phải sang
 // trên cùng một làn nước. API giọng nói (B4): game.onPhraseMatched(roundId, { dialect: boolean }).
 // Sự kiện (game.addEventListener): state, round, matched, landed, tier, crash, over, pause, taunt.
-import { CONFIG } from '../config.js?v=8d4b1e05';
-import { PhrasePicker, roundTime, levelForPasses } from './phrases.js?v=8d4b1e05';
-import { loadBest, recordScore } from './storage.js?v=8d4b1e05';
+import { CONFIG } from '../config.js?v=e2f13414';
+import { PhrasePicker, roundTime, levelForPasses } from './phrases.js?v=e2f13414';
+import { loadBest, recordScore } from './storage.js?v=e2f13414';
 
 const lerp = (a, b, t) => a + (b - a) * t;
 const clamp01 = (t) => Math.max(0, Math.min(1, t));

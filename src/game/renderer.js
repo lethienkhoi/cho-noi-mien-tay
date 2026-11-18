@@ -1,6 +1,6 @@
 // Vẽ cảnh bằng Canvas 2D từ sprite đã nướng sẵn (xem assets.js).
 // Toạ độ thế giới: đơn vị u (khung thiết kế rộng 390u như keyframe), chiều cao = chiều cao màn / tỉ lệ.
-import { CONFIG } from '../config.js?v=8d4b1e05';
+import { CONFIG } from '../config.js?v=e2f13414';
 
 const DEG = Math.PI / 180;
 

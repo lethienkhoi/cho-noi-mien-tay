@@ -1,17 +1,17 @@
 // Khởi động game: nạp dữ liệu + sprite, nối Game <-> Renderer <-> UI, vòng lặp requestAnimationFrame.
 // Mọi đường dẫn đều tương đối để chạy được trong thư mục con của GitHub Pages.
-import { CONFIG } from './config.js?v=8d4b1e05';
-import { Assets } from './game/assets.js?v=8d4b1e05';
-import { Game } from './game/game.js?v=8d4b1e05';
-import { Renderer } from './game/renderer.js?v=8d4b1e05';
-import { Hud } from './ui/hud.js?v=8d4b1e05';
-import { Panel } from './ui/panel.js?v=8d4b1e05';
-import { Screens } from './ui/screens.js?v=8d4b1e05';
-import { SpeechInput, speechSupport } from './speech/recognizer.js?v=8d4b1e05';
-import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=8d4b1e05';
-import { VoiceControl } from './speech/voice.js?v=8d4b1e05';
-import { sfx, playTaunt } from './game/sfx.js?v=8d4b1e05';
-import { SoundButton } from './ui/sound-button.js?v=8d4b1e05';
+import { CONFIG } from './config.js?v=e2f13414';
+import { Assets } from './game/assets.js?v=e2f13414';
+import { Game } from './game/game.js?v=e2f13414';
+import { Renderer } from './game/renderer.js?v=e2f13414';
+import { Hud } from './ui/hud.js?v=e2f13414';
+import { Panel } from './ui/panel.js?v=e2f13414';
+import { Screens } from './ui/screens.js?v=e2f13414';
+import { SpeechInput, speechSupport } from './speech/recognizer.js?v=e2f13414';
+import { LocalSpeechInput, SpeechSwitch, localAsrSupport } from './speech/local-asr.js?v=e2f13414';
+import { VoiceControl } from './speech/voice.js?v=e2f13414';
+import { sfx } from './game/sfx.js?v=e2f13414';
+import { SoundButton } from './ui/sound-button.js?v=e2f13414';
 
 const app = document.getElementById('app');
 const canvas = document.getElementById('scene');
@@ -178,7 +178,6 @@ async function boot() {
   // ---- nối sự kiện game -> UI
   // bộ nghe cục bộ: mỗi câu mới đặt hotwords + mốc cắt âm thanh; nhảy/đụng thì ngừng giải mã cho nhẹ máy
   game.addEventListener('round', (e) => {
-    sfx.prefetch(e.detail.vendor, e.detail.tauntPick);   // B6: nạp lười đúng 2 câu chửi của ghe này
     const T = e.detail.T || (game.round && game.round.T) || 8;
     speech.setContext(e.detail.phrase, { maxSec: T + CONFIG.TIME_GRACE + CONFIG.HOLD_MAX + 1 });
     panel.play(e.detail.phrase); measureUI();
@@ -194,7 +193,7 @@ async function boot() {
     shot.ok = false; shot.taken = false;
     sfx.crash();
   });
-  game.addEventListener('taunt', (e) => playTaunt(e.detail.kind, e.detail.text, e.detail.vendor, e.detail.index));
+  // 2026-11-18: Khôi bỏ giọng đọc câu chửi (giọng máy nghe không ra) — người bán chỉ chửi bằng bong bóng chữ.
   game.addEventListener('over', (e) => {
     panel.show(false); hud.show(false);
     if (!shot.taken) { shot.taken = true; snapCrash(); }  // dự phòng (vd. tạm dừng ngay lúc đụng)
